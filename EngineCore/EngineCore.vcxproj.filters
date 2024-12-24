@@ -1,0 +1,152 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClInclude Include="EngineCore.h" />
+    <ClInclude Include="PreCompile.h" />
+    <ClInclude Include="IContentsCore.h">
+      <Filter>Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="GameMode.h">
+      <Filter>Object\Actor</Filter>
+    </ClInclude>
+    <ClInclude Include="Pawn.h">
+      <Filter>Object\Actor</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer.h">
+      <Filter>Object\Component\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="ActorComponent.h">
+      <Filter>Object\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneComponent.h">
+      <Filter>Object\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Level.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineGraphicDevice.h">
+      <Filter>Graphic</Filter>
+    </ClInclude>
+    <ClInclude Include="SpriteRenderer.h">
+      <Filter>Object\Component\Contents</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraActor.h">
+      <Filter>Object\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineCamera.h">
+      <Filter>Object\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineResources.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineTexture.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\TeacherProject\GM2\DX\GM2DX\EngineCore\ThirdParty\DirectxTex\Inc\DirectXTex.h">
+      <Filter>ThirdParty\DirectTex\Inc</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="EngineCore.cpp" />
+    <ClCompile Include="PreCompile.cpp" />
+    <ClCompile Include="GameMode.cpp">
+      <Filter>Object\Actor</Filter>
+    </ClCompile>
+    <ClCompile Include="Pawn.cpp">
+      <Filter>Object\Actor</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer.cpp">
+      <Filter>Object\Component\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="ActorComponent.cpp">
+      <Filter>Object\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneComponent.cpp">
+      <Filter>Object\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Level.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineGraphicDevice.cpp">
+      <Filter>Graphic</Filter>
+    </ClCompile>
+    <ClCompile Include="SpriteRenderer.cpp">
+      <Filter>Object\Component\Contents</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraActor.cpp">
+      <Filter>Object\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineCamera.cpp">
+      <Filter>Object\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineResources.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineTexture.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Interface">
+      <UniqueIdentifier>{6e1d87f9-ae41-4c5e-92a4-c04e66d9ac7b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object">
+      <UniqueIdentifier>{3e646c08-7897-4bca-a179-4c2f03b3bff8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Actor">
+      <UniqueIdentifier>{ab8fdad1-5ebf-4211-a87e-d4220f8a67c3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Component">
+      <UniqueIdentifier>{7d02310e-ea68-4ddc-a3c9-8185ccd3f375}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphic">
+      <UniqueIdentifier>{08e4c5ce-6b2e-4024-a3f6-30a895061350}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Component\Render">
+      <UniqueIdentifier>{520f5741-b97e-46fc-a314-b14d35a8df23}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Component\Contents">
+      <UniqueIdentifier>{30c5006c-0f1b-4ee3-92f5-5d937ee339e9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Render">
+      <UniqueIdentifier>{35a5e378-d5a2-4e26-8c1d-be3dc0f9c72b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources">
+      <UniqueIdentifier>{8c977091-4418-41d5-8b6d-0f41d5bff4e4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty">
+      <UniqueIdentifier>{363dc0ef-2373-45c2-87f2-a85ee840ec35}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\DirectTex">
+      <UniqueIdentifier>{e3e19704-5fc8-4dc2-9c8a-74cdde357536}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\DirectTex\Debug">
+      <UniqueIdentifier>{ea7ea387-02c3-4507-b72e-245b67e17f34}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\DirectTex\Inc">
+      <UniqueIdentifier>{c35e9e71-88b8-4dee-b245-e668d12bd493}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\DirectTex\Release">
+      <UniqueIdentifier>{c27e3542-0645-479c-878e-0325e369839d}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="..\..\..\..\TeacherProject\GM2\DX\GM2DX\EngineCore\ThirdParty\DirectxTex\Debug\DirectXTex_Debug.lib">
+      <Filter>ThirdParty\DirectTex\Debug</Filter>
+    </Library>
+    <Library Include="..\..\..\..\TeacherProject\GM2\DX\GM2DX\EngineCore\ThirdParty\DirectxTex\Release\DirectXTex_Release.lib">
+      <Filter>ThirdParty\DirectTex\Release</Filter>
+    </Library>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\..\TeacherProject\GM2\DX\GM2DX\EngineCore\ThirdParty\DirectxTex\Inc\DirectXTex.inl">
+      <Filter>ThirdParty\DirectTex\Inc</Filter>
+    </None>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClInclude Include="PreCompile.h" />
+    <ClInclude Include="EngineDirectory.h">
+      <Filter>IO</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineSerializer.h">
+      <Filter>IO</Filter>
+    </ClInclude>
+    <ClInclude Include="EnginePath.h">
+      <Filter>IO</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineFile.h">
+      <Filter>IO</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineDebug.h">
+      <Filter>Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineDefine.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineMath.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Object.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineString.h">
+      <Filter>String</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="PreCompile.cpp" />
+    <ClCompile Include="EngineDirectory.cpp">
+      <Filter>IO</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineFile.cpp">
+      <Filter>IO</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineSerializer.cpp">
+      <Filter>IO</Filter>
+    </ClCompile>
+    <ClCompile Include="EnginePath.cpp">
+      <Filter>IO</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineDebug.cpp">
+      <Filter>Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineMath.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Object.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineString.cpp">
+      <Filter>String</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="IO">
+      <UniqueIdentifier>{ca7050e6-9c7b-48f7-a36e-79f574e61af7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Debug">
+      <UniqueIdentifier>{c13d89f1-66cc-4361-8c02-9e74b9b0ffdf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header">
+      <UniqueIdentifier>{6d938c8e-04d2-4a59-bdeb-30c1409e6308}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Math">
+      <UniqueIdentifier>{36df219b-0c33-456c-8ab2-bad6d6e35c6b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object">
+      <UniqueIdentifier>{77efc157-10ea-41ba-b7ed-14cf22a53e43}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="String">
+      <UniqueIdentifier>{ffb9f8de-8f84-4171-bcf0-000872d607de}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

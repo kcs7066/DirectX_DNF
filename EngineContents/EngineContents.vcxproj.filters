@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClInclude Include="Player.h" />
+    <ClInclude Include="PreCompile.h" />
+    <ClInclude Include="ContentsCore.h" />
+    <ClInclude Include="PlayGameMode.h">
+      <Filter>GameMode</Filter>
+    </ClInclude>
+    <ClInclude Include="TestImage.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="PreCompile.cpp" />
+    <ClCompile Include="ContentsCore.cpp" />
+    <ClCompile Include="PlayGameMode.cpp">
+      <Filter>GameMode</Filter>
+    </ClCompile>
+    <ClCompile Include="TestImage.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="GameMode">
+      <UniqueIdentifier>{0360423b-134c-43d3-9459-33e9ca9b998c}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

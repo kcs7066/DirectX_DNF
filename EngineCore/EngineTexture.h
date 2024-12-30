@@ -6,11 +6,10 @@
 class UEngineTexture : public UEngineResources
 {
 public:
-
-	ENGINEAPI UEngineTexture();
+		ENGINEAPI UEngineTexture();
 	ENGINEAPI ~UEngineTexture();
 
-	UEngineTexture(const UEngineTexture& _Other) = delete;
+		UEngineTexture(const UEngineTexture& _Other) = delete;
 	UEngineTexture(UEngineTexture&& _Other) noexcept = delete;
 	UEngineTexture& operator=(const UEngineTexture& _Other) = delete;
 	UEngineTexture& operator=(UEngineTexture&& _Other) noexcept = delete;
@@ -31,11 +30,17 @@ public:
 		return SRV.Get();
 	}
 
+	FVector GetTextureSize()
+	{
+		return Size;
+	}
+
 protected:
 
 private:
 	ENGINEAPI void ResLoad();
 
-	Microsoft::WRL::ComPtr<ID3D11Texture2D> Texture2D = nullptr; 
-	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> SRV = nullptr; 
-};
+	FVector Size;
+	DirectX::TexMetadata Metadata;
+	DirectX::ScratchImage ImageData;
+	Microsoft::WRL::ComPtr<ID3D11Texture2D> Texture2D = nullptr; 	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> SRV = nullptr; };

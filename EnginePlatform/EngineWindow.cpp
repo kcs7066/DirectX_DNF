@@ -5,11 +5,23 @@
 
 HINSTANCE UEngineWindow::hInstance = nullptr;
 std::map<std::string, WNDCLASSEXA> UEngineWindow::WindowClasss;
+std::function<bool(HWND, UINT, WPARAM, LPARAM)> UEngineWindow::CustomProc = nullptr;
 int WindowCount = 0;
 
+void UEngineWindow::SetCustomProc(std::function<bool(HWND, UINT, WPARAM, LPARAM)> _CustomProc)
+{
+    CustomProc = _CustomProc;
+}
 
 LRESULT CALLBACK UEngineWindow::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
+    if (nullptr != CustomProc)
+    {
+        if (true == CustomProc(hWnd, message, wParam, lParam))
+        {
+                    }
+    }
+
     switch (message)
     {
     case WM_CREATE:
@@ -20,7 +32,7 @@ LRESULT CALLBACK UEngineWindow::WndProc(HWND hWnd, UINT message, WPARAM wParam, 
     {
         PAINTSTRUCT ps;
         HDC hdc = BeginPaint(hWnd, &ps);
-        EndPaint(hWnd, &ps);
+                EndPaint(hWnd, &ps);
     }
     break;
     case WM_DESTROY:
@@ -41,7 +53,7 @@ void UEngineWindow::EngineWindowInit(HINSTANCE _Instance)
 {
     hInstance = _Instance;
 
-    WNDCLASSEXA wcex;
+            WNDCLASSEXA wcex;
     wcex.cbSize = sizeof(WNDCLASSEX);
     wcex.style = CS_HREDRAW | CS_VREDRAW;
     wcex.lpfnWndProc = WndProc;
@@ -80,6 +92,11 @@ int UEngineWindow::WindowMessageLoop(std::function<void()> _StartFunction, std::
             DispatchMessage(&msg);
         }
 
+        if (false == LoopActive)
+        {
+            break;
+        }
+
         _FrameFunction();
     }
 
@@ -93,14 +110,14 @@ int UEngineWindow::WindowMessageLoop(std::function<void()> _StartFunction, std::
 
 void UEngineWindow::CreateWindowClass(const WNDCLASSEXA& _Class)
 {
-
+    
     std::map<std::string, WNDCLASSEXA>::iterator EndIter = WindowClasss.end();
     std::map<std::string, WNDCLASSEXA>::iterator FindIter = WindowClasss.find(std::string(_Class.lpszClassName));
 
-    if (EndIter != FindIter)
+        if (EndIter != FindIter)
     {
-
-        MSGASSERT(std::string(_Class.lpszClassName) + " 같은 이름의 윈도우 클래스를 2번 등록했습니다");
+        
+                                        MSGASSERT(std::string(_Class.lpszClassName) + " 같은 이름의 윈도우 클래스를 2번 등록했습니다");
         return;
     }
 
@@ -116,8 +133,7 @@ UEngineWindow::UEngineWindow()
 
 UEngineWindow::~UEngineWindow()
 {
-
-    if (nullptr != WindowHandle)
+        if (nullptr != WindowHandle)
     {
         DestroyWindow(WindowHandle);
         WindowHandle = nullptr;
@@ -146,16 +162,14 @@ void UEngineWindow::Create(std::string_view _TitleName, std::string_view _ClassN
         return;
     }
 
-    HDC WindowMainDC = GetDC(WindowHandle);
+        HDC WindowMainDC = GetDC(WindowHandle);
 }
 
 void UEngineWindow::Open(std::string_view _TitleName /*= "Window"*/)
 {
-
-    if (0 == WindowHandle)
+        if (0 == WindowHandle)
     {
-
-        Create(_TitleName);
+                Create(_TitleName);
     }
 
     if (0 == WindowHandle)
@@ -163,9 +177,9 @@ void UEngineWindow::Open(std::string_view _TitleName /*= "Window"*/)
         return;
     }
 
-    ShowWindow(WindowHandle, SW_SHOW);
+        ShowWindow(WindowHandle, SW_SHOW);
     UpdateWindow(WindowHandle);
-}
+    }
 
 void UEngineWindow::SetWindowPosAndScale(FVector _Pos, FVector _Scale)
 {
@@ -181,7 +195,7 @@ FVector UEngineWindow::GetMousePos()
     POINT MousePoint;
 
     GetCursorPos(&MousePoint);
-    ScreenToClient(WindowHandle, &MousePoint);
+        ScreenToClient(WindowHandle, &MousePoint);
 
     return FVector(MousePoint.x, MousePoint.y);
 }

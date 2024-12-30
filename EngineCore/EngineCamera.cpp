@@ -16,17 +16,18 @@ void UEngineCamera::BeginPlay()
 
 UEngineCamera::~UEngineCamera()
 {
+	Renderers.clear();
 }
 
 void UEngineCamera::Tick(float _DetlaTime)
 {
-	Transform.View;
+		Transform.View;
 	Transform.Projection;
 }
 
 void UEngineCamera::Render(float _DetlaTime)
 {
-	for (std::pair<const int, std::list<std::shared_ptr<URenderer>>>& RenderGroup : Renderers)
+		for (std::pair<const int, std::list<std::shared_ptr<URenderer>>>& RenderGroup : Renderers)
 	{
 		std::list<std::shared_ptr<URenderer>>& RenderList = RenderGroup.second;
 

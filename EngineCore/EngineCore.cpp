@@ -2,15 +2,26 @@
 #include "EngineCore.h"
 #include <EngineBase/EngineDebug.h>
 #include <EnginePlatform/EngineWindow.h>
+#include <EnginePlatform/EngineInput.h>
 #include "IContentsCore.h"
 #include "EngineResources.h"
+#include "EngineGUI.h"
 #include "Level.h"
 
+
+UEngineGraphicDevice& UEngineCore::GetDevice()
+{
+	return Device;
+}
+
 UEngineGraphicDevice UEngineCore::Device;
+
 UEngineWindow UEngineCore::MainWindow;
 HMODULE UEngineCore::ContentsDLL = nullptr;
 std::shared_ptr<IContentsCore> UEngineCore::Core;
 UEngineInitData UEngineCore::Data;
+UEngineTimer UEngineCore::Timer;
+
 
 std::shared_ptr<class ULevel> UEngineCore::NextLevel;
 std::shared_ptr<class ULevel> UEngineCore::CurLevel = nullptr;
@@ -43,7 +54,7 @@ void UEngineCore::LoadContents(std::string_view _DllName)
 	Dir.MoveParentToDirectory("Build");
 	Dir.Move("bin/x64");
 
-#ifdef _DEBUG
+	#ifdef _DEBUG
 	Dir.Move("Debug");
 #else
 	Dir.Move("Release");
@@ -52,8 +63,7 @@ void UEngineCore::LoadContents(std::string_view _DllName)
 	UEngineFile File = Dir.GetFile(_DllName);
 
 	std::string FullPath = File.GetPathToString();
-
-	ContentsDLL = LoadLibraryA(FullPath.c_str());
+		ContentsDLL = LoadLibraryA(FullPath.c_str());
 
 	if (nullptr == ContentsDLL)
 	{
@@ -86,38 +96,35 @@ void UEngineCore::EngineStart(HINSTANCE _Instance, std::string_view _DllName)
 
 	LoadContents(_DllName);
 
-	UEngineWindow::WindowMessageLoop(
+		UEngineWindow::WindowMessageLoop(
 		[]()
 		{
-
-			Device.CreateDeviceAndContext();
-
-			Core->EngineStart(Data);
-
-			MainWindow.SetWindowPosAndScale(Data.WindowPos, Data.WindowSize);
+												Device.CreateDeviceAndContext();
+						Core->EngineStart(Data);
+						MainWindow.SetWindowPosAndScale(Data.WindowPos, Data.WindowSize);
 			Device.CreateBackBuffer(MainWindow);
-
-
-
+						
+			UEngineGUI::Init();
 		},
 		[]()
 		{
 			EngineFrame();
-
-		},
+					},
 		[]()
 		{
-			EngineEnd();
+												EngineEnd();
 		});
 
 
+		
+	
 
 }
 
 std::shared_ptr<ULevel> UEngineCore::NewLevelCreate(std::string_view _Name)
 {
-
-	std::shared_ptr<ULevel> Ptr = std::make_shared<ULevel>();
+	
+			std::shared_ptr<ULevel> Ptr = std::make_shared<ULevel>();
 	Ptr->SetName(_Name);
 
 	LevelMap.insert({ _Name.data(), Ptr });
@@ -152,16 +159,24 @@ void UEngineCore::EngineFrame()
 
 		CurLevel->LevelChangeStart();
 		NextLevel = nullptr;
+		Timer.TimeStart();
 	}
 
-	CurLevel->Tick(0.0f);
-	CurLevel->Render(0.0f);
+	Timer.TimeCheck();
+	float DeltaTime = Timer.GetDeltaTime();
+	UEngineInput::KeyCheck(DeltaTime);
+
+	CurLevel->Tick(DeltaTime);
+	CurLevel->Render(DeltaTime);
+	
 }
 
 void UEngineCore::EngineEnd()
 {
 
-	Device.Release();
+	UEngineGUI::Release();
+
+		Device.Release();
 
 	UEngineResources::Release();
 

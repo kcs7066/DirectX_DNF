@@ -19,6 +19,6 @@ public:
 protected:
 
 private:
-
+	std::shared_ptr<class ATestImage> TestImage;
 };
 

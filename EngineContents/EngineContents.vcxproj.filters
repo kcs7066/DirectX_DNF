@@ -8,6 +8,10 @@
       <Filter>GameMode</Filter>
     </ClInclude>
     <ClInclude Include="TestImage.h" />
+    <ClInclude Include="MyRenderer.h" />
+    <ClInclude Include="CampGameMode.h">
+      <Filter>GameMode</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Player.cpp" />
@@ -17,6 +21,10 @@
       <Filter>GameMode</Filter>
     </ClCompile>
     <ClCompile Include="TestImage.cpp" />
+    <ClCompile Include="MyRenderer.cpp" />
+    <ClCompile Include="CampGameMode.cpp">
+      <Filter>GameMode</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="GameMode">

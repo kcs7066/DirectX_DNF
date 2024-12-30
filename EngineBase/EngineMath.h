@@ -12,6 +12,7 @@
 class ENGINEAPI  UEngineMath
 {
 public:
+
 	static const double DPI;
 	static const double DPI2;
 
@@ -56,6 +57,29 @@ public:
 	}
 };
 
+class FQuat
+{
+public:
+	union
+	{
+		struct
+		{
+			float X;
+			float Y;
+			float Z;
+			float W;
+		};
+
+		float Arr2D[1][4];
+		float Arr1D[4];
+		DirectX::XMVECTOR DirectVector;
+
+	};
+
+	class FVector QuaternionToEulerDeg() const;
+	class FVector QuaternionToEulerRad() const;
+};
+
 class FVector
 {
 public:
@@ -81,7 +105,6 @@ public:
 
 		float Arr2D[1][4];
 		float Arr1D[4];
-
 		DirectX::XMVECTOR DirectVector;
 	};
 
@@ -130,9 +153,9 @@ public:
 		LCopy.Normalize();
 		RCopy.Normalize();
 
-		float CosRad = Dot(LCopy, RCopy);
+								float CosRad = Dot(LCopy, RCopy);
 
-		return acos(CosRad);
+										return acos(CosRad);
 	}
 
 	static FVector Cross(const FVector& _Left, const FVector& _Right)
@@ -149,7 +172,7 @@ public:
 		float LeftLen = _Left.Length();
 		float RightLen = _Right.Length();
 
-
+		
 		return _Left.X * _Right.X + _Left.Y * _Right.Y + _Left.Z * _Right.Z;
 	}
 
@@ -159,9 +182,11 @@ public:
 		return _Value;
 	}
 
-	static FVector AngleToVectorDeg(float _Angle)
+		static FVector AngleToVectorDeg(float _Angle)
 	{
-		return AngleToVectorRad(_Angle * UEngineMath::D2R);
+				
+		
+				return AngleToVectorRad(_Angle * UEngineMath::D2R);
 	}
 
 
@@ -174,16 +199,18 @@ public:
 		return Result;
 	}
 
-	static FVector AngleToVectorRad(float _Angle)
+					static FVector AngleToVectorRad(float _Angle)
 	{
-		return { cosf(_Angle), sinf(_Angle) };
+						
+		
+				return { cosf(_Angle), sinf(_Angle) };
 	}
 
-	static FVector Transform(const FVector& _Vector, const class FMatrix& _Matrix);
+			static FVector Transform(const FVector& _Vector, const class FMatrix& _Matrix);
 
-	static FVector TransformCoord(const FVector& _Vector, const class FMatrix& _Matrix);
+		static FVector TransformCoord(const FVector& _Vector, const class FMatrix& _Matrix);
 
-	static FVector TransformNormal(const FVector& _Vector, const class FMatrix& _Matrix);
+		static FVector TransformNormal(const FVector& _Vector, const class FMatrix& _Matrix);
 
 	int iX() const
 	{
@@ -205,7 +232,7 @@ public:
 		return Y * 0.5f;
 	}
 
-	bool IsZeroed() const
+		bool IsZeroed() const
 	{
 		return X == 0.0f || Y == 0.0f;
 	}
@@ -215,7 +242,7 @@ public:
 		return { X * 0.5f, Y * 0.5f };
 	}
 
-	float Length() const
+		float Length() const
 	{
 		return UEngineMath::Sqrt(X * X + Y * Y + Z * Z);
 	}
@@ -246,7 +273,7 @@ public:
 		return Result;
 	}
 
-	void RotationXDeg(float _Angle)
+		void RotationXDeg(float _Angle)
 	{
 		RotationXRad(_Angle * UEngineMath::D2R);
 	}
@@ -272,8 +299,7 @@ public:
 	}
 
 
-	// 
-	void RotationYDeg(float _Angle)
+		void RotationYDeg(float _Angle)
 	{
 		RotationYRad(_Angle * UEngineMath::D2R);
 	}
@@ -298,8 +324,7 @@ public:
 		return Result;
 	}
 
-	// 
-	void RotationZDeg(float _Angle)
+		void RotationZDeg(float _Angle)
 	{
 		RotationZRad(_Angle * UEngineMath::D2R);
 	}
@@ -334,6 +359,7 @@ public:
 		FVector Result;
 		Result.X = X * _Value;
 		Result.Y = Y * _Value;
+		Result.Z = Z * _Value;
 		return Result;
 	}
 
@@ -345,7 +371,7 @@ public:
 		return Result;
 	}
 
-	ENGINEAPI FVector operator*(const class FMatrix& _Matrix) const;
+		ENGINEAPI FVector operator*(const class FMatrix& _Matrix) const;
 	ENGINEAPI FVector& operator*=(const class FMatrix& _Matrix);
 
 	FVector& operator-=(const FVector& _Other)
@@ -388,18 +414,18 @@ public:
 		Result.Y = Y / Other.Y;
 		return Result;
 	}
- 
-	bool operator==(const FVector& _Other) const
+
+		bool operator==(const FVector& _Other) const
 	{
 		return X == _Other.X && Y == _Other.Y;
 	}
 
-	bool EqualToInt(FVector _Other) const
+			bool EqualToInt(FVector _Other) const
 	{
-		return iX() == _Other.iX() && iY() == _Other.iY();
+						return iX() == _Other.iX() && iY() == _Other.iY();
 	}
 
-
+				
 	FVector& operator+=(const FVector& _Other)
 	{
 		X += _Other.X;
@@ -439,6 +465,13 @@ public:
 		Stream += std::to_string(W);
 		Stream += "]";
 		return Stream;
+	}
+
+	FQuat DegAngleToQuaternion()
+	{
+		FQuat Result;
+		Result.DirectVector = DirectX::XMQuaternionRotationRollPitchYawFromVector(DirectVector);
+		return Result;
 	}
 
 };
@@ -482,7 +515,8 @@ public:
 		Identity();
 	}
 
-	void Identity()
+		
+		void Identity()
 	{
 		DirectMatrix = DirectX::XMMatrixIdentity();
 	}
@@ -525,9 +559,13 @@ public:
 		RotationRad(_Angle * UEngineMath::D2R);
 	}
 
+
+
 	void RotationRad(const FVector& _Angle)
 	{
 		DirectMatrix = DirectX::XMMatrixRotationRollPitchYawFromVector(_Angle.DirectVector);
+		
+																		
 	}
 
 
@@ -542,10 +580,9 @@ public:
 				Arr2D[x][y] = Swap;
 			}
 		}
-
 	}
 
-	void View(const FVector& _Pos, const FVector& _Dir, const FVector& _Up)
+		void View(const FVector& _Pos, const FVector& _Dir, const FVector& _Up)
 	{
 		Identity();
 		DirectMatrix = DirectX::XMMatrixLookToLH(_Pos.DirectVector, _Dir.DirectVector, _Up.DirectVector);
@@ -571,14 +608,15 @@ public:
 		DirectMatrix = DirectX::XMMatrixPerspectiveFovLH(_FovAngle, _Width / _Height, _Near, _Far);
 	}
 
-	void ViewPort(float _Width, float _Height, float _Left, float _Top, float _ZMin, float _ZMax)
+						
+		
+		void ViewPort(float _Width, float _Height, float _Left, float _Top, float _ZMin, float _ZMax)
 	{
 		Identity();
 		Arr2D[0][0] = _Width * 0.5f;
+				Arr2D[1][1] = -_Height * 0.5f;
 
-		Arr2D[1][1] = -_Height * 0.5f;
-
-		Arr2D[2][2] = _ZMax != 0.0f ? 1.0f : _ZMin / _ZMax;
+				Arr2D[2][2] = _ZMax != 0.0f ? 1.0f : _ZMin / _ZMax;
 
 		Arr2D[3][0] = Arr2D[0][0] + _Left;
 		Arr2D[3][1] = -Arr2D[1][1] + _Top;
@@ -614,6 +652,20 @@ public:
 		Arr2D[2][2] = cosf(_Angle);
 	}
 
+	FMatrix InverseReturn()
+	{
+		FMatrix Result;
+
+		Result.DirectMatrix = DirectX::XMMatrixInverse(nullptr, DirectMatrix);
+
+		return Result;
+	}
+
+	void Decompose(FVector& _Scale, FQuat& _RotQuaternion, FVector& _Pos)
+	{
+				DirectX::XMMatrixDecompose(&_Scale.DirectVector, &_RotQuaternion.DirectVector, &_Pos.DirectVector, DirectMatrix);
+	}
+
 	void RotationZDeg(float _Angle)
 	{
 		RotationZRad(_Angle * UEngineMath::D2R);
@@ -638,20 +690,33 @@ enum class ECollisionType
 {
 	Point,
 	Rect,
-	CirCle, 
-	Max
+	CirCle, 	Max
 
-};
+		};
 
 struct FTransform
 {
-	float4 Scale;
+					float4 Scale;
 	float4 Rotation;
+	FQuat Quat;
 	float4 Location;
+
+		float4 RelativeScale;
+	float4 RelativeRotation;
+	FQuat RelativeQuat;
+	float4 RelativeLocation;
+
+		float4 WorldScale;
+	float4 WorldRotation;
+	FQuat WorldQuat;
+	float4 WorldLocation;
 
 	float4x4 ScaleMat;
 	float4x4 RotationMat;
 	float4x4 LocationMat;
+	float4x4 RevolveMat;
+	float4x4 ParentMat;
+	float4x4 LocalWorld;
 	float4x4 World;
 	float4x4 View;
 	float4x4 Projection;
@@ -663,8 +728,12 @@ struct FTransform
 
 	}
 
+
 public:
-	ENGINEAPI void TransformUpdate();
+	ENGINEAPI void TransformUpdate(bool _IsAbsolut = false);
+
+	
+	ENGINEAPI void Decompose();
 
 private:
 	friend class CollisionFunctionInit;
@@ -674,7 +743,7 @@ private:
 public:
 	static bool Collision(ECollisionType _LeftType, const FTransform& _Left, ECollisionType _RightType, const FTransform& _Right);
 
-	static bool PointToCirCle(const FTransform& _Left, const FTransform& _Right);
+		static bool PointToCirCle(const FTransform& _Left, const FTransform& _Right);
 	static bool PointToRect(const FTransform& _Left, const FTransform& _Right);
 
 	static bool RectToRect(const FTransform& _Left, const FTransform& _Right);

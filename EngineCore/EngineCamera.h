@@ -4,15 +4,16 @@
 #include "Renderer.h"
 #include "SceneComponent.h"
 
+
 class UEngineCamera : public USceneComponent
 {
 	friend class ULevel;
 
 public:
-	UEngineCamera();
+		UEngineCamera();
 	~UEngineCamera();
 
-	UEngineCamera(const UEngineCamera& _Other) = delete;
+		UEngineCamera(const UEngineCamera& _Other) = delete;
 	UEngineCamera(UEngineCamera&& _Other) noexcept = delete;
 	UEngineCamera& operator=(const UEngineCamera& _Other) = delete;
 	UEngineCamera& operator=(UEngineCamera&& _Other) noexcept = delete;
@@ -44,7 +45,7 @@ private:
 
 	FVector ProjectionScale = { 0.0f, 0.0f };
 
-	std::map<int, std::list<std::shared_ptr<class URenderer>>> Renderers;
+		std::map<int, std::list<std::shared_ptr<class URenderer>>> Renderers;
 
 	void ChangeRenderGroup(int _PrevGroupOrder, std::shared_ptr<URenderer> _Renderer);
 };

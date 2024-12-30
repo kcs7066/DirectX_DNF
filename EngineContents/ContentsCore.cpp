@@ -2,7 +2,9 @@
 #include "ContentsCore.h"
 #include <EngineCore/Level.h>
 #include <EngineCore/EngineTexture.h>
+#include <EngineCore/EngineSprite.h>
 #include "PlayGameMode.h"
+#include "CampGameMode.h"
 
 CreateContentsCoreDefine(UContentsCore);
 
@@ -18,8 +20,8 @@ UContentsCore::~UContentsCore()
 void UContentsCore::EngineStart(UEngineInitData& _Data)
 {
 
-	_Data.WindowPos = { 100, 100 };
-	_Data.WindowSize = { 1280, 720 };
+	_Data.WindowPos = { 0, 0 };
+	_Data.WindowSize = { 1600, 900 };
 
 	{
 		UEngineDirectory Dir;
@@ -37,8 +39,34 @@ void UContentsCore::EngineStart(UEngineInitData& _Data)
 		}
 	}
 
+	{
+		UEngineDirectory Dir;
+		if (false == Dir.MoveParentToDirectory("DNFResource"))
+		{
+			MSGASSERT("리소스 폴더를 찾지 못했습니다.");
+			return;
+		}
+		Dir.Append("Image/Test");
+
+		UEngineSprite::CreateSpriteToFolder(Dir.GetPathToString());
+	}
+
+	{
+		UEngineDirectory Dir;
+		if (false == Dir.MoveParentToDirectory("DNFResource"))
+		{
+			MSGASSERT("리소스 폴더를 찾지 못했습니다.");
+			return;
+		}
+		Dir.Append("Image/Camp");
+
+		UEngineSprite::CreateSpriteToFolder(Dir.GetPathToString());
+	}
+	//UEngineSprite::CreateSpriteToMeta("Test.png", ".sdata");
+
+	UEngineCore::CreateLevel<ACampGameMode, APawn>("Camplevel");
 	UEngineCore::CreateLevel<APlayGameMode, APawn>("Playlevel");
-	UEngineCore::OpenLevel("Playlevel");
+	UEngineCore::OpenLevel("Camplevel");
 
 
 }

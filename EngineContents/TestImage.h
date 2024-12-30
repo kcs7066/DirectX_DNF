@@ -26,5 +26,6 @@ protected:
 
 private:
 	std::shared_ptr<class USpriteRenderer> TestRenderer;
+	std::shared_ptr<class USpriteRenderer> Child;
 };
 

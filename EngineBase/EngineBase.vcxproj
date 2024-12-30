@@ -173,6 +173,10 @@
   <ItemGroup>
     <ClInclude Include="EngineDebug.h" />
     <ClInclude Include="EngineDefine.h" />
+    <ClInclude Include="EngineDelegate.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="EngineDirectory.h" />
     <ClInclude Include="EngineFile.h">
       <SubType>
@@ -194,6 +198,10 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="EngineTimer.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="Object.h">
       <SubType>
       </SubType>
@@ -205,6 +213,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EngineDebug.cpp" />
+    <ClCompile Include="EngineDelegate.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="EngineDirectory.cpp" />
     <ClCompile Include="EngineFile.cpp">
       <SubType>
@@ -223,6 +235,10 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="EngineString.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="EngineTimer.cpp">
       <SubType>
       </SubType>
     </ClCompile>

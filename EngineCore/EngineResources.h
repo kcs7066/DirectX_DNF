@@ -3,18 +3,18 @@
 #include <EngineBase/EnginePath.h>
 #include <EngineBase/EngineString.h>
 
+
 class UEngineResources : public UObject
 {
 public:
-
-	UEngineResources() {
+		UEngineResources() {
 
 	}
 	~UEngineResources() {
 
 	}
 
-	UEngineResources(const UEngineResources& _Other) = delete;
+		UEngineResources(const UEngineResources& _Other) = delete;
 	UEngineResources(UEngineResources&& _Other) noexcept = delete;
 	UEngineResources& operator=(const UEngineResources& _Other) = delete;
 	UEngineResources& operator=(UEngineResources&& _Other) noexcept = delete;
@@ -50,14 +50,19 @@ public:
 		PushRes(_Res, Info.name(), _Name, _Path);
 	}
 
-	ENGINEAPI static void PushRes(std::shared_ptr<UEngineResources> _Res, const std::string_view _Info, std::string_view _Name, std::string_view _Path);
+		ENGINEAPI static void PushRes(std::shared_ptr<UEngineResources> _Res, const std::string_view _Info, std::string_view _Name, std::string_view _Path);
+
+
+	ENGINEAPI UEnginePath GetPath()
+	{
+		return Path;
+	}
 
 protected:
 	UEnginePath Path;
 
 private:
-
-	ENGINEAPI static inline std::map<std::string, std::map<std::string, std::shared_ptr<UEngineResources>>> ResMap;
+				ENGINEAPI static inline std::map<std::string, std::map<std::string, std::shared_ptr<UEngineResources>>> ResMap;
 };
 
 

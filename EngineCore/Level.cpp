@@ -5,6 +5,8 @@
 #include "EngineCore.h"
 #include "EngineCamera.h"
 #include "CameraActor.h"
+#include "EngineGUI.h"
+
 
 
 
@@ -31,7 +33,13 @@ ULevel::ULevel()
 
 ULevel::~ULevel()
 {
+	BeginPlayList.clear();
+
+	AllActorList.clear();
+
+	Cameras.clear();
 }
+
 void ULevel::LevelChangeStart()
 {
 
@@ -63,7 +71,7 @@ void ULevel::Tick(float _DeltaTime)
 		AllActorList.push_back(CurActor);
 	}
 
-	for (std::shared_ptr<AActor> CurActor : AllActorList)
+		for (std::shared_ptr<AActor> CurActor : AllActorList)
 	{
 		CurActor->Tick(_DeltaTime);
 	}
@@ -71,7 +79,7 @@ void ULevel::Tick(float _DeltaTime)
 
 void ULevel::Render(float _DeltaTime)
 {
-	UEngineCore::Device.RenderStart();
+	UEngineCore::GetDevice().RenderStart();
 
 	for (std::pair<const int, std::shared_ptr<ACameraActor>>& Camera : Cameras)
 	{
@@ -79,8 +87,16 @@ void ULevel::Render(float _DeltaTime)
 		Camera.second->CameraComponent->Render(_DeltaTime);
 	}
 
+	if (true == UEngineWindow::IsApplicationOn())
+	{
+		UEngineGUI::GUIRender();
 
-	UEngineCore::Device.RenderEnd();
+		
+	}
+
+
+
+	UEngineCore::GetDevice().RenderEnd();
 }
 
 

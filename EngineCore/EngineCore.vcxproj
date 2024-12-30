@@ -184,6 +184,14 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="DefaultSceneComponent.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="EngineBlend.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="EngineCamera.h">
       <SubType>
       </SubType>
@@ -196,7 +204,19 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="EngineGUI.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="EngineGUIWindow.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="EngineResources.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="EngineSprite.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -204,12 +224,38 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="EngineVertex.h" />
     <ClInclude Include="GameMode.h">
       <SubType>
       </SubType>
     </ClInclude>
     <ClInclude Include="IContentsCore.h" />
+    <ClInclude Include="imconfig.h" />
+    <ClInclude Include="imgui.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="imgui_impl_dx11.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="imgui_impl_win32.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="imgui_internal.h" />
+    <ClInclude Include="imstb_rectpack.h" />
+    <ClInclude Include="imstb_textedit.h" />
+    <ClInclude Include="imstb_truetype.h" />
+    <ClInclude Include="IndexBuffer.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="Level.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="Mesh.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -222,11 +268,19 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="RenderUnit.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="SceneComponent.h">
       <SubType>
       </SubType>
     </ClInclude>
     <ClInclude Include="SpriteRenderer.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="VertexBuffer.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -244,6 +298,14 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="DefaultSceneComponent.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="EngineBlend.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="EngineCamera.cpp">
       <SubType>
       </SubType>
@@ -256,7 +318,20 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="EngineGraphicDevice_Resources.cpp" />
+    <ClCompile Include="EngineGUI.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="EngineGUIWindow.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="EngineResources.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="EngineSprite.cpp">
       <SubType>
       </SubType>
     </ClCompile>
@@ -268,7 +343,33 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="imgui.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="imgui_draw.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="imgui_impl_dx11.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="imgui_impl_win32.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="imgui_tables.cpp" />
+    <ClCompile Include="imgui_widgets.cpp" />
+    <ClCompile Include="IndexBuffer.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="Level.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="Mesh.cpp">
       <SubType>
       </SubType>
     </ClCompile>
@@ -286,11 +387,19 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="RenderUnit.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="SceneComponent.cpp">
       <SubType>
       </SubType>
     </ClCompile>
     <ClCompile Include="SpriteRenderer.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="VertexBuffer.cpp">
       <SubType>
       </SubType>
     </ClCompile>

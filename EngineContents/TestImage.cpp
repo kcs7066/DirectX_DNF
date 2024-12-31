@@ -16,7 +16,7 @@ ATestImage::ATestImage()
 	{
 		USpriteRenderer::FrameAnimation* Animation = TestRenderer->FindAnimation("Idle");
 		Animation->IsAutoScale = true;
-		Animation->AutoScaleRatio = 2.0f;
+		Animation->AutoScaleRatio = 1.0f;
 	}
 
 	TestRenderer->CreateAnimation("Move", "Test", 8, 17, 0.2f);
@@ -24,14 +24,12 @@ ATestImage::ATestImage()
 	{
 		USpriteRenderer::FrameAnimation* Animation = TestRenderer->FindAnimation("Move");
 		Animation->IsAutoScale = true;
-		Animation->AutoScaleRatio = 2.0f;
+		Animation->AutoScaleRatio = 1.0f;
 	}
 
 	TestRenderer->ChangeAnimation("Idle");
-
-	TestRenderer->SetRelativeScale3D({ 50, 50, 1.0f });
+	TestRenderer->SetRelativeScale3D({ 50, 50, -1.0f });
 	TestRenderer->SetupAttachment(RootComponent);
-
 }
 
 ATestImage::~ATestImage()
@@ -41,6 +39,7 @@ ATestImage::~ATestImage()
 void ATestImage::BeginPlay()
 {
 	AActor::BeginPlay();
+	TestRenderer->SetOrder(100);
 }
 
 void ATestImage::Tick(float _DeltaTime)

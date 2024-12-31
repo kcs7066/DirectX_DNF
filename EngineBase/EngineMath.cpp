@@ -247,28 +247,28 @@ ENGINEAPI void FTransform::Decompose()
 
 void FTransform::TransformUpdate(bool _IsAbsolut /*= false*/)
 {
-	
-		
 
-		ScaleMat.Scale(Scale);
+
+
+	ScaleMat.Scale(Scale);
 	RotationMat.RotationDeg(Rotation);
 	LocationMat.Position(Location);
 
 	FMatrix CheckWorld = ScaleMat * RotationMat * LocationMat;
 
-		if (true == _IsAbsolut)
+	if (true == _IsAbsolut)
 	{
 		World = CheckWorld;
 		LocalWorld = CheckWorld * ParentMat.InverseReturn();
-			}
+	}
 	else
 	{
-				LocalWorld = ScaleMat * RotationMat * LocationMat;
+		LocalWorld = ScaleMat * RotationMat * LocationMat;
 		World = ScaleMat * RotationMat * LocationMat * RevolveMat * ParentMat;
-		
-			}
 
-		Decompose();
+	}
+
+	Decompose();
 
 
 

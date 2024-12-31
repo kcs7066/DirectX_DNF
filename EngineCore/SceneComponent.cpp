@@ -44,7 +44,7 @@ void USceneComponent::BeginPlay()
 void USceneComponent::TransformUpdate()
 {
 	ParentMatrixCheck();
-		Transform.TransformUpdate(IsAbsolute);
+	Transform.TransformUpdate(IsAbsolute);
 
 	for (std::shared_ptr<USceneComponent> Child : Childs)
 	{

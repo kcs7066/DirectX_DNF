@@ -296,8 +296,8 @@ void URenderer::RasterizerInit()
 	Desc.FillMode = D3D11_FILL_MODE::D3D11_FILL_SOLID;
 	UEngineCore::GetDevice().GetDevice()->CreateRasterizerState(&Desc, &RasterizerState);
 
-	ViewPortInfo.Width = 1280.0f;
-	ViewPortInfo.Height = 720.0f;
+	ViewPortInfo.Width = UEngineCore::GetScreenScale().X;
+	ViewPortInfo.Height = UEngineCore::GetScreenScale().Y;
 	ViewPortInfo.TopLeftX = 0.0f;
 	ViewPortInfo.TopLeftY = 0.0f;
 	ViewPortInfo.MinDepth = 0.0f;

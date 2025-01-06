@@ -21,27 +21,27 @@ enum class KeyEvent
 class UEngineInput
 {
 public:
-		~UEngineInput();
+	~UEngineInput();
 
-		UEngineInput(const UEngineInput& _Other) = delete;
+	UEngineInput(const UEngineInput& _Other) = delete;
 	UEngineInput(UEngineInput&& _Other) noexcept = delete;
 	UEngineInput& operator=(const UEngineInput& _Other) = delete;
 	UEngineInput& operator=(UEngineInput&& _Other) noexcept = delete;
 
 
-	private:
+private:
 	class UEngineKey
 	{
 	public:
 		int Key = -1;
 
-				bool IsDown = false;
+		bool IsDown = false;
 
-				bool IsPress = false;
+		bool IsPress = false;
 
-				bool IsUp = false;
+		bool IsUp = false;
 
-				bool IsFree = true;
+		bool IsFree = true;
 
 		float PressTime = 0.0f;
 		float FreeTime = 0.0f;
@@ -52,7 +52,7 @@ public:
 		std::vector<std::function<void()>> FreeEvents;
 
 
-						
+
 		UEngineKey()
 		{
 		}
@@ -74,7 +74,7 @@ public:
 public:
 	ENGINEAPI static void KeyCheck(float _DeltaTime);
 
-	
+
 	bool IsDoubleClick(int _KeyIndex, float _Time)
 	{
 		if (false == Keys.contains(_KeyIndex))
@@ -94,7 +94,7 @@ public:
 			return false;
 		}
 
-												
+
 		return GetInst().Keys[_KeyIndex].IsDown;
 	}
 
@@ -148,10 +148,10 @@ public:
 protected:
 
 private:
-				
-		
-			
-		std::map<int, UEngineKey> Keys;
+
+
+
+	std::map<int, UEngineKey> Keys;
 
 	UEngineInput();
 

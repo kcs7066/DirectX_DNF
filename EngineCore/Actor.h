@@ -40,11 +40,13 @@ public:
 		ComponentType* NewPtr = reinterpret_cast<ComponentType*>(ComMemory);
 						std::shared_ptr<ComponentType> NewCom(new(ComMemory) ComponentType());
 
-						if (std::is_base_of_v<UActorComponent, ComponentType>)
+						if (std::is_base_of_v<UActorComponent, ComponentType>
+			&& !std::is_base_of_v<USceneComponent, ComponentType>)
 		{
 			ActorComponentList.push_back(NewCom);
 		}
-		else
+		else if (!std::is_base_of_v<UActorComponent, ComponentType>
+			&& !std::is_base_of_v<USceneComponent, ComponentType>)
 		{
 			MSGASSERT("¸»µµ ¾ÈµÊ");
 		}
@@ -106,6 +108,23 @@ public:
 
 		RootComponent->AddRotation(_Value);
 	}
+
+	void AttachToActor(AActor* _Parent);
+
+		FTransform GetActorTransform()
+	{
+		if (nullptr == RootComponent)
+		{
+			return FTransform();
+		}
+
+		return RootComponent->GetTransformRef();
+	}
+
+
+	ENGINEAPI FVector GetActorUpVector();
+	ENGINEAPI FVector GetActorRightVector();
+	ENGINEAPI FVector GetActorForwardVector();
 
 protected:
 	std::shared_ptr<class USceneComponent> RootComponent = nullptr;

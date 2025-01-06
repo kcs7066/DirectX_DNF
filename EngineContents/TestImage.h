@@ -1,15 +1,16 @@
 #pragma once
 #include <EngineCore/Actor.h>
+#include <EngineCore/SpriteRenderer.h>
+#include <EnginePlatform/EngineWinImage.h>
 
-// Ό³Έν :
 class ATestImage : public AActor
 {
 public:
-	// constrcuter destructer
+
 	ATestImage();
 	~ATestImage();
 
-	// delete Function
+
 	ATestImage(const ATestImage& _Other) = delete;
 	ATestImage(ATestImage&& _Other) noexcept = delete;
 	ATestImage& operator=(const ATestImage& _Other) = delete;

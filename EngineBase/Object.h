@@ -30,7 +30,7 @@ public:
 		return Name.c_str();
 	}
 
-	virtual void SetName(std::string_view _Name)
+	ENGINEAPI virtual void SetName(std::string_view _Name)
 	{
 		Name = _Name.data();
 	}

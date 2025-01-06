@@ -1,6 +1,8 @@
 #pragma once
 #include <wrl.h>
 #include <d3d11_4.h> #include <d3dcompiler.h> #include <EnginePlatform/EngineWindow.h>
+#include <memory>
+
 
 #pragma comment(lib, "d3d11")
 #pragma comment(lib, "d3dcompiler") 
@@ -14,10 +16,10 @@
 class UEngineGraphicDevice
 {
 public:
-		ENGINEAPI UEngineGraphicDevice();
+	ENGINEAPI UEngineGraphicDevice();
 	ENGINEAPI ~UEngineGraphicDevice();
 
-		UEngineGraphicDevice(const UEngineGraphicDevice& _Other) = delete;
+	UEngineGraphicDevice(const UEngineGraphicDevice& _Other) = delete;
 	UEngineGraphicDevice(UEngineGraphicDevice&& _Other) noexcept = delete;
 	UEngineGraphicDevice& operator=(const UEngineGraphicDevice& _Other) = delete;
 	UEngineGraphicDevice& operator=(UEngineGraphicDevice&& _Other) noexcept = delete;
@@ -26,7 +28,7 @@ public:
 
 	void CreateBackBuffer(const UEngineWindow& _Window);
 
-			IDXGIAdapter* GetHighPerFormanceAdapter();
+	IDXGIAdapter* GetHighPerFormanceAdapter();
 
 	ENGINEAPI void Release();
 
@@ -53,23 +55,31 @@ protected:
 
 private:
 
-		
-	
-	
-			Microsoft::WRL::ComPtr<ID3D11Device> Device = nullptr;
 
-		Microsoft::WRL::ComPtr<ID3D11DeviceContext> Context = nullptr;
 
-			Microsoft::WRL::ComPtr<IDXGISwapChain> SwapChain = nullptr;
+
+	Microsoft::WRL::ComPtr<ID3D11Device> Device = nullptr;
+
+	Microsoft::WRL::ComPtr<ID3D11DeviceContext> Context = nullptr;
+
+	Microsoft::WRL::ComPtr<IDXGISwapChain> SwapChain = nullptr;
 
 	Microsoft::WRL::ComPtr<IDXGIAdapter> MainAdapter = nullptr;
 
 	Microsoft::WRL::ComPtr<ID3D11Texture2D> DXBackBufferTexture = nullptr;
 	Microsoft::WRL::ComPtr<ID3D11RenderTargetView> RTV = nullptr;
 
-		ENGINEAPI void DefaultResourcesInit();
+	std::shared_ptr<class UEngineTexture> DepthTex;
+
+
+	ENGINEAPI void DefaultResourcesInit();
 
 	ENGINEAPI void MeshInit();
 	ENGINEAPI void BlendInit();
+	ENGINEAPI void ShaderInit();
+	ENGINEAPI void MaterialInit();
+	ENGINEAPI void RasterizerStateInit();
+	ENGINEAPI void TextureInit();
+	ENGINEAPI void DepthStencilInit();
 };
 

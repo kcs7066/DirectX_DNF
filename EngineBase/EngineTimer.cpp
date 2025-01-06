@@ -3,11 +3,11 @@
 
 UEngineTimer::UEngineTimer()
 {
-		QueryPerformanceFrequency(&Count);
+	QueryPerformanceFrequency(&Count);
 
-		TimeCounter = static_cast<double>(Count.QuadPart);
+	TimeCounter = static_cast<double>(Count.QuadPart);
 
-		QueryPerformanceCounter(&PrevTime);
+	QueryPerformanceCounter(&PrevTime);
 	QueryPerformanceCounter(&CurTime);
 
 	int a = 0;
@@ -36,10 +36,10 @@ double UEngineTimer::DEnd()
 
 void UEngineTimer::TimeCheck()
 {
-	
+
 	QueryPerformanceCounter(&CurTime);
 
-		double Tick = static_cast<double>(CurTime.QuadPart - PrevTime.QuadPart);
+	double Tick = static_cast<double>(CurTime.QuadPart - PrevTime.QuadPart);
 	DeltaTime = Tick / TimeCounter * TimeScale;
 	fDeltaTime = static_cast<float>(DeltaTime);
 	PrevTime.QuadPart = CurTime.QuadPart;

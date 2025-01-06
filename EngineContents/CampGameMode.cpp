@@ -27,19 +27,19 @@ ACampGameMode::ACampGameMode()
 	BackGroundRenderer7 = CreateDefaultSubObject<USpriteRenderer>();
 	BackGroundRenderer7->SetSprite("Camp", 0);
 	BackGroundRenderer7->SetScale3D({ 560, 187 , 1.0f });
-	BackGroundRenderer7->SetWorldLocation({ -520,263,1 });
+	BackGroundRenderer7->SetWorldLocation({ -520,263,3 });
 	BackGroundRenderer7->SetOrder(-100);
 
 	BackGroundRenderer13 = CreateDefaultSubObject<USpriteRenderer>();
 	BackGroundRenderer13->SetSprite("Camp", 0);
 	BackGroundRenderer13->SetScale3D({ 560, 187 , 1.0f });
-	BackGroundRenderer13->SetWorldLocation({ 40,263,1 });
+	BackGroundRenderer13->SetWorldLocation({ 40,263,3 });
 	BackGroundRenderer13->SetOrder(-100);
 
 	BackGroundRenderer5 = CreateDefaultSubObject<USpriteRenderer>();
 	BackGroundRenderer5->SetSprite("Camp", 1);
 	BackGroundRenderer5->SetScale3D({ 1120, 161 , 1.0f });
-	BackGroundRenderer5->SetWorldLocation({ -240,289,1 });
+	BackGroundRenderer5->SetWorldLocation({ -240,289,2 });
 	BackGroundRenderer5->SetOrder(-100);
 
 	//BackGroundRenderer6 = CreateDefaultSubObject<USpriteRenderer>();
@@ -55,7 +55,7 @@ ACampGameMode::ACampGameMode()
 
 	BackGroundRenderer1 = CreateDefaultSubObject<USpriteRenderer>();
 	BackGroundRenderer1->SetSprite("Camp", 4);
-	BackGroundRenderer1->SetScale3D({ 224, 600, 1.0f });
+	BackGroundRenderer1->SetScale3D({ 224, 900, 1.0f });
 	BackGroundRenderer1->SetWorldLocation({ -464,-117,1 });
 	BackGroundRenderer1->SetOrder(-100);
 

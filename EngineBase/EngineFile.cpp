@@ -35,16 +35,16 @@ UEngineFile::UEngineFile(std::filesystem::path _Path)
 
 UEngineFile::~UEngineFile()
 {
-		Close();
+	Close();
 }
 
 void UEngineFile::FileOpen(const char* _Mode)
 {
 	fopen_s(&File, GetPathToString().c_str(), _Mode);
 
-			if (nullptr == File)
+	if (nullptr == File)
 	{
-						
+
 		MSGASSERT(GetPathToString() + +"파일 오픈에 실패했습니다");
 	}
 }
@@ -68,7 +68,7 @@ int UEngineFile::GetFileSize()
 
 void UEngineFile::Read(class UEngineSerializer& _Ser)
 {
-	
+
 	int FileSize = GetFileSize();
 
 	_Ser.DataResize(FileSize);
@@ -88,7 +88,7 @@ void UEngineFile::Write(const void* _Ptr, size_t _Size)
 		MSGASSERT("존재하지 않는 메모리를 사용하려고 했습니다.");
 	}
 
-		if (nullptr == File)
+	if (nullptr == File)
 	{
 		MSGASSERT("열지 않은 파일에 내용을 쓰려고 했습니다");
 		return;
@@ -122,7 +122,7 @@ void UEngineFile::Read(void* _Ptr, size_t _Size)
 
 void UEngineFile::Close()
 {
-		if (nullptr != File)
+	if (nullptr != File)
 	{
 		fclose(File);
 		File = nullptr;

@@ -23,6 +23,8 @@ void UContentsCore::EngineStart(UEngineInitData& _Data)
 	_Data.WindowPos = { 0, 0 };
 	_Data.WindowSize = { 1600, 900 };
 
+
+
 	{
 		UEngineDirectory Dir;
 		if (false == Dir.MoveParentToDirectory("DNFResource"))

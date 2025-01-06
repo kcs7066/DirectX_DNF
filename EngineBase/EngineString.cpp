@@ -26,11 +26,11 @@ std::string UEngineString::ToUpper(std::string_view _string)
 
 std::wstring UEngineString::AnsiToUnicode(std::string_view _Name)
 {
-					
-		
-			
-		
-					int Size = MultiByteToWideChar(CP_ACP, 0, _Name.data(), static_cast<int>(_Name.size()), nullptr, 0);
+
+
+
+
+	int Size = MultiByteToWideChar(CP_ACP, 0, _Name.data(), static_cast<int>(_Name.size()), nullptr, 0);
 
 	if (0 == Size)
 	{

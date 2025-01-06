@@ -29,6 +29,7 @@ std::shared_ptr<class ACameraActor> ULevel::SpawnCamera(int _Order)
 ULevel::ULevel()
 {
 	SpawnCamera(0);
+
 }
 
 ULevel::~ULevel()
@@ -84,7 +85,7 @@ void ULevel::Render(float _DeltaTime)
 	for (std::pair<const int, std::shared_ptr<ACameraActor>>& Camera : Cameras)
 	{
 		Camera.second->Tick(_DeltaTime);
-		Camera.second->CameraComponent->Render(_DeltaTime);
+		Camera.second->GetCameraComponent()->Render(_DeltaTime);
 	}
 
 	if (true == UEngineWindow::IsApplicationOn())
@@ -109,7 +110,7 @@ void ULevel::ChangeRenderGroup(int _CameraOrder, int _PrevGroupOrder, std::share
 	}
 	std::shared_ptr<ACameraActor> Camera = Cameras[_CameraOrder];
 
-	Camera->CameraComponent->ChangeRenderGroup(_PrevGroupOrder, _Renderer);
+	Camera->GetCameraComponent()->ChangeRenderGroup(_PrevGroupOrder, _Renderer);
 }
 
 

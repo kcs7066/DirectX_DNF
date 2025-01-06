@@ -3,6 +3,8 @@
 #include <EngineCore/SpriteRenderer.h>
 #include <EnginePlatform/EngineInput.h>
 #include <EngineCore/DefaultSceneComponent.h>
+#include <EngineCore/CameraActor.h>
+#include <EngineCore/TimeEventComponent.h>
 #include "MyRenderer.h"
 
 ATestImage::ATestImage()
@@ -15,16 +17,12 @@ ATestImage::ATestImage()
 	TestRenderer->CreateAnimation("Idle", "Test", 0, 7, 0.2f);
 	{
 		USpriteRenderer::FrameAnimation* Animation = TestRenderer->FindAnimation("Idle");
-		Animation->IsAutoScale = true;
-		Animation->AutoScaleRatio = 1.0f;
 	}
 
 	TestRenderer->CreateAnimation("Move", "Test", 8, 17, 0.2f);
 
 	{
 		USpriteRenderer::FrameAnimation* Animation = TestRenderer->FindAnimation("Move");
-		Animation->IsAutoScale = true;
-		Animation->AutoScaleRatio = 1.0f;
 	}
 
 	TestRenderer->ChangeAnimation("Idle");

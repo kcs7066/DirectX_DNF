@@ -11,7 +11,7 @@
 class UEngineCore
 {
 public:
-		ENGINEAPI UEngineCore();
+	ENGINEAPI UEngineCore();
 	ENGINEAPI virtual ~UEngineCore() = 0;
 
 	ENGINEAPI static void EngineStart(HINSTANCE _Instance, std::string_view _DllName);
@@ -19,27 +19,30 @@ public:
 	template<typename GameModeType, typename MainPawnType>
 	static class std::shared_ptr<class ULevel> CreateLevel(std::string_view _Name)
 	{
-						std::shared_ptr<ULevel> NewLevel = NewLevelCreate(_Name);
-				
+		std::shared_ptr<ULevel> NewLevel = NewLevelCreate(_Name);
+
 		NewLevel->SpawnActor<GameModeType>();
 		NewLevel->SpawnActor<MainPawnType>();
 
-				return NewLevel;
+		return NewLevel;
 	}
 
 	ENGINEAPI static void OpenLevel(std::string_view _Name);
 
-	ENGINEAPI static UEngineWindow MainWindow;
 
 	ENGINEAPI static FVector GetScreenScale();
 
 	ENGINEAPI static UEngineGraphicDevice& GetDevice();
 
-	ENGINEAPI static UEngineGraphicDevice Device;
+	ENGINEAPI static UEngineWindow& GetMainWindow();
+
 protected:
 
 private:
-			static HMODULE ContentsDLL;
+	ENGINEAPI static UEngineWindow MainWindow;
+
+	ENGINEAPI static UEngineGraphicDevice Device;
+	static HMODULE ContentsDLL;
 	static std::shared_ptr<IContentsCore> Core;
 	static UEngineInitData Data;
 

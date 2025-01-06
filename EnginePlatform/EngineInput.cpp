@@ -4,13 +4,13 @@
 
 void UEngineInput::UEngineKey::KeyCheck(float _DeltaTime)
 {
-		if (0 != GetAsyncKeyState(Key))
+	if (0 != GetAsyncKeyState(Key))
 	{
-						if (true == IsPress)
+		if (true == IsPress)
 		{
 			PressTime += _DeltaTime;
 		}
-				if (true == IsFree)
+		if (true == IsFree)
 		{
 			IsDown = true;
 			IsPress = true;
@@ -19,22 +19,22 @@ void UEngineInput::UEngineKey::KeyCheck(float _DeltaTime)
 		}
 		else if (true == IsDown)
 		{
-						FreeTime = 0.0f;
+			FreeTime = 0.0f;
 			IsDown = false;
 			IsPress = true;
 			IsFree = false;
 			IsUp = false;
 		}
 
-			}
+	}
 	else
 	{
-				if (true == IsFree)
+		if (true == IsFree)
 		{
 			FreeTime += _DeltaTime;
 		}
 
-				if (true == IsPress)
+		if (true == IsPress)
 		{
 			IsDown = false;
 			IsPress = false;
@@ -90,13 +90,13 @@ void UEngineInput::UEngineKey::EventCheck()
 
 UEngineInput& UEngineInput::GetInst()
 {
-		static UEngineInput Inst = UEngineInput();
+	static UEngineInput Inst = UEngineInput();
 	return Inst;
 }
 
 UEngineInput::UEngineInput()
 {
-			Keys.insert({ 'Q', UEngineKey('Q') });
+	Keys.insert({ 'Q', UEngineKey('Q') });
 	Keys.insert({ 'W', UEngineKey('W') });
 	Keys.insert({ 'E', UEngineKey('E') });
 	Keys.insert({ 'R', UEngineKey('R') });
@@ -210,7 +210,7 @@ void UEngineInput::EventCheck(float _DeltaTime)
 
 	for (; StartIter != EndIter; ++StartIter)
 	{
-				UEngineKey& CurKey = StartIter->second;
+		UEngineKey& CurKey = StartIter->second;
 		CurKey.EventCheck();
 	}
 }
@@ -222,7 +222,7 @@ void UEngineInput::KeyCheck(float _DeltaTime)
 
 	for (; StartIter != EndIter; ++StartIter)
 	{
-				UEngineKey& CurKey = StartIter->second;
+		UEngineKey& CurKey = StartIter->second;
 		CurKey.KeyCheck(_DeltaTime);
 	}
 

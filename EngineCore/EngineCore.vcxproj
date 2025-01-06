@@ -171,7 +171,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\..\TeacherProject\GM2\DX\GM2DX\EngineCore\ThirdParty\DirectxTex\Inc\DirectXTex.h" />
     <ClInclude Include="Actor.h">
       <SubType>
       </SubType>
@@ -196,10 +195,23 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="EngineConstantBuffer.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="EngineCore.h">
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="EngineDepthStencilState.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="EngineDeviceBuffer.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="EngineEnums.h" />
     <ClInclude Include="EngineGraphicDevice.h">
       <SubType>
       </SubType>
@@ -212,7 +224,39 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="EngineIndexBuffer.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="EngineInputLayOutInfo.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="EngineMaterial.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="EnginePixelShader.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="EngineRasterizerState.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="EngineResources.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="EngineSampler.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="EngineShader.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="EngineShaderResources.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -224,7 +268,18 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="EngineVertex.h" />
+    <ClInclude Include="EngineVertex.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="EngineVertexBuffer.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="EngineVertexShader.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="GameMode.h">
       <SubType>
       </SubType>
@@ -247,10 +302,6 @@
     <ClInclude Include="imstb_rectpack.h" />
     <ClInclude Include="imstb_textedit.h" />
     <ClInclude Include="imstb_truetype.h" />
-    <ClInclude Include="IndexBuffer.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
     <ClInclude Include="Level.h">
       <SubType>
       </SubType>
@@ -280,7 +331,8 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="VertexBuffer.h">
+    <ClInclude Include="ThirdParty\DirectxTex\Inc\DirectXTex.h" />
+    <ClInclude Include="TimeEventComponent.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -310,7 +362,19 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="EngineConstantBuffer.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="EngineCore.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="EngineDepthStencilState.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="EngineDeviceBuffer.cpp">
       <SubType>
       </SubType>
     </ClCompile>
@@ -327,7 +391,39 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="EngineIndexBuffer.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="EngineInputLayOutInfo.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="EngineMaterial.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="EnginePixelShader.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="EngineRasterizerState.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="EngineResources.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="EngineSampler.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="EngineShader.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="EngineShaderResources.cpp">
       <SubType>
       </SubType>
     </ClCompile>
@@ -336,6 +432,18 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="EngineTexture.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="EngineVertex.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="EngineVertexBuffer.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="EngineVertexShader.cpp">
       <SubType>
       </SubType>
     </ClCompile>
@@ -361,10 +469,6 @@
     </ClCompile>
     <ClCompile Include="imgui_tables.cpp" />
     <ClCompile Include="imgui_widgets.cpp" />
-    <ClCompile Include="IndexBuffer.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
     <ClCompile Include="Level.cpp">
       <SubType>
       </SubType>
@@ -399,17 +503,17 @@
       <SubType>
       </SubType>
     </ClCompile>
-    <ClCompile Include="VertexBuffer.cpp">
+    <ClCompile Include="TimeEventComponent.cpp">
       <SubType>
       </SubType>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Library Include="..\..\..\..\TeacherProject\GM2\DX\GM2DX\EngineCore\ThirdParty\DirectxTex\Debug\DirectXTex_Debug.lib" />
-    <Library Include="..\..\..\..\TeacherProject\GM2\DX\GM2DX\EngineCore\ThirdParty\DirectxTex\Release\DirectXTex_Release.lib" />
+    <None Include="ThirdParty\DirectxTex\Inc\DirectXTex.inl" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\..\..\TeacherProject\GM2\DX\GM2DX\EngineCore\ThirdParty\DirectxTex\Inc\DirectXTex.inl" />
+    <Library Include="ThirdParty\DirectxTex\Debug\DirectXTex_Debug.lib" />
+    <Library Include="ThirdParty\DirectxTex\Release\DirectXTex_Release.lib" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,22 +1,17 @@
 #include "PreCompile.h"
 #include "EngineMath.h"
 
-const double UEngineMath::DPI = 3.14159265358979323846264338327950288419716939937510;
-const double UEngineMath::DPI2 = DPI * 2.0;
 
-const float UEngineMath::PI = 3.14159265358979323846264f;
-const float UEngineMath::PI2 = PI * 2.0f;
+template<>
+FQuat TVector<float>::DegAngleToQuaternion()
+{
+	FQuat Result;
+	Result.DirectVector = DirectX::XMQuaternionRotationRollPitchYawFromVector(DirectVector);
+	return Result;
+}
 
-const float UEngineMath::D2R = UEngineMath::PI / 180.0f;
-const float UEngineMath::R2D = 180.0f / UEngineMath::PI;
 
-const FVector FVector::ZERO = { 0.0f, 0.0f };
-const FVector FVector::LEFT = { -1.0f, 0.0f };
-const FVector FVector::RIGHT = { 1.0f, 0.0f };
-const FVector FVector::UP = { 0.0f, 1.0f };
-const FVector FVector::DOWN = { 0.0f, -1.0f };
-const FVector FVector::FORWARD = { 0.0f, 0.0f, 1.0f };
-const FVector FVector::BACK = { 0.0f, 0.0f , -1.0f };
+
 
 
 
@@ -43,7 +38,7 @@ class CollisionFunctionInit
 public:
 	CollisionFunctionInit()
 	{
-						FTransform::AllCollisionFunction[static_cast<int>(ECollisionType::Rect)][static_cast<int>(ECollisionType::Rect)] = FTransform::RectToRect;
+		FTransform::AllCollisionFunction[static_cast<int>(ECollisionType::Rect)][static_cast<int>(ECollisionType::Rect)] = FTransform::RectToRect;
 		FTransform::AllCollisionFunction[static_cast<int>(ECollisionType::CirCle)][static_cast<int>(ECollisionType::CirCle)] = FTransform::CirCleToCirCle;
 		FTransform::AllCollisionFunction[static_cast<int>(ECollisionType::Rect)][static_cast<int>(ECollisionType::CirCle)] = FTransform::RectToCirCle;
 		FTransform::AllCollisionFunction[static_cast<int>(ECollisionType::CirCle)][static_cast<int>(ECollisionType::Rect)] = FTransform::CirCleToRect;
@@ -84,11 +79,11 @@ FVector FQuat::QuaternionToEulerRad() const
 		result.X = asinf(sinp);
 	}
 
-		float sinyCosp = 2.0f * (W * Y + X * Z);
+	float sinyCosp = 2.0f * (W * Y + X * Z);
 	float cosyCosp = 1.0f - 2.0f * (X * X + Y * Y);
 	result.Y = atan2f(sinyCosp, cosyCosp);
 
-				
+
 	return result;
 }
 
@@ -115,7 +110,7 @@ bool FTransform::CirCleToCirCle(const FTransform& _Left, const FTransform& _Righ
 {
 	FVector Len = _Left.Location - _Right.Location;
 
-			if (Len.Length() < _Left.Scale.hX() + _Right.Scale.hX())
+	if (Len.Length() < _Left.Scale.hX() + _Right.Scale.hX())
 	{
 		return true;
 	}
@@ -145,7 +140,7 @@ bool FTransform::RectToRect(const FTransform& _Left, const FTransform& _Right)
 	{
 		return false;
 	}
-		return true;
+	return true;
 }
 
 bool FTransform::RectToCirCle(const FTransform& _Left, const FTransform& _Right)
@@ -156,10 +151,10 @@ bool FTransform::RectToCirCle(const FTransform& _Left, const FTransform& _Right)
 
 bool FTransform::CirCleToRect(const FTransform& _Left, const FTransform& _Right)
 {
-		FTransform WTransform = _Right;
+	FTransform WTransform = _Right;
 	WTransform.Scale.X += _Left.Scale.X;
 
-		FTransform HTransform = _Right;
+	FTransform HTransform = _Right;
 	HTransform.Scale.Y += _Left.Scale.X;
 
 	if (true == PointToRect(_Left, WTransform) || true == PointToRect(_Left, HTransform))
@@ -167,7 +162,7 @@ bool FTransform::CirCleToRect(const FTransform& _Left, const FTransform& _Right)
 		return true;
 	}
 
-				FVector ArrPoint[4];
+	FVector ArrPoint[4];
 
 	ArrPoint[0] = _Right.ZAxisCenterLeftTop();
 	ArrPoint[1] = _Right.ZAxisCenterLeftBottom();
@@ -207,18 +202,19 @@ FVector FVector::TransformNormal(const FVector& _Vector, const class FMatrix& _M
 	return Copy * _Matrix;
 }
 
+template<>
 FVector FVector::operator*(const class FMatrix& _Matrix) const
 {
 	FVector Result;
-	
-		Result.X = Arr2D[0][0] * _Matrix.Arr2D[0][0] + Arr2D[0][1] * _Matrix.Arr2D[1][0] + Arr2D[0][2] * _Matrix.Arr2D[2][0] + Arr2D[0][3] * _Matrix.Arr2D[3][0];
+
+	Result.X = Arr2D[0][0] * _Matrix.Arr2D[0][0] + Arr2D[0][1] * _Matrix.Arr2D[1][0] + Arr2D[0][2] * _Matrix.Arr2D[2][0] + Arr2D[0][3] * _Matrix.Arr2D[3][0];
 	Result.Y = Arr2D[0][0] * _Matrix.Arr2D[0][1] + Arr2D[0][1] * _Matrix.Arr2D[1][1] + Arr2D[0][2] * _Matrix.Arr2D[2][1] + Arr2D[0][3] * _Matrix.Arr2D[3][1];
 	Result.Z = Arr2D[0][0] * _Matrix.Arr2D[0][2] + Arr2D[0][1] * _Matrix.Arr2D[1][2] + Arr2D[0][2] * _Matrix.Arr2D[2][2] + Arr2D[0][3] * _Matrix.Arr2D[3][2];
 	Result.W = Arr2D[0][0] * _Matrix.Arr2D[0][3] + Arr2D[0][1] * _Matrix.Arr2D[1][3] + Arr2D[0][2] * _Matrix.Arr2D[2][3] + Arr2D[0][3] * _Matrix.Arr2D[3][3];
 
 
-				
-	
+
+
 
 	return Result;
 }
@@ -243,7 +239,7 @@ ENGINEAPI void FTransform::Decompose()
 
 	LocalWorld.Decompose(RelativeScale, RelativeQuat, RelativeLocation);
 
-				}
+}
 
 void FTransform::TransformUpdate(bool _IsAbsolut /*= false*/)
 {

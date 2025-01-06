@@ -5,6 +5,7 @@
 #include <EnginePlatform/EngineInput.h>
 #include "IContentsCore.h"
 #include "EngineResources.h"
+#include "EngineConstantBuffer.h"
 #include "EngineGUI.h"
 #include "Level.h"
 
@@ -12,6 +13,11 @@
 UEngineGraphicDevice& UEngineCore::GetDevice()
 {
 	return Device;
+}
+
+UEngineWindow& UEngineCore::GetMainWindow()
+{
+	return MainWindow;
 }
 
 UEngineGraphicDevice UEngineCore::Device;
@@ -54,7 +60,7 @@ void UEngineCore::LoadContents(std::string_view _DllName)
 	Dir.MoveParentToDirectory("Build");
 	Dir.Move("bin/x64");
 
-	#ifdef _DEBUG
+#ifdef _DEBUG
 	Dir.Move("Debug");
 #else
 	Dir.Move("Release");
@@ -63,7 +69,7 @@ void UEngineCore::LoadContents(std::string_view _DllName)
 	UEngineFile File = Dir.GetFile(_DllName);
 
 	std::string FullPath = File.GetPathToString();
-		ContentsDLL = LoadLibraryA(FullPath.c_str());
+	ContentsDLL = LoadLibraryA(FullPath.c_str());
 
 	if (nullptr == ContentsDLL)
 	{
@@ -96,35 +102,35 @@ void UEngineCore::EngineStart(HINSTANCE _Instance, std::string_view _DllName)
 
 	LoadContents(_DllName);
 
-		UEngineWindow::WindowMessageLoop(
+	UEngineWindow::WindowMessageLoop(
 		[]()
 		{
-												Device.CreateDeviceAndContext();
-						Core->EngineStart(Data);
-						MainWindow.SetWindowPosAndScale(Data.WindowPos, Data.WindowSize);
+			Device.CreateDeviceAndContext();
+			Core->EngineStart(Data);
+			MainWindow.SetWindowPosAndScale(Data.WindowPos, Data.WindowSize);
 			Device.CreateBackBuffer(MainWindow);
-						
+
 			UEngineGUI::Init();
 		},
 		[]()
 		{
 			EngineFrame();
-					},
+		},
 		[]()
 		{
-												EngineEnd();
+			EngineEnd();
 		});
 
 
-		
-	
+
+
 
 }
 
 std::shared_ptr<ULevel> UEngineCore::NewLevelCreate(std::string_view _Name)
 {
-	
-			std::shared_ptr<ULevel> Ptr = std::make_shared<ULevel>();
+
+	std::shared_ptr<ULevel> Ptr = std::make_shared<ULevel>();
 	Ptr->SetName(_Name);
 
 	LevelMap.insert({ _Name.data(), Ptr });
@@ -168,7 +174,7 @@ void UEngineCore::EngineFrame()
 
 	CurLevel->Tick(DeltaTime);
 	CurLevel->Render(DeltaTime);
-	
+
 }
 
 void UEngineCore::EngineEnd()
@@ -176,9 +182,10 @@ void UEngineCore::EngineEnd()
 
 	UEngineGUI::Release();
 
-		Device.Release();
+	Device.Release();
 
 	UEngineResources::Release();
+	UEngineConstantBuffer::Release();
 
 	CurLevel = nullptr;
 	NextLevel = nullptr;

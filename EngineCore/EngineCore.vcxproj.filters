@@ -1,7 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClInclude Include="EngineCore.h" />
     <ClInclude Include="PreCompile.h" />
     <ClInclude Include="IContentsCore.h">
       <Filter>Interface</Filter>
@@ -42,34 +41,10 @@
     <ClInclude Include="EngineResources.h">
       <Filter>Resources</Filter>
     </ClInclude>
-    <ClInclude Include="EngineTexture.h">
-      <Filter>Resources</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\TeacherProject\GM2\DX\GM2DX\EngineCore\ThirdParty\DirectxTex\Inc\DirectXTex.h">
-      <Filter>ThirdParty\DirectTex\Inc</Filter>
-    </ClInclude>
     <ClInclude Include="DefaultSceneComponent.h">
       <Filter>Object\Component\Contents</Filter>
     </ClInclude>
-    <ClInclude Include="RenderUnit.h">
-      <Filter>Object\Component\Render</Filter>
-    </ClInclude>
     <ClInclude Include="EngineBlend.h">
-      <Filter>Resources</Filter>
-    </ClInclude>
-    <ClInclude Include="EngineSprite.h">
-      <Filter>Resources</Filter>
-    </ClInclude>
-    <ClInclude Include="EngineVertex.h">
-      <Filter>Resources</Filter>
-    </ClInclude>
-    <ClInclude Include="IndexBuffer.h">
-      <Filter>Resources</Filter>
-    </ClInclude>
-    <ClInclude Include="Mesh.h">
-      <Filter>Resources</Filter>
-    </ClInclude>
-    <ClInclude Include="VertexBuffer.h">
       <Filter>Resources</Filter>
     </ClInclude>
     <ClInclude Include="EngineGUI.h">
@@ -102,9 +77,74 @@
     <ClInclude Include="imstb_truetype.h">
       <Filter>GUI\IMGUI\Header</Filter>
     </ClInclude>
+    <ClInclude Include="EngineCore.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineEnums.h">
+      <Filter>Data</Filter>
+    </ClInclude>
+    <ClInclude Include="TimeEventComponent.h">
+      <Filter>Object\Component\Contents</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderUnit.h">
+      <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineShaderResources.h">
+      <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineConstantBuffer.h">
+      <Filter>Resources\Buffer</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineDeviceBuffer.h">
+      <Filter>Resources\Buffer</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineIndexBuffer.h">
+      <Filter>Resources\Buffer</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineVertexBuffer.h">
+      <Filter>Resources\Buffer</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineInputLayOutInfo.h">
+      <Filter>Resources\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineVertex.h">
+      <Filter>Resources\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="Mesh.h">
+      <Filter>Resources\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="EnginePixelShader.h">
+      <Filter>Resources\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineShader.h">
+      <Filter>Resources\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineVertexShader.h">
+      <Filter>Resources\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineSampler.h">
+      <Filter>Resources\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineSprite.h">
+      <Filter>Resources\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineTexture.h">
+      <Filter>Resources\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineDepthStencilState.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineMaterial.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineRasterizerState.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\DirectxTex\Inc\DirectXTex.h">
+      <Filter>ThirdParty\DirectTex\Inc</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="EngineCore.cpp" />
     <ClCompile Include="PreCompile.cpp" />
     <ClCompile Include="GameMode.cpp">
       <Filter>Object\Actor</Filter>
@@ -142,31 +182,13 @@
     <ClCompile Include="EngineResources.cpp">
       <Filter>Resources</Filter>
     </ClCompile>
-    <ClCompile Include="EngineTexture.cpp">
-      <Filter>Resources</Filter>
-    </ClCompile>
     <ClCompile Include="EngineGraphicDevice_Resources.cpp">
       <Filter>Graphic</Filter>
     </ClCompile>
     <ClCompile Include="DefaultSceneComponent.cpp">
       <Filter>Object\Component\Contents</Filter>
     </ClCompile>
-    <ClCompile Include="RenderUnit.cpp">
-      <Filter>Object\Component\Render</Filter>
-    </ClCompile>
     <ClCompile Include="EngineBlend.cpp">
-      <Filter>Resources</Filter>
-    </ClCompile>
-    <ClCompile Include="EngineSprite.cpp">
-      <Filter>Resources</Filter>
-    </ClCompile>
-    <ClCompile Include="IndexBuffer.cpp">
-      <Filter>Resources</Filter>
-    </ClCompile>
-    <ClCompile Include="Mesh.cpp">
-      <Filter>Resources</Filter>
-    </ClCompile>
-    <ClCompile Include="VertexBuffer.cpp">
       <Filter>Resources</Filter>
     </ClCompile>
     <ClCompile Include="EngineGUI.cpp">
@@ -192,6 +214,66 @@
     </ClCompile>
     <ClCompile Include="imgui_widgets.cpp">
       <Filter>GUI\IMGUI\Cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineCore.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="TimeEventComponent.cpp">
+      <Filter>Object\Component\Contents</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderUnit.cpp">
+      <Filter>Render</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineShaderResources.cpp">
+      <Filter>Render</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineConstantBuffer.cpp">
+      <Filter>Resources\Buffer</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineDeviceBuffer.cpp">
+      <Filter>Resources\Buffer</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineIndexBuffer.cpp">
+      <Filter>Resources\Buffer</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineVertexBuffer.cpp">
+      <Filter>Resources\Buffer</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineInputLayOutInfo.cpp">
+      <Filter>Resources\Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineVertex.cpp">
+      <Filter>Resources\Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="Mesh.cpp">
+      <Filter>Resources\Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="EnginePixelShader.cpp">
+      <Filter>Resources\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineShader.cpp">
+      <Filter>Resources\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineVertexShader.cpp">
+      <Filter>Resources\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineSampler.cpp">
+      <Filter>Resources\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineSprite.cpp">
+      <Filter>Resources\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineTexture.cpp">
+      <Filter>Resources\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineDepthStencilState.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineMaterial.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineRasterizerState.cpp">
+      <Filter>Resources</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -249,18 +331,39 @@
     <Filter Include="GUI\IMGUI\Header">
       <UniqueIdentifier>{01355387-9f73-481f-8e08-a25fdecba4ef}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Core">
+      <UniqueIdentifier>{c07e7413-d398-4c6e-b030-9c8ea8b487f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Data">
+      <UniqueIdentifier>{3c1c045d-053c-412a-853e-177ff037686b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Render">
+      <UniqueIdentifier>{906fb5ef-ddcf-4c2e-a309-3c7bb9a22957}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources\Buffer">
+      <UniqueIdentifier>{5bb54aa1-7f2c-4341-8696-310e4bb347bd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources\Mesh">
+      <UniqueIdentifier>{21c8ea67-26de-40d8-9a15-5037fdbf5b29}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources\Shader">
+      <UniqueIdentifier>{67fe429b-7b12-4e83-b66a-16567d3b4ead}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources\Texture">
+      <UniqueIdentifier>{99385d23-c51f-4df0-87a3-9e85e7e437d6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <Library Include="..\..\..\..\TeacherProject\GM2\DX\GM2DX\EngineCore\ThirdParty\DirectxTex\Debug\DirectXTex_Debug.lib">
-      <Filter>ThirdParty\DirectTex\Debug</Filter>
-    </Library>
-    <Library Include="..\..\..\..\TeacherProject\GM2\DX\GM2DX\EngineCore\ThirdParty\DirectxTex\Release\DirectXTex_Release.lib">
-      <Filter>ThirdParty\DirectTex\Release</Filter>
-    </Library>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\..\..\..\TeacherProject\GM2\DX\GM2DX\EngineCore\ThirdParty\DirectxTex\Inc\DirectXTex.inl">
+    <None Include="ThirdParty\DirectxTex\Inc\DirectXTex.inl">
       <Filter>ThirdParty\DirectTex\Inc</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="ThirdParty\DirectxTex\Release\DirectXTex_Release.lib">
+      <Filter>ThirdParty\DirectTex\Release</Filter>
+    </Library>
+    <Library Include="ThirdParty\DirectxTex\Debug\DirectXTex_Debug.lib">
+      <Filter>ThirdParty\DirectTex\Debug</Filter>
+    </Library>
   </ItemGroup>
 </Project>

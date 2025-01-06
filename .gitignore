@@ -396,3 +396,4 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+/EngineCore/ThirdParty/DirectxTex/Release/DirectXTex_Release.lib

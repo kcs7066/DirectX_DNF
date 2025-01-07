@@ -17,7 +17,8 @@ public:
 protected:
 
 private:
-	std::shared_ptr<class ATestImage> TestImage;
+	std::shared_ptr<class AInfighter> NewInfighter;
+	std::shared_ptr<class ALucille> NewLucille;
 
 	std::shared_ptr<class USpriteRenderer> BackGroundRenderer0;
 	std::shared_ptr<class USpriteRenderer> BackGroundRenderer1;

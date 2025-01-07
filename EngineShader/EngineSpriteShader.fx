@@ -8,22 +8,24 @@ struct EngineVertex
 
 struct VertexShaderOutPut
 {
-    float4 SVPOSITION : SV_POSITION;     float4 UV : TEXCOORD;     float4 COLOR : COLOR;
+    float4 SVPOSITION : SV_POSITION;
+    float4 UV : TEXCOORD;
+    float4 COLOR : COLOR;
 };
 
 cbuffer FTransform : register(b0)
 {
-				    float4 Scale;
+    float4 Scale;
     float4 Rotation;
     float4 Qut;
     float4 Location;
 
-	    float4 RelativeScale;
+    float4 RelativeScale;
     float4 RelativeRotation;
     float4 RelativeQut;
     float4 RelativeLocation;
 
-	    float4 WorldScale;
+    float4 WorldScale;
     float4 WorldRotation;
     float4 WorldQuat;
     float4 WorldLocation;
@@ -44,7 +46,8 @@ cbuffer FSpriteData : register(b1)
 {
     float4 CuttingPos;
     float4 CuttingSize;
-    float4 Pivot; };
+    float4 Pivot;
+};
 
 cbuffer FUVValue : register(b2)
 {
@@ -72,11 +75,6 @@ VertexShaderOutPut VertexToWorld_VS(EngineVertex _Vertex)
     OutPut.COLOR = _Vertex.COLOR;
     return OutPut;
 }
-
-
-struct OutTargetColor
-{
-    float4 Target0 : SV_Target0;     float4 Target1 : SV_Target1;     float4 Target2 : SV_Target2;     float4 Target3 : SV_Target3;     float4 Target4 : SV_Target4;     float4 Target5 : SV_Target5;     float4 Target6 : SV_Target6;     float4 Target7 : SV_Target7; };
 
 
 Texture2D ImageTexture : register(t0);

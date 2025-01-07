@@ -44,7 +44,7 @@ void USceneComponent::BeginPlay()
 void USceneComponent::TransformUpdate()
 {
 	ParentMatrixCheck();
-		Transform.TransformUpdate(IsAbsolute);
+	Transform.TransformUpdate(IsAbsolute);
 
 	for (std::shared_ptr<USceneComponent> Child : Childs)
 	{
@@ -60,6 +60,11 @@ void USceneComponent::ComponentTick(float _DeltaTime)
 
 	for (std::shared_ptr<USceneComponent> Child : Childs)
 	{
+		if (false == Child->IsActive())
+		{
+			continue;
+		}
+
 		Child->ComponentTick(_DeltaTime);
 	}
 }

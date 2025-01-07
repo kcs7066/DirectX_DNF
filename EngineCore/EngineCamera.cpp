@@ -27,21 +27,21 @@ UEngineCamera::~UEngineCamera()
 
 void UEngineCamera::Tick(float _DetlaTime)
 {
-		Transform.View;
+	Transform.View;
 	Transform.Projection;
 }
 
 void UEngineCamera::Render(float _DetlaTime)
 {
-		UEngineCore::GetDevice().GetContext()->RSSetViewports(1, &ViewPortInfo);
+	UEngineCore::GetDevice().GetContext()->RSSetViewports(1, &ViewPortInfo);
 
-		for (std::pair<const int, std::list<std::shared_ptr<URenderer>>>& RenderGroup : Renderers)
+	for (std::pair<const int, std::list<std::shared_ptr<URenderer>>>& RenderGroup : Renderers)
 	{
 		std::list<std::shared_ptr<URenderer>>& RenderList = RenderGroup.second;
 
 		if (true == RendererZSort[RenderGroup.first])
 		{
-									RenderList.sort([](std::shared_ptr<URenderer>& _Left, std::shared_ptr<URenderer>& _Right)
+			RenderList.sort([](std::shared_ptr<URenderer>& _Left, std::shared_ptr<URenderer>& _Right)
 				{
 					return _Left->GetTransformRef().WorldLocation.Z > _Right->GetTransformRef().WorldLocation.Z;
 				});
@@ -50,7 +50,34 @@ void UEngineCamera::Render(float _DetlaTime)
 
 		for (std::shared_ptr<URenderer> Renderer : RenderList)
 		{
+			if (false == Renderer->IsActive())
+			{
+				continue;
+			}
+
 			Renderer->Render(this, _DetlaTime);
+		}
+	}
+}
+
+void UEngineCamera::Release(float _DeltaTime)
+{
+
+	for (std::pair<const int, std::list<std::shared_ptr<URenderer>>>& RenderGroup : Renderers)
+	{
+		std::list<std::shared_ptr<URenderer>>& RenderList = RenderGroup.second;
+		std::list<std::shared_ptr<URenderer>>::iterator StartIter = RenderList.begin();
+		std::list<std::shared_ptr<URenderer>>::iterator EndIter = RenderList.end();
+
+		for (; StartIter != EndIter; )
+		{
+			if (false == (*StartIter)->IsDestroy())
+			{
+				++StartIter;
+				continue;
+			}
+
+			StartIter = RenderList.erase(StartIter);
 		}
 	}
 }

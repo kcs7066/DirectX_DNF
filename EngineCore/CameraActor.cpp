@@ -5,7 +5,7 @@
 ACameraActor::ACameraActor()
 {
 	CameraComponent = CreateDefaultSubObject<UEngineCamera>();
-		RootComponent = CameraComponent;
+	RootComponent = CameraComponent;
 }
 
 ACameraActor::~ACameraActor()
@@ -46,5 +46,5 @@ FVector ACameraActor::ScreenMousePosToWorldPos()
 	MousePos = MousePos * CameraTransform.View.InverseReturn();
 
 	return MousePos;
-		}
+}
 

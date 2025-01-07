@@ -6,12 +6,12 @@ class USceneComponent : public UActorComponent
 {
 	friend class AActor;
 
-			
+
 public:
-		USceneComponent();
+	USceneComponent();
 	virtual ~USceneComponent() = 0;
 
-		USceneComponent(const USceneComponent& _Other) = delete;
+	USceneComponent(const USceneComponent& _Other) = delete;
 	USceneComponent(USceneComponent&& _Other) noexcept = delete;
 	USceneComponent& operator=(const USceneComponent& _Other) = delete;
 	USceneComponent& operator=(USceneComponent&& _Other) noexcept = delete;
@@ -57,11 +57,16 @@ public:
 		TransformUpdate();
 	}
 
-		void SetRelativeScale3D(const FVector& _Value)
+	void SetRelativeScale3D(const FVector& _Value)
 	{
-												Transform.Scale = _Value;
+		Transform.Scale = _Value;
 		Transform.Scale.W = 0.0f;
 		TransformUpdate();
+	}
+
+	FVector GetWorldScale3D()
+	{
+		return Transform.WorldScale;
 	}
 
 
@@ -69,6 +74,7 @@ public:
 	{
 		return Transform;
 	}
+
 
 	ENGINEAPI void SetupAttachment(std::shared_ptr<USceneComponent> _Parent);
 

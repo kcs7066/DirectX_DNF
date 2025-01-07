@@ -143,6 +143,9 @@
     <ClInclude Include="ThirdParty\DirectxTex\Inc\DirectXTex.h">
       <Filter>ThirdParty\DirectTex\Inc</Filter>
     </ClInclude>
+    <ClInclude Include="Collision.h">
+      <Filter>Object\Component\Collision</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PreCompile.cpp" />
@@ -275,6 +278,9 @@
     <ClCompile Include="EngineRasterizerState.cpp">
       <Filter>Resources</Filter>
     </ClCompile>
+    <ClCompile Include="Collision.cpp">
+      <Filter>Object\Component\Collision</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Interface">
@@ -351,6 +357,9 @@
     </Filter>
     <Filter Include="Resources\Texture">
       <UniqueIdentifier>{99385d23-c51f-4df0-87a3-9e85e7e437d6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Component\Collision">
+      <UniqueIdentifier>{939c5c5a-beab-4c8a-96cd-68a364fdd55f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

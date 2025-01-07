@@ -131,7 +131,7 @@ void URenderUnit::SetMaterial(std::string_view _Name)
 
 	MaterialResourcesCheck();
 
-	
+
 	if (nullptr != Mesh)
 	{
 		InputLayOutCreate();
@@ -143,30 +143,32 @@ void URenderUnit::SetMaterial(std::string_view _Name)
 
 void URenderUnit::Render(class UEngineCamera* _Camera, float _DeltaTime)
 {
-	
-	
-	
-					
+
+
+
+
 
 	for (std::pair<const EShaderType, UEngineShaderResources>& Pair : Resources)
 	{
 		Pair.second.Setting();
 	}
 
-		Mesh->GetVertexBuffer()->Setting();
+	Mesh->GetVertexBuffer()->Setting();
 
-		Material->GetVertexShader()->Setting();
+	Material->GetVertexShader()->Setting();
 
-		Mesh->GetIndexBuffer()->Setting();
+	Mesh->GetIndexBuffer()->Setting();
 	Material->PrimitiveTopologySetting();
 
 	UEngineCore::GetDevice().GetContext()->IASetInputLayout(InputLayOut.Get());
 
-		Material->GetRasterizerState()->Setting();
+	Material->GetRasterizerState()->Setting();
 
-		Material->GetPixelShader()->Setting();
+	Material->GetPixelShader()->Setting();
 
-			Material->GetBlend()->Setting();
+	Material->GetBlend()->Setting();
+
+	Material->GetDepthStencilState()->Setting();
 
 	UEngineCore::GetDevice().GetContext()->DrawIndexed(Mesh->GetIndexBuffer()->GetIndexCount(), 0, 0);
 }

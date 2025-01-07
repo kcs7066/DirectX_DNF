@@ -1,6 +1,6 @@
 #include "PreCompile.h"
 #include "PlayGameMode.h"
-#include "TestImage.h"
+
 #include <EngineCore/CameraActor.h>
 #include <EngineCore/SpriteRenderer.h>
 #include <EngineCore/EngineGUIWindow.h>
@@ -21,9 +21,7 @@ public:
 
 APlayGameMode::APlayGameMode()
 {
-	{
-		TestImage = GetWorld()->SpawnActor<ATestImage>();
-	}
+
 
 	std::shared_ptr<ACameraActor> Camera = GetWorld()->GetMainCamera();
 	Camera->SetActorLocation({ 0.0f, 0.0f, -1000.0f, 1.0f });

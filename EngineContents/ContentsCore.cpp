@@ -48,7 +48,7 @@ void UContentsCore::EngineStart(UEngineInitData& _Data)
 			MSGASSERT("리소스 폴더를 찾지 못했습니다.");
 			return;
 		}
-		Dir.Append("Image/Test");
+		Dir.Append("Image/camp");
 
 		UEngineSprite::CreateSpriteToFolder(Dir.GetPathToString());
 	}
@@ -60,11 +60,61 @@ void UContentsCore::EngineStart(UEngineInitData& _Data)
 			MSGASSERT("리소스 폴더를 찾지 못했습니다.");
 			return;
 		}
-		Dir.Append("Image/Camp");
+		Dir.Append("Image/camptwo");
 
 		UEngineSprite::CreateSpriteToFolder(Dir.GetPathToString());
 	}
-	//UEngineSprite::CreateSpriteToMeta("Test.png", ".sdata");
+
+	{
+		UEngineDirectory Dir;
+		if (false == Dir.MoveParentToDirectory("DNFResource"))
+		{
+			MSGASSERT("리소스 폴더를 찾지 못했습니다.");
+			return;
+		}
+		Dir.Append("Image/ellerinon");
+
+		UEngineSprite::CreateSpriteToFolder(Dir.GetPathToString());
+	}
+
+	{
+		UEngineDirectory Dir;
+		if (false == Dir.MoveParentToDirectory("DNFResource"))
+		{
+			MSGASSERT("리소스 폴더를 찾지 못했습니다.");
+			return;
+		}
+		Dir.Append("Image/grandis");
+
+		UEngineSprite::CreateSpriteToFolder(Dir.GetPathToString());
+	}
+
+	{
+		UEngineDirectory Dir;
+		if (false == Dir.MoveParentToDirectory("DNFResource"))
+		{
+			MSGASSERT("리소스 폴더를 찾지 못했습니다.");
+			return;
+		}
+		Dir.Append("Image/infighter");
+
+		UEngineSprite::CreateSpriteToFolder(Dir.GetPathToString());
+	}
+
+	{
+		UEngineDirectory Dir;
+		if (false == Dir.MoveParentToDirectory("DNFResource"))
+		{
+			MSGASSERT("리소스 폴더를 찾지 못했습니다.");
+			return;
+		}
+		Dir.Append("Image/lucille");
+
+		UEngineSprite::CreateSpriteToFolder(Dir.GetPathToString());
+	}
+
+
+
 
 	UEngineCore::CreateLevel<ACampGameMode, APawn>("Camplevel");
 	UEngineCore::CreateLevel<APlayGameMode, APawn>("Playlevel");

@@ -244,9 +244,6 @@ void UEngineGraphicDevice::RenderStart()
 	ID3D11RenderTargetView* ArrRtv[16] = { 0 };
 	ArrRtv[0] = RTV;     Context->OMSetRenderTargets(1, &ArrRtv[0], DepthTex->GetDSV());
 
-	std::shared_ptr<UEngineDepthStencilState> DepthState = UEngineDepthStencilState::Find<UEngineDepthStencilState>("BaseDepth");
-	DepthState->Setting();
-
 }
 
 void UEngineGraphicDevice::RenderEnd()

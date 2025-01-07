@@ -109,7 +109,7 @@ public:
 		RootComponent->AddRotation(_Value);
 	}
 
-	void AttachToActor(AActor* _Parent);
+	ENGINEAPI void AttachToActor(AActor* _Parent);
 
 		FTransform GetActorTransform()
 	{

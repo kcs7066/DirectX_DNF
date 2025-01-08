@@ -280,13 +280,14 @@ void FTransform::TransformUpdate(bool _IsAbsolut /*= false*/)
 
 	if (true == _IsAbsolut)
 	{
+
 		World = CheckWorld;
 		LocalWorld = CheckWorld * ParentMat.InverseReturn();
 	}
 	else
 	{
-		LocalWorld = ScaleMat * RotationMat * LocationMat;
-		World = ScaleMat * RotationMat * LocationMat * RevolveMat * ParentMat;
+		LocalWorld = CheckWorld;
+		World = CheckWorld * RevolveMat * ParentMat;
 
 	}
 

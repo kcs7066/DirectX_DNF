@@ -3,8 +3,9 @@
 #include <EngineCore/Level.h>
 #include <EngineCore/EngineTexture.h>
 #include <EngineCore/EngineSprite.h>
-#include "PlayGameMode.h"
 #include "CampGameMode.h"
+#include "CampTwoGameMode.h"
+#include "EllerinonGameMode.h"
 
 CreateContentsCoreDefine(UContentsCore);
 
@@ -108,16 +109,51 @@ void UContentsCore::EngineStart(UEngineInitData& _Data)
 			MSGASSERT("리소스 폴더를 찾지 못했습니다.");
 			return;
 		}
+		Dir.Append("Image/infighter/buff");
+
+		UEngineSprite::CreateSpriteToFolder(Dir.GetPathToString());
+	}
+
+	{
+		UEngineDirectory Dir;
+		if (false == Dir.MoveParentToDirectory("DNFResource"))
+		{
+			MSGASSERT("리소스 폴더를 찾지 못했습니다.");
+			return;
+		}
+		Dir.Append("Image/infighter/neo");
+
+		UEngineSprite::CreateSpriteToFolder(Dir.GetPathToString());
+	}
+
+	{
+		UEngineDirectory Dir;
+		if (false == Dir.MoveParentToDirectory("DNFResource"))
+		{
+			MSGASSERT("리소스 폴더를 찾지 못했습니다.");
+			return;
+		}
 		Dir.Append("Image/lucille");
 
 		UEngineSprite::CreateSpriteToFolder(Dir.GetPathToString());
 	}
 
+	{
+		UEngineDirectory Dir;
+		if (false == Dir.MoveParentToDirectory("DNFResource"))
+		{
+			MSGASSERT("리소스 폴더를 찾지 못했습니다.");
+			return;
+		}
+		Dir.Append("Image/astaroth");
 
+		UEngineSprite::CreateSpriteToFolder(Dir.GetPathToString());
+	}
 
 
 	UEngineCore::CreateLevel<ACampGameMode, APawn>("Camplevel");
-	UEngineCore::CreateLevel<APlayGameMode, APawn>("Playlevel");
+	UEngineCore::CreateLevel<ACampTwoGameMode, APawn>("CampTwolevel");
+	UEngineCore::CreateLevel<AEllerinonGameMode, APawn>("Ellerinonlevel");
 	UEngineCore::OpenLevel("Camplevel");
 
 

@@ -9,6 +9,7 @@
 class UEngineCamera : public USceneComponent
 {
 	friend class ULevel;
+	friend class ACameraActor;
 
 public:
 	UEngineCamera();
@@ -44,7 +45,7 @@ public:
 
 	ENGINEAPI void SetProjectionType(EProjectionType _Type)
 	{
-		Type = _Type;
+		ProjectionType = _Type;
 	}
 
 	ENGINEAPI void SetZSort(int _Order, bool _Value);
@@ -60,7 +61,7 @@ private:
 
 	float FOV = 60.0f;
 
-	EProjectionType Type = EProjectionType::Orthographic;
+	EProjectionType ProjectionType = EProjectionType::Orthographic;
 
 	D3D11_VIEWPORT ViewPortInfo;
 

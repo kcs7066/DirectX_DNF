@@ -171,11 +171,27 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Astaroth.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="CampGameMode.h">
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="CampTwoGameMode.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="ContentsCore.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="EllerinonGameMode.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="Grandis.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -191,18 +207,30 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="PlayGameMode.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
     <ClInclude Include="PreCompile.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Astaroth.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="CampGameMode.cpp">
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="CampTwoGameMode.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="ContentsCore.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="EllerinonGameMode.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="Grandis.cpp">
       <SubType>
       </SubType>
     </ClCompile>
@@ -215,10 +243,6 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="MyRenderer.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
-    <ClCompile Include="PlayGameMode.cpp">
       <SubType>
       </SubType>
     </ClCompile>

@@ -3,9 +3,6 @@
   <ItemGroup>
     <ClInclude Include="PreCompile.h" />
     <ClInclude Include="ContentsCore.h" />
-    <ClInclude Include="PlayGameMode.h">
-      <Filter>GameMode</Filter>
-    </ClInclude>
     <ClInclude Include="CampGameMode.h">
       <Filter>GameMode</Filter>
     </ClInclude>
@@ -16,13 +13,22 @@
       <Filter>Camp</Filter>
     </ClInclude>
     <ClInclude Include="Infighter.h" />
+    <ClInclude Include="CampTwoGameMode.h">
+      <Filter>GameMode</Filter>
+    </ClInclude>
+    <ClInclude Include="EllerinonGameMode.h">
+      <Filter>GameMode</Filter>
+    </ClInclude>
+    <ClInclude Include="Grandis.h">
+      <Filter>CampTwo</Filter>
+    </ClInclude>
+    <ClInclude Include="Astaroth.h">
+      <Filter>Ellerinon</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PreCompile.cpp" />
     <ClCompile Include="ContentsCore.cpp" />
-    <ClCompile Include="PlayGameMode.cpp">
-      <Filter>GameMode</Filter>
-    </ClCompile>
     <ClCompile Include="CampGameMode.cpp">
       <Filter>GameMode</Filter>
     </ClCompile>
@@ -33,6 +39,18 @@
       <Filter>Camp</Filter>
     </ClCompile>
     <ClCompile Include="Infighter.cpp" />
+    <ClCompile Include="CampTwoGameMode.cpp">
+      <Filter>GameMode</Filter>
+    </ClCompile>
+    <ClCompile Include="EllerinonGameMode.cpp">
+      <Filter>GameMode</Filter>
+    </ClCompile>
+    <ClCompile Include="Grandis.cpp">
+      <Filter>CampTwo</Filter>
+    </ClCompile>
+    <ClCompile Include="Astaroth.cpp">
+      <Filter>Ellerinon</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="GameMode">
@@ -43,6 +61,12 @@
     </Filter>
     <Filter Include="Camp">
       <UniqueIdentifier>{3634e7ad-ac3a-430a-a856-4e749db80a3a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CampTwo">
+      <UniqueIdentifier>{c0149f52-8a25-481d-ad4a-0b06a8481058}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Ellerinon">
+      <UniqueIdentifier>{291c77e3-f40d-4b25-addc-95dbdd754d5a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

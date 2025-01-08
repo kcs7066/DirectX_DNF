@@ -63,6 +63,42 @@ bool UCollision::CollisionCheck(std::string_view _OtherName, std::vector<UCollis
 	return 0 != _Vector.size();
 }
 
+bool UCollision::CollisionCheck(std::string_view _OtherName, FVector _NextPos, std::vector<UCollision*>& _Vector)
+{
+	std::string UpperName = UEngineString::ToUpper(_OtherName);
+
+	std::map<std::string, std::list<std::shared_ptr<class UCollision>>>& Collision = GetWorld()->Collisions;
+
+	if (false == Collision.contains(UpperName))
+	{
+		MSGASSERT("존재하지 않는 그룹과 충돌할수 없습니다" + std::string(UpperName));
+		return false;
+	}
+
+
+	FTransform NextTransform = Transform;
+
+	NextTransform.Location += _NextPos;
+	NextTransform.TransformUpdate();
+
+	std::list<std::shared_ptr<class UCollision>>& Group = Collision[UpperName];
+
+	for (std::shared_ptr<class UCollision>& OtherCol : Group)
+	{
+		if (false == OtherCol->IsActive())
+		{
+			continue;
+		}
+
+		if (true == FTransform::Collision(CollisionType, NextTransform, OtherCol->CollisionType, OtherCol->Transform))
+		{
+			_Vector.push_back(OtherCol.get());
+		}
+	}
+
+	return 0 != _Vector.size();
+}
+
 
 void UCollision::BeginPlay()
 {

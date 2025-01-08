@@ -135,12 +135,13 @@ ACampGameMode::ACampGameMode()
 
 	NewInfighter = GetWorld()->SpawnActor<AInfighter>();
 	NewLucille = GetWorld()->SpawnActor<ALucille>();
+	NewLucille->GetRenderer()->SetWorldLocation({ 400,-140,-10 });
 
 
 
 	std::shared_ptr<ACameraActor> Camera = GetWorld()->GetMainCamera();
 	Camera->SetActorLocation({ 0.0f, 0.0f, -1000.0f, 1.0f });
-	Camera->AttachToActor(NewInfighter.get());
+
 
 	UEngineGUI::CreateGUIWindow<TestWindow>("TestWindow");
 }
@@ -149,8 +150,31 @@ ACampGameMode::~ACampGameMode()
 {
 }
 
+void ACampGameMode::BeginPlay()
+{
+
+}
+
 void ACampGameMode::Tick(float _DeltaTime)
 {
 	AActor::Tick(_DeltaTime);
 	std::shared_ptr<ACameraActor> Camera = GetWorld()->GetMainCamera();
+	FVector CameraPos = NewInfighter->GetActorLocation();
+	FVector Value = { 0, 0, -1000, 0 };
+	CameraPos += Value;
+	
+	if (CameraPos.X < 0)
+	{
+		CameraPos.X = 0;
+	}
+	if (CameraPos.X > 80)
+	{
+		CameraPos.X = 80;
+	}
+	if (CameraPos.Y < 0)
+	{
+		CameraPos.Y = 0;
+	}
+	Camera->SetActorLocation(CameraPos);
+	
 }

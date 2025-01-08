@@ -21,7 +21,6 @@ ALucille::ALucille()
 
 	LucilleRenderer->ChangeAnimation("lucille_Idle");
 	LucilleRenderer->SetAutoScaleRatio(1.5f);
-	LucilleRenderer->SetWorldLocation({ 400,-140,-10 });
 	LucilleRenderer->SetupAttachment(RootComponent);
 }
 

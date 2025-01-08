@@ -27,5 +27,9 @@ protected:
 
 private:
 	std::shared_ptr<class USpriteRenderer> InfighterRenderer;
+	std::shared_ptr<class USpriteRenderer> buffRenderer;
+	std::shared_ptr<class USpriteRenderer> neoRenderer;
+
+	int Speed = 300;
 };
 

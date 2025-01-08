@@ -7,10 +7,10 @@
 class UEngineGUI
 {
 public:
-		UEngineGUI();
+	UEngineGUI();
 	~UEngineGUI();
 
-		UEngineGUI(const UEngineGUI& _Other) = delete;
+	UEngineGUI(const UEngineGUI& _Other) = delete;
 	UEngineGUI(UEngineGUI&& _Other) noexcept = delete;
 	UEngineGUI& operator=(const UEngineGUI& _Other) = delete;
 	UEngineGUI& operator=(UEngineGUI&& _Other) noexcept = delete;
@@ -33,7 +33,7 @@ public:
 		return Window;
 	}
 
-	static void GUIRender();
+	static void GUIRender(ULevel* _Level);
 
 protected:
 

@@ -14,15 +14,34 @@ AInfighter::AInfighter()
 
 	InfighterRenderer = CreateDefaultSubObject<USpriteRenderer>();
 
-	InfighterRenderer->CreateAnimation("infighter_Idle", "infighter", 0, 196, 0.2f);
+	InfighterRenderer->CreateAnimation("infighter_Idle", "infighter", 0, 196, 0.1f);
 	{
 		USpriteRenderer::FrameAnimation* Animation = InfighterRenderer->FindAnimation("infighter_Idle");
 	}
 
 	InfighterRenderer->ChangeAnimation("infighter_Idle");
-	InfighterRenderer->SetRelativeScale3D({ 50, 50, -1.0f });
-	InfighterRenderer->SetWorldLocation({ 0,0,-10 });
+	InfighterRenderer->SetAutoScaleRatio(1.5f);
+	InfighterRenderer->SetRelativeLocation({ 0,0,-10 });
 	InfighterRenderer->SetupAttachment(RootComponent);
+
+	buffRenderer = CreateDefaultSubObject<USpriteRenderer>();
+	buffRenderer->CreateAnimation("infighter_buff", "buff", 0, 18, 0.1f);
+	{
+		USpriteRenderer::FrameAnimation* Animation = InfighterRenderer->FindAnimation("infighter_buff");
+	}
+	
+	buffRenderer->SetRelativeLocation({ 0,150,-20 });
+	buffRenderer->SetupAttachment(RootComponent);
+
+
+    neoRenderer = CreateDefaultSubObject<USpriteRenderer>();
+	neoRenderer->CreateAnimation("infighter_neo", "neo", 0, 22, 0.1f);
+	{
+		USpriteRenderer::FrameAnimation* Animation = InfighterRenderer->FindAnimation("infighter_neo");
+	}
+	neoRenderer->SetAutoScaleRatio(1.5f);
+	neoRenderer->SetWorldLocation({ 0,0,-30 });
+	neoRenderer->SetupAttachment(RootComponent);
 
 }
 
@@ -41,21 +60,21 @@ void AInfighter::Tick(float _DeltaTime)
 
 	if (UEngineInput::IsPress('A'))
 	{
-		AddRelativeLocation(FVector{ -100.0f * _DeltaTime, 0.0f, 0.0f });
+		AddRelativeLocation(FVector{ -Speed * _DeltaTime, 0.0f, 0.0f });
 	}
 	if (UEngineInput::IsPress('D'))
 	{
-		AddRelativeLocation(FVector{ 100.0f * _DeltaTime, 0.0f, 0.0f });
+		AddRelativeLocation(FVector{ Speed * _DeltaTime, 0.0f, 0.0f });
 	}
 
 	if (UEngineInput::IsPress('W'))
 	{
-		AddRelativeLocation(FVector{ 0.0f, 100.0f * _DeltaTime, 0.0f });
+		AddRelativeLocation(FVector{ 0.0f, Speed * _DeltaTime, 0.0f });
 	}
 
 	if (UEngineInput::IsPress('S'))
 	{
-		AddRelativeLocation(FVector{ 0.0f, -100.0f * _DeltaTime, 0.0f });
+		AddRelativeLocation(FVector{ 0.0f, -Speed * _DeltaTime, 0.0f });
 	}
 
 	if (UEngineInput::IsPress('Q'))
@@ -65,12 +84,12 @@ void AInfighter::Tick(float _DeltaTime)
 
 	if (UEngineInput::IsPress('E'))
 	{
-		//InfighterRenderer->ChangeAnimation("Move");
+		buffRenderer->ChangeAnimation("infighter_buff");
 	}
 
 	if (UEngineInput::IsPress('R'))
 	{
-		InfighterRenderer->ChangeAnimation("Idle");
+		neoRenderer->ChangeAnimation("infighter_neo");
 	}
 
 }

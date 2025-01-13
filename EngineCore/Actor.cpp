@@ -27,10 +27,19 @@ void AActor::BeginPlay()
 
 void AActor::Tick(float _DeltaTime)
 {
-	if (nullptr != RootComponent)
+	for (std::shared_ptr<AActor>& Actor : ChildList)
 	{
-		RootComponent->ComponentTick(_DeltaTime);
+		Actor->Tick(_DeltaTime);
 	}
+
+	if (nullptr == Parent)
+	{
+		if (nullptr != RootComponent)
+		{
+			RootComponent->ComponentTick(_DeltaTime);
+		}
+	}
+
 
 	for (std::shared_ptr<class UActorComponent> ActorComponent : ActorComponentList)
 	{
@@ -57,6 +66,8 @@ void AActor::AttachToActor(AActor* _Parent)
 		return;
 	}
 
+	Parent = _Parent;
+	_Parent->ChildList.push_back(GetThis<AActor>());
 	RootComponent->SetupAttachment(_Parent->RootComponent);
 }
 

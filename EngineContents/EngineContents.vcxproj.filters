@@ -2,7 +2,6 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClInclude Include="PreCompile.h" />
-    <ClInclude Include="ContentsCore.h" />
     <ClInclude Include="CampGameMode.h">
       <Filter>GameMode</Filter>
     </ClInclude>
@@ -19,16 +18,21 @@
     <ClInclude Include="EllerinonGameMode.h">
       <Filter>GameMode</Filter>
     </ClInclude>
-    <ClInclude Include="Grandis.h">
-      <Filter>CampTwo</Filter>
-    </ClInclude>
     <ClInclude Include="Astaroth.h">
+      <Filter>Ellerinon</Filter>
+    </ClInclude>
+    <ClInclude Include="ContentsCore.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="ContentsEditorGUI.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Grandis.h">
       <Filter>Ellerinon</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PreCompile.cpp" />
-    <ClCompile Include="ContentsCore.cpp" />
     <ClCompile Include="CampGameMode.cpp">
       <Filter>GameMode</Filter>
     </ClCompile>
@@ -45,10 +49,19 @@
     <ClCompile Include="EllerinonGameMode.cpp">
       <Filter>GameMode</Filter>
     </ClCompile>
-    <ClCompile Include="Grandis.cpp">
-      <Filter>CampTwo</Filter>
-    </ClCompile>
     <ClCompile Include="Astaroth.cpp">
+      <Filter>Ellerinon</Filter>
+    </ClCompile>
+    <ClCompile Include="ContentsCore.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="ContentsCore_Resources.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="ContentsEditorGUI.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Grandis.cpp">
       <Filter>Ellerinon</Filter>
     </ClCompile>
   </ItemGroup>
@@ -67,6 +80,12 @@
     </Filter>
     <Filter Include="Ellerinon">
       <UniqueIdentifier>{291c77e3-f40d-4b25-addc-95dbdd754d5a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core">
+      <UniqueIdentifier>{b1fca96c-1266-4218-95da-660196ee84c6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GUI">
+      <UniqueIdentifier>{88f16df1-86a2-447d-90f9-ca5ddabc67ea}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

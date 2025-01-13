@@ -33,7 +33,7 @@ public:
 class UEngineTextureRes : public UEngineShaderRes
 {
 public:
-	std::shared_ptr<UEngineTexture> Res;
+	UEngineTexture* Res;
 
 	void Setting()
 	{
@@ -57,12 +57,12 @@ public:
 
 class UEngineShaderResources
 {
-	
+
 public:
-		UEngineShaderResources();
+	UEngineShaderResources();
 	~UEngineShaderResources();
 
-						
+
 	void CreateSamplerRes(std::string_view _Name, UEngineSamplerRes _Res);
 
 	void CreateTextureRes(std::string_view _Name, UEngineTextureRes _Res);
@@ -79,6 +79,9 @@ public:
 
 	void SamplerSetting(std::string_view _Name, std::string_view _ResName);
 	void TextureSetting(std::string_view _Name, std::string_view _ResName);
+	void TextureSetting(std::string_view _Name, std::shared_ptr<UEngineTexture> _Texture);
+
+	void TextureSetting(std::string_view _Name, UEngineTexture* _Texture);
 
 	bool IsSampler(std::string_view _Name);
 	bool IsTexture(std::string_view _Name);
@@ -91,6 +94,6 @@ private:
 	std::map<std::string, UEngineConstantBufferRes> ConstantBufferRes;
 	std::map<std::string, UEngineTextureRes> TextureRes;
 	std::map<std::string, UEngineSamplerRes> SamplerRes;
-	
+
 };
 

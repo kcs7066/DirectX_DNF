@@ -7,20 +7,20 @@
 class URenderUnit
 {
 public:
-		URenderUnit();
+	URenderUnit();
 	~URenderUnit();
 
 	URenderer* ParentRenderer = nullptr;
 
-		std::shared_ptr<UMesh> Mesh;
-		std::shared_ptr<UEngineMaterial> Material;
+	std::shared_ptr<UMesh> Mesh;
+	std::shared_ptr<UEngineMaterial> Material;
 
 	Microsoft::WRL::ComPtr<ID3D11InputLayout> InputLayOut;
 
 	ENGINEAPI void SetMesh(std::string_view _Name);
 	ENGINEAPI void SetMaterial(std::string_view _Name);
 
-		
+
 	ENGINEAPI virtual void Render(class UEngineCamera* _Camera, float _DeltaTime);
 
 	ENGINEAPI void MaterialResourcesCheck();
@@ -34,11 +34,15 @@ public:
 	ENGINEAPI void ConstantBufferLinkData(std::string_view Name, void* _Data);
 
 	ENGINEAPI void SetTexture(std::string_view _Name, std::string_view _ResName);
+	ENGINEAPI void SetTexture(std::string_view _Name, std::shared_ptr<UEngineTexture> _Texture);
 	ENGINEAPI void SetSampler(std::string_view Name, std::string_view _ResName);
 
-private:
-		std::map<EShaderType, UEngineShaderResources> Resources;
 
+	ENGINEAPI void SetTexture(std::string_view _Name, UEngineTexture* _Texture);
+
+	std::map<EShaderType, UEngineShaderResources> Resources;
+
+private:
 	void InputLayOutCreate();
 };
 

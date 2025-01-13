@@ -17,10 +17,10 @@ public:
 	ENGINEAPI static int WindowMessageLoop(std::function<void()> _StartFunction, std::function<void()> _FrameFunction, std::function<void()> _EndFunction = nullptr);
 
 
-		ENGINEAPI UEngineWindow();
+	ENGINEAPI UEngineWindow();
 	ENGINEAPI ~UEngineWindow();
 
-		UEngineWindow(const UEngineWindow& _Other) = delete;
+	UEngineWindow(const UEngineWindow& _Other) = delete;
 	UEngineWindow(UEngineWindow&& _Other) noexcept = delete;
 	UEngineWindow& operator=(const UEngineWindow& _Other) = delete;
 	UEngineWindow& operator=(UEngineWindow&& _Other) noexcept = delete;
@@ -60,6 +60,12 @@ public:
 
 	ENGINEAPI static  void SetCustomProc(std::function<bool(HWND, UINT, WPARAM, LPARAM)> _CustomProc);
 
+	ENGINEAPI bool IsFocus()
+	{
+		return IsFocusValue;
+	}
+
+
 
 
 protected:
@@ -68,12 +74,16 @@ private:
 	ENGINEAPI static std::function<bool(HWND, UINT, WPARAM, LPARAM)> CustomProc;
 	static LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 
-		
+
 	ENGINEAPI static HINSTANCE hInstance;
 
-		inline static bool LoopActive = true;
+	inline static bool LoopActive = true;
 
 	ENGINEAPI static std::map<std::string, WNDCLASSEXA> WindowClasss;
+
+	ENGINEAPI static std::map<HWND, UEngineWindow*> AllWindows;
+
+	bool IsFocusValue = false;
 
 	FVector WindowSize;
 	HWND WindowHandle = nullptr;

@@ -7,6 +7,7 @@
 #include "EngineCamera.h"
 #include "CameraActor.h"
 #include "EngineGUI.h"
+#include "EngineRenderTarget.h"
 
 
 
@@ -29,8 +30,13 @@ std::shared_ptr<class ACameraActor> ULevel::SpawnCamera(int _Order)
 
 ULevel::ULevel()
 {
-	SpawnCamera(0);
+	SpawnCamera(EEngineCameraType::MainCamera);
 
+	SpawnCamera(EEngineCameraType::UICamera);
+
+	LastRenderTarget = std::make_shared<UEngineRenderTarget>();
+	LastRenderTarget->CreateTarget(UEngineCore::GetScreenScale());
+	LastRenderTarget->CreateDepth();
 }
 
 ULevel::~ULevel()
@@ -44,12 +50,29 @@ ULevel::~ULevel()
 
 void ULevel::LevelChangeStart()
 {
+	for (std::shared_ptr<class AActor> Actor : BeginPlayList)
+	{
+		Actor->LevelChangeStart();
+	}
 
+
+	for (std::shared_ptr<class AActor> Actor : AllActorList)
+	{
+		Actor->LevelChangeStart();
+	}
 }
 
 void ULevel::LevelChangeEnd()
 {
+	for (std::shared_ptr<class AActor> Actor : BeginPlayList)
+	{
+		Actor->LevelChangeEnd();
+	}
 
+	for (std::shared_ptr<class AActor> Actor : AllActorList)
+	{
+		Actor->LevelChangeEnd();
+	}
 }
 
 
@@ -75,6 +98,12 @@ void ULevel::Tick(float _DeltaTime)
 		StartIter = BeginPlayList.erase(StartIter);
 
 		CurActor->BeginPlay();
+
+		if (nullptr != CurActor->Parent)
+		{
+			continue;
+		}
+
 		AllActorList.push_back(CurActor);
 	}
 
@@ -93,11 +122,26 @@ void ULevel::Render(float _DeltaTime)
 {
 	UEngineCore::GetDevice().RenderStart();
 
+	LastRenderTarget->Clear();
+
 	for (std::pair<const int, std::shared_ptr<ACameraActor>>& Camera : Cameras)
 	{
+		if (Camera.first == static_cast<int>(EEngineCameraType::UICamera))
+		{
+			continue;
+		}
+
 		Camera.second->Tick(_DeltaTime);
 		Camera.second->GetCameraComponent()->Render(_DeltaTime);
+		Camera.second->GetCameraComponent()->CameraTarget->MergeTo(LastRenderTarget);
 	}
+
+
+
+
+
+	std::shared_ptr<UEngineRenderTarget> BackBuffer = UEngineCore::GetDevice().GetBackBufferTarget();
+	LastRenderTarget->MergeTo(BackBuffer);
 
 
 	{
@@ -202,6 +246,11 @@ void ULevel::Collision(float _DeltaTime)
 			{
 				for (std::shared_ptr<class UCollision>& RightCollision : RightList)
 				{
+					if (false == LeftCollision->IsActive())
+					{
+						continue;
+					}
+
 					LeftCollision->CollisionEventCheck(RightCollision);
 				}
 			}
@@ -245,6 +294,12 @@ void ULevel::Release(float _DeltaTime)
 
 		for (; StartIter != EndIter; )
 		{
+			if (nullptr != (*StartIter)->Parent)
+			{
+				StartIter = List.erase(StartIter);
+				continue;
+			}
+
 			if (false == (*StartIter)->IsDestroy())
 			{
 				++StartIter;
@@ -254,4 +309,13 @@ void ULevel::Release(float _DeltaTime)
 			StartIter = List.erase(StartIter);
 		}
 	}
+}
+
+void ULevel::InitLevel(AGameMode* _GameMode, APawn* _Pawn, AHUD* _HUD)
+{
+	GameMode = _GameMode;
+
+	MainPawn = _Pawn;
+
+	HUD = _HUD;
 }

@@ -1,7 +1,6 @@
 #pragma once
-#include <EngineCore/Actor.h>
 
-class ACampGameMode : public AActor
+class ACampGameMode : public AGameMode
 {
 public:
 	ACampGameMode();
@@ -16,6 +15,8 @@ public:
 	void Tick(float _DeltaTime);
 
 protected:
+
+	void LevelChangeStart() override;
 
 private:
 	std::shared_ptr<class AInfighter> NewInfighter;

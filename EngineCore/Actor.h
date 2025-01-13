@@ -157,6 +157,9 @@ protected:
 	std::shared_ptr<class USceneComponent> RootComponent = nullptr;
 
 private:
+	AActor* Parent = nullptr;
+	std::list<std::shared_ptr<AActor>> ChildList;
+
 	ULevel* World;
 
 	std::list<std::shared_ptr<class UActorComponent>> ActorComponentList;

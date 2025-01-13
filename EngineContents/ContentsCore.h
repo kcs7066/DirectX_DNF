@@ -21,6 +21,6 @@ protected:
 	void EngineEnd();
 
 private:
-
+	void ResSetting();
 };
 

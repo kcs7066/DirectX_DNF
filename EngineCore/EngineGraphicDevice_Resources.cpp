@@ -42,6 +42,17 @@ void UEngineGraphicDevice::DepthStencilInit()
 
 		UEngineDepthStencilState::Create("CollisionDebugDepth", Desc);
 	}
+
+	{
+		D3D11_DEPTH_STENCIL_DESC Desc = { 0 };
+		Desc.DepthEnable = true;
+		Desc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
+		Desc.DepthFunc = D3D11_COMPARISON_ALWAYS;
+		Desc.StencilEnable = false;
+
+		UEngineDepthStencilState::Create("TargetMerge", Desc);
+	}
+
 }
 
 void UEngineGraphicDevice::TextureInit()
@@ -118,7 +129,19 @@ void UEngineGraphicDevice::MeshInit()
 	}
 
 	{
+		std::vector<FEngineVertex> Vertexs;
+		Vertexs.resize(4);
+		Vertexs[0] = FEngineVertex{ FVector(-1.0f, 1.0f, 0.0f), {0.0f , 0.0f }, {1.0f, 0.0f, 0.0f, 1.0f} };
+		Vertexs[1] = FEngineVertex{ FVector(1.0f, 1.0f, 0.0f), {1.0f , 0.0f } , {0.0f, 1.0f, 0.0f, 1.0f} };
+		Vertexs[2] = FEngineVertex{ FVector(-1.0f, -1.0f, 0.0f), {0.0f , 1.0f } , {0.0f, 0.0f, 1.0f, 1.0f} };
+		Vertexs[3] = FEngineVertex{ FVector(1.0f, -1.0f, 0.0f), {1.0f , 1.0f } , {1.0f, 1.0f, 1.0f, 1.0f} };
+
+		UEngineVertexBuffer::Create("FullRect", Vertexs);
+	}
+
+	{
 		UMesh::Create("Rect");
+		UMesh::Create("FullRect", "FullRect", "Rect");
 	}
 
 }
@@ -143,11 +166,9 @@ void UEngineGraphicDevice::BlendInit()
 	Desc.RenderTarget[0].SrcBlend = D3D11_BLEND_SRC_ALPHA;
 	Desc.RenderTarget[0].DestBlend = D3D11_BLEND_INV_SRC_ALPHA;
 
-	Desc.RenderTarget[0].BlendOpAlpha = D3D11_BLEND_OP_ADD;
+	Desc.RenderTarget[0].BlendOpAlpha = D3D11_BLEND_OP_MAX;
 	Desc.RenderTarget[0].SrcBlendAlpha = D3D11_BLEND_ONE;
 	Desc.RenderTarget[0].DestBlendAlpha = D3D11_BLEND_ONE;
-
-
 
 	UEngineBlend::Create("AlphaBlend", Desc);
 }
@@ -186,4 +207,18 @@ void UEngineGraphicDevice::MaterialInit()
 		Mat->SetDepthStencilState("CollisionDebugDepth");
 		Mat->SetRasterizerState("CollisionDebugRas");
 	}
+
+	{
+		std::shared_ptr<UEngineMaterial> Mat = UEngineMaterial::Create("TileMap");
+		Mat->SetVertexShader("EngineTileMapShader.fx");
+		Mat->SetPixelShader("EngineTileMapShader.fx");
+	}
+
+	{
+		std::shared_ptr<UEngineMaterial> Mat = UEngineMaterial::Create("TargetMerge");
+		Mat->SetVertexShader("EngineTargetMergeShader.fx");
+		Mat->SetPixelShader("EngineTargetMergeShader.fx");
+		Mat->SetDepthStencilState("TargetMerge");
+	}
+
 }

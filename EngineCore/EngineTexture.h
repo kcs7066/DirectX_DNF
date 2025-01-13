@@ -6,11 +6,13 @@
 
 class UEngineTexture : public UEngineResources
 {
+	friend class UEngineRenderTarget;
+
 public:
-		ENGINEAPI UEngineTexture();
+	ENGINEAPI UEngineTexture();
 	ENGINEAPI ~UEngineTexture();
 
-		UEngineTexture(const UEngineTexture& _Other) = delete;
+	UEngineTexture(const UEngineTexture& _Other) = delete;
 	UEngineTexture(UEngineTexture&& _Other) noexcept = delete;
 	UEngineTexture& operator=(const UEngineTexture& _Other) = delete;
 	UEngineTexture& operator=(UEngineTexture&& _Other) noexcept = delete;
@@ -46,9 +48,15 @@ public:
 		return Size;
 	}
 
+
 	void Setting(EShaderType _Type, UINT _BindIndex);
 
 	ENGINEAPI void ResCreate(const D3D11_TEXTURE2D_DESC& _Value);
+	ENGINEAPI void ResCreate(Microsoft::WRL::ComPtr<ID3D11Texture2D> _Texture2D);
+
+	ENGINEAPI void CreateRenderTargetView();
+	ENGINEAPI void CreateShaderResourceView();
+	ENGINEAPI void CreateDepthStencilView();
 
 protected:
 

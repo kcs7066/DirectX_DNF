@@ -41,10 +41,10 @@ public:
 		}
 	};
 
-		ENGINEAPI USpriteRenderer();
+	ENGINEAPI USpriteRenderer();
 	ENGINEAPI ~USpriteRenderer();
 
-		USpriteRenderer(const USpriteRenderer& _Other) = delete;
+	USpriteRenderer(const USpriteRenderer& _Other) = delete;
 	USpriteRenderer(USpriteRenderer&& _Other) noexcept = delete;
 	USpriteRenderer& operator=(const USpriteRenderer& _Other) = delete;
 	USpriteRenderer& operator=(USpriteRenderer&& _Other) noexcept = delete;
@@ -65,7 +65,7 @@ public:
 
 	ENGINEAPI void CreateAnimation(std::string_view _AnimationName, std::string_view _SpriteName, std::vector<int> _Indexs, float _Frame, bool _Loop = true);
 
-		ENGINEAPI void ChangeAnimation(std::string_view _AnimationName, bool _Force = false);
+	ENGINEAPI void ChangeAnimation(std::string_view _AnimationName, bool _Force = false);
 
 	ENGINEAPI void SetAnimationEvent(std::string_view _AnimationName, int _Frame, std::function<void()> _Function);
 
@@ -105,6 +105,16 @@ public:
 		AutoScaleRatio = _Scale;
 	}
 
+	void BillboardOn()
+	{
+		IsBillboard = true;
+	}
+
+	void BillboardOff()
+	{
+		IsBillboard = false;
+	}
+
 
 	void SetSprite(UEngineSprite* _Sprite);
 
@@ -116,9 +126,11 @@ protected:
 	ENGINEAPI void Render(class UEngineCamera* _Camera, float _DeltaTime) override;
 	void BeginPlay() override;
 	void ComponentTick(float _DeltaTime) override;
-
+	ENGINEAPI void RenderTransUpdate(UEngineCamera* _Camera) override;
 
 private:
+	bool IsBillboard = false;
+
 	URenderUnit* MainUnit;
 
 	int CurIndex = 0;

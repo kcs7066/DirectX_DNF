@@ -49,12 +49,7 @@ cbuffer FSpriteData : register(b1)
     float4 Pivot;
 };
 
-cbuffer FUVValue : register(b2)
-{
-    float4 PlusUVValue;
-};
-
-VertexShaderOutPut TileMap_VS(EngineVertex _Vertex)
+VertexShaderOutPut VertexToWorld_VS(EngineVertex _Vertex)
 {
 				
 		
@@ -69,15 +64,13 @@ VertexShaderOutPut TileMap_VS(EngineVertex _Vertex)
     OutPut.UV = _Vertex.UV;
     OutPut.UV.x = (_Vertex.UV.x * CuttingSize.x) + CuttingPos.x;
     OutPut.UV.y = (_Vertex.UV.y * CuttingSize.y) + CuttingPos.y;
-    OutPut.UV.x += PlusUVValue.x;
-    OutPut.UV.y += PlusUVValue.y;
 	
     OutPut.COLOR = _Vertex.COLOR;
     return OutPut;
 }
 
 
-Texture2D ImageTexture : register(t0);
+Texture2D TileMapTex : register(t0);
 SamplerState ImageSampler : register(s0);
 
 cbuffer ResultColor : register(b0)
@@ -86,10 +79,9 @@ cbuffer ResultColor : register(b0)
     float4 MulColor;
 };
 
-float4 TileMap_PS(VertexShaderOutPut _Vertex) : SV_Target0
+float4 PixelToWorld_PS(VertexShaderOutPut _Vertex) : SV_Target0
 {
-	
-    float4 Color = ImageTexture.Sample(ImageSampler, _Vertex.UV.xy);
+    float4 Color = TileMapTex.Sample(ImageSampler, _Vertex.UV.xy);
 	
     if (0.0f >= Color.a)
     {

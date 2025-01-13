@@ -43,7 +43,7 @@ std::shared_ptr<UEngineSprite> UEngineSprite::CreateSpriteToFolder(std::string_v
 		FSpriteData SpriteData;
 		SpriteData.CuttingPos = { 0.0f, 0.0f };
 		SpriteData.CuttingSize = { 1.0f, 1.0f };
-		SpriteData.Pivot = { 0.5f, 0.0f };
+		SpriteData.Pivot = { 0.5f, 0.5f };
 		NewRes->SpriteDatas.push_back(SpriteData);
 	}
 
@@ -64,7 +64,7 @@ std::shared_ptr<UEngineSprite> UEngineSprite::CreateSpriteToMeta(std::string_vie
 	PushRes<UEngineSprite>(NewRes, _Name, "");
 
 
-				
+
 	UEnginePath Path = Tex->GetPath();
 	std::string FileName = Path.GetFileName();
 	FileName += _DataFileExt;
@@ -178,7 +178,7 @@ FVector UEngineSprite::GetSpriteScaleToReal(size_t _Index)
 
 	FVector Result;
 
-		Result.X = SpriteDatas[_Index].CuttingSize.X * SpriteTexture[_Index]->GetTextureSize().X;
+	Result.X = SpriteDatas[_Index].CuttingSize.X * SpriteTexture[_Index]->GetTextureSize().X;
 	Result.Y = SpriteDatas[_Index].CuttingSize.Y * SpriteTexture[_Index]->GetTextureSize().Y;
 
 	return Result;

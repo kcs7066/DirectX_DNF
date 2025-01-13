@@ -46,9 +46,9 @@ public:
 		return Context.Get();
 	}
 
-	ENGINEAPI ID3D11RenderTargetView* GetRTV()
+	ENGINEAPI std::shared_ptr<class UEngineRenderTarget> GetBackBufferTarget()
 	{
-		return RTV.Get();
+		return BackBufferTarget;
 	}
 
 protected:
@@ -66,11 +66,7 @@ private:
 
 	Microsoft::WRL::ComPtr<IDXGIAdapter> MainAdapter = nullptr;
 
-	Microsoft::WRL::ComPtr<ID3D11Texture2D> DXBackBufferTexture = nullptr;
-	Microsoft::WRL::ComPtr<ID3D11RenderTargetView> RTV = nullptr;
-
-	std::shared_ptr<class UEngineTexture> DepthTex;
-
+	std::shared_ptr<class UEngineRenderTarget> BackBufferTarget;
 
 	ENGINEAPI void DefaultResourcesInit();
 

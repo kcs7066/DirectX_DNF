@@ -3,9 +3,15 @@
 #include <EngineCore/Level.h>
 #include <EngineCore/EngineTexture.h>
 #include <EngineCore/EngineSprite.h>
+#include <EngineCore/EngineShader.h>
+#include <EngineCore/EngineMaterial.h>
 #include "CampGameMode.h"
 #include "CampTwoGameMode.h"
 #include "EllerinonGameMode.h"
+#include <EngineCore/HUD.h>
+#include <EngineCore/EngineGUI.h>
+#include <EngineCore/EngineGUIWindow.h>
+#include "ContentsEditorGUI.h"
 
 CreateContentsCoreDefine(UContentsCore);
 
@@ -24,139 +30,18 @@ void UContentsCore::EngineStart(UEngineInitData& _Data)
 	_Data.WindowPos = { 0, 0 };
 	_Data.WindowSize = { 1600, 900 };
 
+	ResSetting();
 
+	UEngineCore::CreateLevel<ACampGameMode, APawn, AHUD>("Camplevel");
+	UEngineCore::CreateLevel<ACampTwoGameMode, APawn, AHUD>("CampTwolevel");
+	UEngineCore::CreateLevel<AEllerinonGameMode, APawn, AHUD>("Ellerinonlevel");
+	UEngineCore::OpenLevel("Ellerinonlevel");
 
-	{
-		UEngineDirectory Dir;
-		if (false == Dir.MoveParentToDirectory("DNFResource"))
-		{
-			MSGASSERT("리소스 폴더를 찾지 못했습니다.");
-			return;
-		}
-		Dir.Append("Image");
-		std::vector<UEngineFile> ImageFiles = Dir.GetAllFile(true, { ".PNG", ".BMP", ".JPG" });
-		for (size_t i = 0; i < ImageFiles.size(); i++)
-		{
-			std::string FilePath = ImageFiles[i].GetPathToString();
-			UEngineTexture::Load(FilePath);
-		}
-	}
+	UEngineGUI::AllWindowOff();
 
-	{
-		UEngineDirectory Dir;
-		if (false == Dir.MoveParentToDirectory("DNFResource"))
-		{
-			MSGASSERT("리소스 폴더를 찾지 못했습니다.");
-			return;
-		}
-		Dir.Append("Image/camp");
-
-		UEngineSprite::CreateSpriteToFolder(Dir.GetPathToString());
-	}
-
-	{
-		UEngineDirectory Dir;
-		if (false == Dir.MoveParentToDirectory("DNFResource"))
-		{
-			MSGASSERT("리소스 폴더를 찾지 못했습니다.");
-			return;
-		}
-		Dir.Append("Image/camptwo");
-
-		UEngineSprite::CreateSpriteToFolder(Dir.GetPathToString());
-	}
-
-	{
-		UEngineDirectory Dir;
-		if (false == Dir.MoveParentToDirectory("DNFResource"))
-		{
-			MSGASSERT("리소스 폴더를 찾지 못했습니다.");
-			return;
-		}
-		Dir.Append("Image/ellerinon");
-
-		UEngineSprite::CreateSpriteToFolder(Dir.GetPathToString());
-	}
-
-	{
-		UEngineDirectory Dir;
-		if (false == Dir.MoveParentToDirectory("DNFResource"))
-		{
-			MSGASSERT("리소스 폴더를 찾지 못했습니다.");
-			return;
-		}
-		Dir.Append("Image/grandis");
-
-		UEngineSprite::CreateSpriteToFolder(Dir.GetPathToString());
-	}
-
-	{
-		UEngineDirectory Dir;
-		if (false == Dir.MoveParentToDirectory("DNFResource"))
-		{
-			MSGASSERT("리소스 폴더를 찾지 못했습니다.");
-			return;
-		}
-		Dir.Append("Image/infighter");
-
-		UEngineSprite::CreateSpriteToFolder(Dir.GetPathToString());
-	}
-
-	{
-		UEngineDirectory Dir;
-		if (false == Dir.MoveParentToDirectory("DNFResource"))
-		{
-			MSGASSERT("리소스 폴더를 찾지 못했습니다.");
-			return;
-		}
-		Dir.Append("Image/infighter/buff");
-
-		UEngineSprite::CreateSpriteToFolder(Dir.GetPathToString());
-	}
-
-	{
-		UEngineDirectory Dir;
-		if (false == Dir.MoveParentToDirectory("DNFResource"))
-		{
-			MSGASSERT("리소스 폴더를 찾지 못했습니다.");
-			return;
-		}
-		Dir.Append("Image/infighter/neo");
-
-		UEngineSprite::CreateSpriteToFolder(Dir.GetPathToString());
-	}
-
-	{
-		UEngineDirectory Dir;
-		if (false == Dir.MoveParentToDirectory("DNFResource"))
-		{
-			MSGASSERT("리소스 폴더를 찾지 못했습니다.");
-			return;
-		}
-		Dir.Append("Image/lucille");
-
-		UEngineSprite::CreateSpriteToFolder(Dir.GetPathToString());
-	}
-
-	{
-		UEngineDirectory Dir;
-		if (false == Dir.MoveParentToDirectory("DNFResource"))
-		{
-			MSGASSERT("리소스 폴더를 찾지 못했습니다.");
-			return;
-		}
-		Dir.Append("Image/astaroth");
-
-		UEngineSprite::CreateSpriteToFolder(Dir.GetPathToString());
-	}
-
-
-	UEngineCore::CreateLevel<ACampGameMode, APawn>("Camplevel");
-	UEngineCore::CreateLevel<ACampTwoGameMode, APawn>("CampTwolevel");
-	UEngineCore::CreateLevel<AEllerinonGameMode, APawn>("Ellerinonlevel");
-	UEngineCore::OpenLevel("Camplevel");
-
-
+	UEngineGUI::CreateGUIWindow<UContentsEditorGUI>("ContentsEditorGUI");
+	std::shared_ptr<UContentsEditorGUI> Window = UEngineGUI::FindGUIWindow<UContentsEditorGUI>("ContentsEditorGUI");
+	Window->SetActive(true);
 }
 
 void UContentsCore::EngineTick(float _DeltaTime)

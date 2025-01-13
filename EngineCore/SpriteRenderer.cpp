@@ -1,5 +1,6 @@
 #include "PreCompile.h"
 #include "SpriteRenderer.h"
+#include "EngineCamera.h"
 
 USpriteRenderer::USpriteRenderer()
 {
@@ -88,14 +89,46 @@ void USpriteRenderer::Render(UEngineCamera* _Camera, float _DeltaTime)
 	}
 
 	URenderer::Render(_Camera, _DeltaTime);
+
+	if (true == IsBillboard)
+	{
+		Transform.WVP;
+	}
+}
+
+void USpriteRenderer::RenderTransUpdate(UEngineCamera* _Camera)
+{
+	FTransform& CameraTrans = _Camera->GetTransformRef();
+	FTransform& RendererTrans = GetTransformRef();
+
+	RendererTrans.View = CameraTrans.View;
+	FMatrix CurWorld = RendererTrans.World;
+
+	if (true == IsBillboard)
+	{
+
+
+
+		FMatrix Bill = CameraTrans.View;
+		Bill.ArrVector[3] = FVector(0.0f, 0.0f, 0.0f, 1.0f);
+		Bill.Transpose();
+
+		CurWorld = RendererTrans.ScaleMat * Bill * RendererTrans.LocationMat * RendererTrans.RevolveMat * RendererTrans.ParentMat;
+	}
+
+	RendererTrans.Projection = CameraTrans.Projection;
+	RendererTrans.WVP = CurWorld * RendererTrans.View * RendererTrans.Projection;
 }
 
 void USpriteRenderer::ComponentTick(float _DeltaTime)
 {
 	URenderer::ComponentTick(_DeltaTime);
 
-		if (nullptr != CurAnimation)
+	if (nullptr != CurAnimation)
 	{
+		FrameAnimation* EventAnimation = nullptr;
+		int EventFrame = -1;
+
 		CurAnimation->IsEnd = false;
 		std::vector<int>& Indexs = CurAnimation->FrameIndex;
 		std::vector<float>& Times = CurAnimation->FrameTime;
@@ -107,7 +140,7 @@ void USpriteRenderer::ComponentTick(float _DeltaTime)
 
 		float CurFrameTime = Times[CurAnimation->CurIndex];
 
-				if (CurAnimation->CurTime > CurFrameTime)
+		if (CurAnimation->CurTime > CurFrameTime)
 		{
 
 			CurAnimation->CurTime -= CurFrameTime;
@@ -115,10 +148,11 @@ void USpriteRenderer::ComponentTick(float _DeltaTime)
 
 			if (CurAnimation->Events.contains(CurIndex))
 			{
-				CurAnimation->Events[CurIndex]();
+				EventAnimation = CurAnimation;
+				EventFrame = CurIndex;
 			}
 
-						if (CurAnimation->CurIndex >= Indexs.size())
+			if (CurAnimation->CurIndex >= Indexs.size())
 			{
 				CurAnimation->IsEnd = true;
 			}
@@ -135,7 +169,8 @@ void USpriteRenderer::ComponentTick(float _DeltaTime)
 
 					if (CurAnimation->Events.contains(CurIndex))
 					{
-						CurAnimation->Events[CurIndex]();
+						EventAnimation = CurAnimation;
+						EventFrame = CurIndex;
 					}
 				}
 				else
@@ -149,6 +184,14 @@ void USpriteRenderer::ComponentTick(float _DeltaTime)
 
 
 		CurIndex = Indexs[CurAnimation->CurIndex];
+
+		if (nullptr != EventAnimation)
+		{
+			if (EventAnimation->Events.contains(CurIndex))
+			{
+				EventAnimation->Events[CurIndex]();
+			}
+		}
 	}
 
 

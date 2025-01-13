@@ -25,8 +25,6 @@ const FIntPoint FIntPoint::DOWN = { 0, 1 };
 
 
 
-const UColor UColor::WHITE = { 255, 255, 255, 0 };
-const UColor UColor::BLACK = { 0, 0, 0, 0 };
 
 FIntPoint FVector::ConvertToPoint() const
 {
@@ -47,8 +45,20 @@ public:
 		FTransform::AllCollisionFunction[static_cast<int>(ECollisionType::CirCle)][static_cast<int>(ECollisionType::Rect)] = FTransform::CirCleToRect;
 		FTransform::AllCollisionFunction[static_cast<int>(ECollisionType::OBB2D)][static_cast<int>(ECollisionType::OBB2D)] = FTransform::OBB2DToOBB2D;
 		FTransform::AllCollisionFunction[static_cast<int>(ECollisionType::OBB2D)][static_cast<int>(ECollisionType::Rect)] = FTransform::OBB2DToRect;
-		FTransform::AllCollisionFunction[static_cast<int>(ECollisionType::OBB2D)][static_cast<int>(ECollisionType::CirCle)] = FTransform::OBB2DToSphere;
+		FTransform::AllCollisionFunction[static_cast<int>(ECollisionType::OBB2D)][static_cast<int>(ECollisionType::CirCle)] = FTransform::OBB2DToCirCle;
 		FTransform::AllCollisionFunction[static_cast<int>(ECollisionType::OBB2D)][static_cast<int>(ECollisionType::Point)] = FTransform::OBB2DToPoint;
+
+		FTransform::AllCollisionFunction[static_cast<int>(ECollisionType::OBB)][static_cast<int>(ECollisionType::Sphere)] = FTransform::OBBToSphere;
+		FTransform::AllCollisionFunction[static_cast<int>(ECollisionType::OBB)][static_cast<int>(ECollisionType::AABB)] = FTransform::OBBToAABB;
+		FTransform::AllCollisionFunction[static_cast<int>(ECollisionType::OBB)][static_cast<int>(ECollisionType::OBB)] = FTransform::OBBToOBB;
+
+		FTransform::AllCollisionFunction[static_cast<int>(ECollisionType::Sphere)][static_cast<int>(ECollisionType::Sphere)] = FTransform::SphereToSphere;
+		FTransform::AllCollisionFunction[static_cast<int>(ECollisionType::Sphere)][static_cast<int>(ECollisionType::AABB)] = FTransform::SphereToAABB;
+		FTransform::AllCollisionFunction[static_cast<int>(ECollisionType::Sphere)][static_cast<int>(ECollisionType::OBB)] = FTransform::SphereToOBB;
+
+		FTransform::AllCollisionFunction[static_cast<int>(ECollisionType::AABB)][static_cast<int>(ECollisionType::Sphere)] = FTransform::AABBToSphere;
+		FTransform::AllCollisionFunction[static_cast<int>(ECollisionType::AABB)][static_cast<int>(ECollisionType::AABB)] = FTransform::AABBToAABB;
+		FTransform::AllCollisionFunction[static_cast<int>(ECollisionType::AABB)][static_cast<int>(ECollisionType::OBB)] = FTransform::AABBToOBB;
 
 	}
 };
@@ -93,6 +103,98 @@ FVector FQuat::QuaternionToEulerRad() const
 
 	return result;
 }
+
+
+FVector FVector::Transform(const FVector& _Vector, const class FMatrix& _Matrix)
+{
+	return _Vector * _Matrix;
+}
+
+FVector FVector::TransformCoord(const FVector& _Vector, const class FMatrix& _Matrix)
+{
+	FVector Copy = _Vector;
+	Copy.W = 1.0f;
+	return Copy * _Matrix;
+}
+
+FVector FVector::TransformNormal(const FVector& _Vector, const class FMatrix& _Matrix)
+{
+	FVector Copy = _Vector;
+	Copy.W = 0.0f;
+	return Copy * _Matrix;
+}
+
+template<>
+FVector FVector::operator*(const class FMatrix& _Matrix) const
+{
+	FVector Result;
+
+	Result.X = Arr2D[0][0] * _Matrix.Arr2D[0][0] + Arr2D[0][1] * _Matrix.Arr2D[1][0] + Arr2D[0][2] * _Matrix.Arr2D[2][0] + Arr2D[0][3] * _Matrix.Arr2D[3][0];
+	Result.Y = Arr2D[0][0] * _Matrix.Arr2D[0][1] + Arr2D[0][1] * _Matrix.Arr2D[1][1] + Arr2D[0][2] * _Matrix.Arr2D[2][1] + Arr2D[0][3] * _Matrix.Arr2D[3][1];
+	Result.Z = Arr2D[0][0] * _Matrix.Arr2D[0][2] + Arr2D[0][1] * _Matrix.Arr2D[1][2] + Arr2D[0][2] * _Matrix.Arr2D[2][2] + Arr2D[0][3] * _Matrix.Arr2D[3][2];
+	Result.W = Arr2D[0][0] * _Matrix.Arr2D[0][3] + Arr2D[0][1] * _Matrix.Arr2D[1][3] + Arr2D[0][2] * _Matrix.Arr2D[2][3] + Arr2D[0][3] * _Matrix.Arr2D[3][3];
+
+
+
+
+
+	return Result;
+}
+
+FVector& FVector::operator*=(const FMatrix& _Matrix)
+{
+	DirectVector = DirectX::XMVector4Transform(DirectVector, _Matrix.DirectMatrix);
+	return *this;
+}
+
+FMatrix FMatrix::operator*(const FMatrix& _Matrix)
+{
+	FMatrix Result;
+	Result.DirectMatrix = DirectX::XMMatrixMultiply(DirectMatrix, _Matrix.DirectMatrix);
+	return Result;
+
+}
+
+ENGINEAPI void FTransform::Decompose()
+{
+	World.Decompose(WorldScale, WorldQuat, WorldLocation);
+
+	LocalWorld.Decompose(RelativeScale, RelativeQuat, RelativeLocation);
+
+}
+
+void FTransform::TransformUpdate(bool _IsAbsolut /*= false*/)
+{
+
+
+
+	ScaleMat.Scale(Scale);
+	RotationMat.RotationDeg(Rotation);
+	LocationMat.Position(Location);
+
+	FMatrix CheckWorld = ScaleMat * RotationMat * LocationMat;
+
+	if (true == _IsAbsolut)
+	{
+
+		World = CheckWorld;
+		LocalWorld = CheckWorld * ParentMat.InverseReturn();
+	}
+	else
+	{
+		LocalWorld = CheckWorld;
+		World = CheckWorld * RevolveMat * ParentMat;
+
+	}
+
+	Decompose();
+
+
+
+}
+
+
+
 
 bool FTransform::Collision(ECollisionType _LeftType, const FTransform& _Left, ECollisionType _RightType, const FTransform& _Right)
 {
@@ -189,7 +291,7 @@ bool FTransform::OBB2DToRect(const FTransform& _Left, const FTransform& _Right)
 	return LeftCol.OBB.Intersects(RightCol.AABB);
 }
 
-bool FTransform::OBB2DToSphere(const FTransform& _Left, const FTransform& _Right)
+bool FTransform::OBB2DToCirCle(const FTransform& _Left, const FTransform& _Right)
 {
 	FCollisionData LeftCol = _Left.GetCollisionData();
 	FCollisionData RightCol = _Right.GetCollisionData();
@@ -208,92 +310,59 @@ bool FTransform::OBB2DToPoint(const FTransform& _Left, const FTransform& _Right)
 	return LeftCol.OBB.Intersects(RightCol.AABB);
 }
 
-
-FVector FVector::Transform(const FVector& _Vector, const class FMatrix& _Matrix)
+bool FTransform::OBBToSphere(const FTransform& _Left, const FTransform& _Right)
 {
-	return _Vector * _Matrix;
+	FCollisionData LeftCol = _Left.GetCollisionData();
+	FCollisionData RightCol = _Right.GetCollisionData();
+	return LeftCol.OBB.Intersects(RightCol.Sphere);
+}
+bool FTransform::OBBToOBB(const FTransform& _Left, const FTransform& _Right)
+{
+	FCollisionData LeftCol = _Left.GetCollisionData();
+	FCollisionData RightCol = _Right.GetCollisionData();
+	return LeftCol.OBB.Intersects(RightCol.OBB);
+}
+bool FTransform::OBBToAABB(const FTransform& _Left, const FTransform& _Right)
+{
+	FCollisionData LeftCol = _Left.GetCollisionData();
+	FCollisionData RightCol = _Right.GetCollisionData();
+	return LeftCol.OBB.Intersects(RightCol.AABB);
 }
 
-FVector FVector::TransformCoord(const FVector& _Vector, const class FMatrix& _Matrix)
+
+bool FTransform::SphereToSphere(const FTransform& _Left, const FTransform& _Right)
 {
-	FVector Copy = _Vector;
-	Copy.W = 1.0f;
-	return Copy * _Matrix;
+	FCollisionData LeftCol = _Left.GetCollisionData();
+	FCollisionData RightCol = _Right.GetCollisionData();
+	return LeftCol.Sphere.Intersects(RightCol.Sphere);
 }
-
-FVector FVector::TransformNormal(const FVector& _Vector, const class FMatrix& _Matrix)
+bool FTransform::SphereToOBB(const FTransform& _Left, const FTransform& _Right)
 {
-	FVector Copy = _Vector;
-	Copy.W = 0.0f;
-	return Copy * _Matrix;
+	FCollisionData LeftCol = _Left.GetCollisionData();
+	FCollisionData RightCol = _Right.GetCollisionData();
+	return LeftCol.Sphere.Intersects(RightCol.OBB);
 }
-
-template<>
-FVector FVector::operator*(const class FMatrix& _Matrix) const
+bool FTransform::SphereToAABB(const FTransform& _Left, const FTransform& _Right)
 {
-	FVector Result;
-
-	Result.X = Arr2D[0][0] * _Matrix.Arr2D[0][0] + Arr2D[0][1] * _Matrix.Arr2D[1][0] + Arr2D[0][2] * _Matrix.Arr2D[2][0] + Arr2D[0][3] * _Matrix.Arr2D[3][0];
-	Result.Y = Arr2D[0][0] * _Matrix.Arr2D[0][1] + Arr2D[0][1] * _Matrix.Arr2D[1][1] + Arr2D[0][2] * _Matrix.Arr2D[2][1] + Arr2D[0][3] * _Matrix.Arr2D[3][1];
-	Result.Z = Arr2D[0][0] * _Matrix.Arr2D[0][2] + Arr2D[0][1] * _Matrix.Arr2D[1][2] + Arr2D[0][2] * _Matrix.Arr2D[2][2] + Arr2D[0][3] * _Matrix.Arr2D[3][2];
-	Result.W = Arr2D[0][0] * _Matrix.Arr2D[0][3] + Arr2D[0][1] * _Matrix.Arr2D[1][3] + Arr2D[0][2] * _Matrix.Arr2D[2][3] + Arr2D[0][3] * _Matrix.Arr2D[3][3];
-
-
-
-
-
-	return Result;
+	FCollisionData LeftCol = _Left.GetCollisionData();
+	FCollisionData RightCol = _Right.GetCollisionData();
+	return LeftCol.Sphere.Intersects(RightCol.AABB);
 }
-
-FVector& FVector::operator*=(const FMatrix& _Matrix)
+bool FTransform::AABBToSphere(const FTransform& _Left, const FTransform& _Right)
 {
-	DirectVector = DirectX::XMVector4Transform(DirectVector, _Matrix.DirectMatrix);
-	return *this;
+	FCollisionData LeftCol = _Left.GetCollisionData();
+	FCollisionData RightCol = _Right.GetCollisionData();
+	return LeftCol.AABB.Intersects(RightCol.Sphere);
 }
-
-FMatrix FMatrix::operator*(const FMatrix& _Matrix)
+bool FTransform::AABBToOBB(const FTransform& _Left, const FTransform& _Right)
 {
-	FMatrix Result;
-	Result.DirectMatrix = DirectX::XMMatrixMultiply(DirectMatrix, _Matrix.DirectMatrix);
-	return Result;
-
+	FCollisionData LeftCol = _Left.GetCollisionData();
+	FCollisionData RightCol = _Right.GetCollisionData();
+	return LeftCol.AABB.Intersects(RightCol.OBB);
 }
-
-ENGINEAPI void FTransform::Decompose()
+bool FTransform::AABBToAABB(const FTransform& _Left, const FTransform& _Right)
 {
-	World.Decompose(WorldScale, WorldQuat, WorldLocation);
-
-	LocalWorld.Decompose(RelativeScale, RelativeQuat, RelativeLocation);
-
+	FCollisionData LeftCol = _Left.GetCollisionData();
+	FCollisionData RightCol = _Right.GetCollisionData();
+	return LeftCol.AABB.Intersects(RightCol.AABB);
 }
-
-void FTransform::TransformUpdate(bool _IsAbsolut /*= false*/)
-{
-
-
-
-	ScaleMat.Scale(Scale);
-	RotationMat.RotationDeg(Rotation);
-	LocationMat.Position(Location);
-
-	FMatrix CheckWorld = ScaleMat * RotationMat * LocationMat;
-
-	if (true == _IsAbsolut)
-	{
-
-		World = CheckWorld;
-		LocalWorld = CheckWorld * ParentMat.InverseReturn();
-	}
-	else
-	{
-		LocalWorld = CheckWorld;
-		World = CheckWorld * RevolveMat * ParentMat;
-
-	}
-
-	Decompose();
-
-
-
-}
-

@@ -14,7 +14,7 @@ UEngineShader::~UEngineShader()
 
 void UEngineShader::ReflectionCompile(UEngineFile& _File)
 {
-	
+
 	_File.FileOpen("rt");
 	std::string ShaderCode = _File.GetAllFileText();
 
@@ -25,7 +25,7 @@ void UEngineShader::ReflectionCompile(UEngineFile& _File)
 		if (EntryIndex != std::string::npos)
 		{
 			{
-								size_t FirstIndex = ShaderCode.find_last_of(" ", EntryIndex);
+				size_t FirstIndex = ShaderCode.find_last_of(" ", EntryIndex);
 
 				std::string EntryName = ShaderCode.substr(FirstIndex + 1, EntryIndex - FirstIndex - 1);
 				EntryName += "_VS";
@@ -42,7 +42,7 @@ void UEngineShader::ReflectionCompile(UEngineFile& _File)
 		if (EntryIndex != std::string::npos)
 		{
 			{
-								size_t FirstIndex = ShaderCode.find_last_of(" ", EntryIndex);
+				size_t FirstIndex = ShaderCode.find_last_of(" ", EntryIndex);
 
 				std::string EntryName = ShaderCode.substr(FirstIndex + 1, EntryIndex - FirstIndex - 1);
 				EntryName += "_PS";
@@ -55,9 +55,9 @@ void UEngineShader::ReflectionCompile(UEngineFile& _File)
 
 void UEngineShader::ShaderResCheck()
 {
-							
-		
-			if (nullptr == ShaderCodeBlob)
+
+
+	if (nullptr == ShaderCodeBlob)
 	{
 		MSGASSERT("쉐이더가 컴파일되지 않아서 쉐이더의 리소스를 조사할수가 없습니다.");
 		return;
@@ -66,7 +66,7 @@ void UEngineShader::ShaderResCheck()
 	Microsoft::WRL::ComPtr<ID3D11ShaderReflection> CompileInfo = nullptr;
 
 
-		if (S_OK != D3DReflect(ShaderCodeBlob->GetBufferPointer(), ShaderCodeBlob->GetBufferSize(), IID_ID3D11ShaderReflection, &CompileInfo))
+	if (S_OK != D3DReflect(ShaderCodeBlob->GetBufferPointer(), ShaderCodeBlob->GetBufferSize(), IID_ID3D11ShaderReflection, &CompileInfo))
 	{
 		MSGASSERT("리플렉션에 실패했습니다.");
 		return;
@@ -77,7 +77,7 @@ void UEngineShader::ShaderResCheck()
 
 	D3D11_SHADER_INPUT_BIND_DESC ResDesc;
 
-		for (UINT i = 0; i < Info.BoundResources; i++)
+	for (UINT i = 0; i < Info.BoundResources; i++)
 	{
 		CompileInfo->GetResourceBindingDesc(i, &ResDesc);
 
@@ -90,13 +90,13 @@ void UEngineShader::ShaderResCheck()
 		{
 		case D3D_SIT_CBUFFER:
 		{
-						ID3D11ShaderReflectionConstantBuffer* Info = CompileInfo->GetConstantBufferByName(ResDesc.Name);
+			ID3D11ShaderReflectionConstantBuffer* Info = CompileInfo->GetConstantBufferByName(ResDesc.Name);
 			D3D11_SHADER_BUFFER_DESC BufferInfo = { 0 };
 			Info->GetDesc(&BufferInfo);
 
-									std::shared_ptr<UEngineConstantBuffer> Buffer = UEngineConstantBuffer::CreateOrFind(BufferInfo.Size, UpperName);
+			std::shared_ptr<UEngineConstantBuffer> Buffer = UEngineConstantBuffer::CreateOrFind(BufferInfo.Size, UpperName);
 
-						UEngineConstantBufferRes NewRes;
+			UEngineConstantBufferRes NewRes;
 			NewRes.ShaderType = ShaderType;
 			NewRes.Name = UpperName;
 			NewRes.BindIndex = ResDesc.BindPoint;
@@ -114,7 +114,7 @@ void UEngineShader::ShaderResCheck()
 			NewRes.ShaderType = ShaderType;
 			NewRes.Name = UpperName;
 			NewRes.BindIndex = ResDesc.BindPoint;
-			NewRes.Res = Res;
+			NewRes.Res = Res.get();
 
 			ShaderResources.CreateTextureRes(UpperName, NewRes);
 
@@ -140,7 +140,7 @@ void UEngineShader::ShaderResCheck()
 
 			break;
 		}
-		case D3D_SIT_UAV_RWSTRUCTURED: 		{
+		case D3D_SIT_UAV_RWSTRUCTURED: {
 			int a = 0;
 
 			break;
@@ -152,7 +152,7 @@ void UEngineShader::ShaderResCheck()
 		int a = 0;
 	}
 
-		EntryName;
+	EntryName;
 	ShaderResources;
 
 }

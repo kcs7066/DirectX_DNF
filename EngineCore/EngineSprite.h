@@ -14,10 +14,10 @@ struct FSpriteData
 class UEngineSprite : public UEngineResources
 {
 public:
-		UEngineSprite();
+	UEngineSprite();
 	~UEngineSprite();
 
-		UEngineSprite(const UEngineSprite& _Other) = delete;
+	UEngineSprite(const UEngineSprite& _Other) = delete;
 	UEngineSprite(UEngineSprite&& _Other) noexcept = delete;
 	UEngineSprite& operator=(const UEngineSprite& _Other) = delete;
 	UEngineSprite& operator=(UEngineSprite&& _Other) noexcept = delete;
@@ -49,6 +49,12 @@ public:
 	}
 
 	ENGINEAPI FVector GetSpriteScaleToReal(size_t _Index);
+
+	ENGINEAPI size_t GetSpriteCount()
+	{
+		return SpriteTexture.size();
+	}
+
 
 
 protected:

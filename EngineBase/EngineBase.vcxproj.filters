@@ -38,6 +38,9 @@
     <ClInclude Include="EngineRandom.h">
       <Filter>Math</Filter>
     </ClInclude>
+    <ClInclude Include="FSMStateManager.h">
+      <Filter>Object</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PreCompile.cpp" />
@@ -73,6 +76,9 @@
     </ClCompile>
     <ClCompile Include="EngineRandom.cpp">
       <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="FSMStateManager.cpp">
+      <Filter>Object</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

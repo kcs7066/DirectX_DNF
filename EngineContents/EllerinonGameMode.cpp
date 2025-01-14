@@ -33,21 +33,21 @@ AEllerinonGameMode::AEllerinonGameMode()
 	BackGroundRenderer0->SetupAttachment(RootComponent);
 	BackGroundRenderer0->SetSprite("Ellerinon", 0);
 	BackGroundRenderer0->SetAutoScaleRatio(1.5f);
-	BackGroundRenderer0->SetRelativeLocation({ -568,450,0 });
+	BackGroundRenderer0->SetRelativeLocation({ -568,342,0 });
 	BackGroundRenderer0->SetOrder(-100);
 
 	BackGroundRenderer6 = CreateDefaultSubObject<USpriteRenderer>();
 	BackGroundRenderer6->SetupAttachment(RootComponent);
 	BackGroundRenderer6->SetSprite("Ellerinon", 2);
 	BackGroundRenderer6->SetAutoScaleRatio(1.5f);
-	BackGroundRenderer6->SetRelativeLocation({ 199,-55,0 });
+	BackGroundRenderer6->SetRelativeLocation({ 199,320,0 });
 	BackGroundRenderer6->SetOrder(-100);
 
 	BackGroundRenderer5 = CreateDefaultSubObject<USpriteRenderer>();
 	BackGroundRenderer5->SetupAttachment(RootComponent);
 	BackGroundRenderer5->SetSprite("Ellerinon", 0);
 	BackGroundRenderer5->SetAutoScaleRatio(1.5f);
-	BackGroundRenderer5->SetRelativeLocation({ 966,-10,0 });
+	BackGroundRenderer5->SetRelativeLocation({ 966,342,0 });
 	BackGroundRenderer5->SetOrder(-100);
 
 

@@ -141,7 +141,7 @@ UEngineInput::UEngineInput()
 	Keys.insert({ VK_UP , UEngineKey(VK_UP) });
 	Keys.insert({ VK_DOWN , UEngineKey(VK_DOWN) });
 	Keys.insert({ VK_LSHIFT , UEngineKey(VK_LSHIFT) });
-
+	Keys.insert({ VK_LCONTROL, UEngineKey(VK_LCONTROL) });
 
 	Keys.insert({ VK_LEFT, UEngineKey(VK_LEFT) });
 	Keys.insert({ VK_RIGHT, UEngineKey(VK_RIGHT) });

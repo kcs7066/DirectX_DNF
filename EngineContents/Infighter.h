@@ -67,11 +67,24 @@ private:
 
 	int Speed = 300;
 	float Delaytime = 0.0f;
-	bool IsMonster = false;
+	bool MonsterValue = false;
 	bool DashValue = false;
+	bool SeeRight = true;
 
-	FVector DuckingDir = {0,0};
+	FVector DuckingDir = { 0,0 };
 
 	UFSMStateManager FSM = UFSMStateManager();
+
+	void DirChange()
+	{
+		if (false == SeeRight)
+		{
+			RootComponent->SetRelativeScale3D({ -1,1 });
+		}
+		else
+		{
+			RootComponent->SetRelativeScale3D({ 1,1 });
+		}
+	}
 };
 

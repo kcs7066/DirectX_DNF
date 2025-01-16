@@ -22,12 +22,29 @@ AInfighter::AInfighter()
 	InfighterRenderer->CreateAnimation("infighter_Jump", "infighter", 90, 94, 0.2f);
 	InfighterRenderer->CreateAnimation("infighter_Ducking", "infighter", 132, 134, 0.2f);
 	InfighterRenderer->CreateAnimation("infighter_Sway", "infighter", 135, 137, 0.2f);
-	InfighterRenderer->CreateAnimation("infighter_Roll", "infighter", 53, 64, 0.2f);
+	InfighterRenderer->CreateAnimation("infighter_Roll", "infighter", 53, 64, 0.05f);
+
+	InfighterRenderer->CreateAnimation("infighter_Will", "infighter", 79, 87, 0.1f);
+	InfighterRenderer->CreateAnimation("infighter_BackStep", "infighter", 53, 64, 0.1f);
+	InfighterRenderer->CreateAnimation("infighter_Shadow", "infighter", 154, 162, 0.1f);
+	InfighterRenderer->CreateAnimation("infighter_Gorgeous", "infighter", { 64,8,9,58,174,175,176,58,60,62,63,64 }, 0.1f);
+	InfighterRenderer->CreateAnimation("infighter_MachineGun", "infighter", 53, 64, 0.1f);
+	InfighterRenderer->CreateAnimation("infighter_Screw", "infighter", { 192,193,194,195,196,53,54,55,85,86,87 }, 0.2f);
+	InfighterRenderer->CreateAnimation("infighter_Heavenly", "infighter", { 60,61,62,63,64,54,55,56,57,58,59,60,61,62 }, 0.1f);
+	InfighterRenderer->CreateAnimation("infighter_Gatling", "infighter", 53, 64, 0.1f);
+	InfighterRenderer->CreateAnimation("infighter_Demolision", "infighter", 53, 64, 0.1f);
+	InfighterRenderer->CreateAnimation("infighter_Nuclear", "infighter", 53, 64, 0.1f);
+	InfighterRenderer->CreateAnimation("infighter_Atomic", "infighter", 53, 64, 0.1f);
+	InfighterRenderer->CreateAnimation("infighter_Aggresive", "infighter", 53, 64, 0.1f);
+	InfighterRenderer->CreateAnimation("infighter_Challenge1", "infighter", { 154,155,156,157,158,159,160,161,162 }, 0.1f);
+	InfighterRenderer->CreateAnimation("infighter_Challenge2", "infighter", 53, 64, 0.1f);
+	InfighterRenderer->CreateAnimation("infighter_Challenge3", "infighter", 53, 64, 0.1f);
+
 
 	InfighterRenderer->SetAutoScaleRatio(1.5f);
 	InfighterRenderer->SetRelativeLocation({ 0,0,-200 });
 	InfighterRenderer->SetupAttachment(RootComponent);
-
+	
 	//buffRenderer = CreateDefaultSubObject<USpriteRenderer>();
 	//buffRenderer->CreateAnimation("infighter_buff", "buff", 0, 18, 0.1f);
 	//
@@ -55,13 +72,13 @@ void AInfighter::BeginPlay()
 	FSM.CreateState(InfighterState::Idle, std::bind(&AInfighter::Idle, this, std::placeholders::_1),
 		[this]()
 		{
-			if (true == IsMonster)
+			if (true == MonsterValue)
 			{
 				InfighterRenderer->ChangeAnimation("infighter_IdleBattle");
 			}
 			else
 			{
-				InfighterRenderer->ChangeAnimation("infighter_IdleCamp");
+				InfighterRenderer->ChangeAnimation("infighter_Heavenly");
 			}
 		}
 	);
@@ -112,6 +129,15 @@ void AInfighter::BeginPlay()
 		}
 	);
 
+
+	FSM.CreateState(InfighterState::Roll, std::bind(&AInfighter::Roll, this, std::placeholders::_1),
+		[this]()
+		{
+			InfighterRenderer->ChangeAnimation("infighter_Roll");
+			Delaytime = 1.2f;
+		}
+	);
+
 	FSM.ChangeState(InfighterState::Idle);
 }
 
@@ -121,13 +147,13 @@ void AInfighter::Tick(float _DeltaTime)
 
 	if (UEngineInput::IsPress('Q'))
 	{
-		AddActorRotation(FVector{ 0,0, 360.0f * _DeltaTime });
+		AddActorRotation(FVector{ 0,360.0f * _DeltaTime,0});
 	}
 
 	if (UEngineInput::IsPress('E'))
 	{
 		//buffRenderer->ChangeAnimation("infighter_buff");
-		IsMonster = true;
+		MonsterValue = true;
 	}
 
 	if (UEngineInput::IsPress('R'))
@@ -140,8 +166,25 @@ void AInfighter::Tick(float _DeltaTime)
 
 void AInfighter::Idle(float _DeltaTime)
 {
-	if (true == UEngineInput::IsPress(VK_LEFT) ||
-		true == UEngineInput::IsPress(VK_RIGHT) ||
+	if (true == UEngineInput::IsPress(VK_LEFT))
+	{
+		DashValue = false;
+		Speed = 300;
+		SeeRight = false;
+		DirChange();
+		FSM.ChangeState(InfighterState::Move);
+	}
+
+	if (true == UEngineInput::IsPress(VK_RIGHT))
+	{
+		DashValue = false;
+		Speed = 300;
+		SeeRight = true;
+		DirChange();
+		FSM.ChangeState(InfighterState::Move);
+	}
+
+	if (
 		true == UEngineInput::IsPress(VK_DOWN) ||
 		true == UEngineInput::IsPress(VK_UP))
 	{
@@ -182,6 +225,10 @@ void AInfighter::Idle(float _DeltaTime)
 		FSM.ChangeState(InfighterState::Sway);
 	}
 
+	if (true == UEngineInput::IsPress(VK_LCONTROL))
+	{
+		FSM.ChangeState(InfighterState::Roll);
+	}
 }
 
 void AInfighter::Move(float _DeltaTime)
@@ -194,6 +241,11 @@ void AInfighter::Move(float _DeltaTime)
 		true == UEngineInput::IsPress(VK_UP) &&
 		true == UEngineInput::IsPress(VK_RIGHT))
 	{
+		if (false == SeeRight)
+		{
+			SeeRight = true;
+			DirChange();
+		}
 		DuckingDir = { 1,1 };
 		FSM.ChangeState(InfighterState::Ducking);
 	}
@@ -201,6 +253,11 @@ void AInfighter::Move(float _DeltaTime)
 		true == UEngineInput::IsPress(VK_UP) &&
 		true == UEngineInput::IsPress(VK_LEFT))
 	{
+		if (true == SeeRight)
+		{
+			SeeRight = false;
+			DirChange();
+		}
 		DuckingDir = { -1,1 };
 		FSM.ChangeState(InfighterState::Ducking);
 	}
@@ -208,6 +265,11 @@ void AInfighter::Move(float _DeltaTime)
 		true == UEngineInput::IsPress(VK_DOWN) &&
 		true == UEngineInput::IsPress(VK_RIGHT))
 	{
+		if (false == SeeRight)
+		{
+			SeeRight = true;
+			DirChange();
+		}
 		DuckingDir = { 1,-1 };
 		FSM.ChangeState(InfighterState::Ducking);
 	}
@@ -215,18 +277,33 @@ void AInfighter::Move(float _DeltaTime)
 		true == UEngineInput::IsPress(VK_DOWN) &&
 		true == UEngineInput::IsPress(VK_LEFT))
 	{
+		if (true == SeeRight)
+		{
+			SeeRight = false;
+			DirChange();
+		}
 		DuckingDir = { -1,-1 };
 		FSM.ChangeState(InfighterState::Ducking);
 	}
 	else if (true == UEngineInput::IsPress('Z') &&
 		true == UEngineInput::IsPress(VK_RIGHT))
 	{
+		if (false == SeeRight)
+		{
+			SeeRight = true;
+			DirChange();
+		}
 		DuckingDir = { 1,0 };
 		FSM.ChangeState(InfighterState::Ducking);
 	}
 	else if (true == UEngineInput::IsPress('Z') &&
 		true == UEngineInput::IsPress(VK_LEFT))
 	{
+		if (true == SeeRight)
+		{
+			SeeRight = false;
+			DirChange();
+		}
 		DuckingDir = { -1,0 };
 		FSM.ChangeState(InfighterState::Ducking);
 	}
@@ -235,6 +312,11 @@ void AInfighter::Move(float _DeltaTime)
 		true == UEngineInput::IsPress(VK_UP) &&
 		true == UEngineInput::IsPress(VK_RIGHT))
 	{
+		if (true == SeeRight)
+		{
+			SeeRight = false;
+			DirChange();
+		}
 		DuckingDir = { -1,1 };
 		FSM.ChangeState(InfighterState::Sway);
 	}
@@ -242,6 +324,11 @@ void AInfighter::Move(float _DeltaTime)
 		true == UEngineInput::IsPress(VK_UP) &&
 		true == UEngineInput::IsPress(VK_LEFT))
 	{
+		if (false == SeeRight)
+		{
+			SeeRight = true;
+			DirChange();
+		}
 		DuckingDir = { 1,1 };
 		FSM.ChangeState(InfighterState::Sway);
 	}
@@ -249,6 +336,11 @@ void AInfighter::Move(float _DeltaTime)
 		true == UEngineInput::IsPress(VK_DOWN) &&
 		true == UEngineInput::IsPress(VK_RIGHT))
 	{
+		if (true == SeeRight)
+		{
+			SeeRight = false;
+			DirChange();
+		}
 		DuckingDir = { -1,-1 };
 		FSM.ChangeState(InfighterState::Sway);
 	}
@@ -256,28 +348,47 @@ void AInfighter::Move(float _DeltaTime)
 		true == UEngineInput::IsPress(VK_DOWN) &&
 		true == UEngineInput::IsPress(VK_LEFT))
 	{
+		if (false == SeeRight)
+		{
+			SeeRight = true;
+			DirChange();
+		}
 		DuckingDir = { 1,-1 };
 		FSM.ChangeState(InfighterState::Sway);
 	}
 	else if (true == UEngineInput::IsPress('A') &&
 		true == UEngineInput::IsPress(VK_RIGHT))
 	{
+		if (true == SeeRight)
+		{
+			SeeRight = false;
+			DirChange();
+		}
 		DuckingDir = { -1,0 };
 		FSM.ChangeState(InfighterState::Sway);
 	}
 	else if (true == UEngineInput::IsPress('A') &&
 		true == UEngineInput::IsPress(VK_LEFT))
 	{
+		if (false == SeeRight)
+		{
+			SeeRight = true;
+			DirChange();
+		}
 		DuckingDir = { 1,0 };
 		FSM.ChangeState(InfighterState::Sway);
 	}
 
 	if (UEngineInput::IsPress(VK_LEFT))
 	{
+		SeeRight = false;
+		DirChange();
 		AddRelativeLocation(FVector{ -Speed * _DeltaTime, 0.0f, 0.0f });
 	}
 	if (UEngineInput::IsPress(VK_RIGHT))
 	{
+		SeeRight = true;
+		DirChange();
 		AddRelativeLocation(FVector{ Speed * _DeltaTime, 0.0f, 0.0f });
 	}
 
@@ -293,6 +404,10 @@ void AInfighter::Move(float _DeltaTime)
 
 	if (true == UEngineInput::IsPress('X'))
 	{
+		if (true == DashValue)
+		{
+
+		}
 		FSM.ChangeState(InfighterState::Attack);
 	}
 
@@ -320,21 +435,15 @@ void AInfighter::Jump(float _DeltaTime)
 
 	if (UEngineInput::IsPress(VK_LEFT))
 	{
+		SeeRight = false;
+		DirChange();
 		AddRelativeLocation(FVector{ -Speed * _DeltaTime, 0.0f, 0.0f });
 	}
 	if (UEngineInput::IsPress(VK_RIGHT))
 	{
+		SeeRight = true;
+		DirChange();
 		AddRelativeLocation(FVector{ Speed * _DeltaTime, 0.0f, 0.0f });
-	}
-
-	if (UEngineInput::IsPress(VK_UP))
-	{
-		AddRelativeLocation(FVector{ 0.0f, Speed * _DeltaTime, 0.0f });
-	}
-
-	if (UEngineInput::IsPress(VK_DOWN))
-	{
-		AddRelativeLocation(FVector{ 0.0f, -Speed * _DeltaTime, 0.0f });
 	}
 
 	if (0.0f > Delaytime)
@@ -382,5 +491,29 @@ void AInfighter::Sway(float _DeltaTime)
 }
 void AInfighter::Roll(float _DeltaTime)
 {
+	Delaytime -= _DeltaTime;
 
+	if (UEngineInput::IsPress(VK_LEFT))
+	{
+		AddRelativeLocation(FVector{ -Speed * _DeltaTime, 0.0f, 0.0f });
+	}
+	if (UEngineInput::IsPress(VK_RIGHT))
+	{
+		AddRelativeLocation(FVector{ Speed * _DeltaTime, 0.0f, 0.0f });
+	}
+
+	if (UEngineInput::IsPress(VK_UP))
+	{
+		AddRelativeLocation(FVector{ 0.0f, Speed * _DeltaTime, 0.0f });
+	}
+
+	if (UEngineInput::IsPress(VK_DOWN))
+	{
+		AddRelativeLocation(FVector{ 0.0f, -Speed * _DeltaTime, 0.0f });
+	}
+
+	if (0.0f > Delaytime)
+	{
+		FSM.ChangeState(InfighterState::Idle);
+	}
 }

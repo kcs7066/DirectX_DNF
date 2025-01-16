@@ -20,7 +20,6 @@ public:
 		ImGui::Button("WindowButton");
 		ImGui::SameLine();
 		ImGui::Text("test");
-
 	}
 };
 

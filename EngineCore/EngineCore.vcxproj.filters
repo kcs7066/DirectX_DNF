@@ -401,11 +401,11 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Library Include="ThirdParty\DirectxTex\Release\DirectXTex_Release.lib">
+    <CopyFileToFolders Include="ThirdParty\DirectxTex\Release\DirectXTex_Release.lib">
       <Filter>ThirdParty\DirectTex\Release</Filter>
-    </Library>
-    <Library Include="ThirdParty\DirectxTex\Debug\DirectXTex_Debug.lib">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="ThirdParty\DirectxTex\Debug\DirectXTex_Debug.lib">
       <Filter>ThirdParty\DirectTex\Debug</Filter>
-    </Library>
+    </CopyFileToFolders>
   </ItemGroup>
 </Project>

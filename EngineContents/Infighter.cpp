@@ -121,7 +121,7 @@ void AInfighter::Tick(float _DeltaTime)
 
 	if (UEngineInput::IsPress('Q'))
 	{
-		AddActorRotation(FVector{ 360.0f * _DeltaTime,0, 0.0 });
+		AddActorRotation(FVector{ 0,0, 360.0f * _DeltaTime });
 	}
 
 	if (UEngineInput::IsPress('E'))

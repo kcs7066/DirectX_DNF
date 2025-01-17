@@ -42,9 +42,18 @@ public:
 
 	ENGINEAPI static std::map<std::string, std::shared_ptr<class ULevel>> GetAllLevelMap();
 
+	ENGINEAPI static class UGameInstance* GetGameInstance();
+
+	template<typename Type>
+	static void CreateGameInstance()
+	{
+		GameInstance = std::make_shared<Type>();
+	}
+
 protected:
 
 private:
+	std::shared_ptr<class UGameInstance> GameInstance;
 
 	UEngineWindow MainWindow;
 

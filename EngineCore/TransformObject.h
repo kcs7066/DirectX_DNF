@@ -76,12 +76,22 @@ public:
 		return Transform.WorldScale;
 	}
 
+	FVector GetRelativeLocation()
+	{
+		return Transform.RelativeLocation;
+	}
+
+	FVector GetWorldLocation()
+	{
+		return Transform.WorldLocation;
+	}
 
 	FTransform& GetTransformRef()
 	{
 		return Transform;
 	}
 
+	ENGINEAPI virtual void CameraTransUpdate(class UEngineCamera* _Camera);
 
 	ENGINEAPI void SetupAttachment(std::shared_ptr<UTransformObject> _Parent);
 
@@ -89,12 +99,12 @@ public:
 
 	ENGINEAPI void TransformUpdate();
 
+	UTransformObject* Parent = nullptr;
 protected:
 	bool IsAbsolute = false;
 
 	FTransform Transform;
 	void ParentMatrixCheck();
-	UTransformObject* Parent = nullptr;
 	std::list<UTransformObject*> Childs;
 };
 

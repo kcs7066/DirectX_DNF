@@ -38,6 +38,20 @@ void UEngineGUI::Init()
 	ImGui_ImplDX11_Init(UEngineCore::GetDevice().GetDevice(), UEngineCore::GetDevice().GetContext());
 
 
+	UEngineDirectory NewDir;
+	NewDir.MoveParentToDirectory("EngineResources");
+	NewDir.Move("Font");
+	UEngineFile File = NewDir.GetFile("malgun.ttf");
+
+	File.GetPathToString();
+	std::string UTF8Path = UEngineString::AnsiToUTF8(File.GetPathToString());
+
+	io.Fonts->AddFontFromFileTTF(UTF8Path.c_str(), 18.0f, nullptr, io.Fonts->GetGlyphRangesKorean());
+
+
+
+
+
 	UEngineWindow::SetCustomProc(
 		[=](HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 		{

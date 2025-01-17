@@ -9,7 +9,7 @@ UTileMapRenderer::UTileMapRenderer()
 	SetMesh("Rect");
 	SetMaterial("TileMap");
 
-			
+
 
 
 }
@@ -83,9 +83,9 @@ FVector UTileMapRenderer::TileIndexToWorldPos(FTileIndex _Index)
 
 void UTileMapRenderer::Render(UEngineCamera* _Camera, float _DeltaTime)
 {
-		FTransform& CameraTrans = _Camera->GetTransformRef();
+	FTransform& CameraTrans = _Camera->GetTransformRef();
 	FTransform& RendererTrans = GetTransformRef();
-		RendererTrans.View = CameraTrans.View;
+	RendererTrans.View = CameraTrans.View;
 	RendererTrans.Projection = CameraTrans.Projection;
 	RendererTrans.WVP = RendererTrans.World * RendererTrans.View * RendererTrans.Projection;
 
@@ -106,7 +106,7 @@ void UTileMapRenderer::Render(UEngineCamera* _Camera, float _DeltaTime)
 
 	for (std::pair<const __int64, FTileData>& TilePair : Tiles)
 	{
-								
+
 		FTileData& Tile = TilePair.second;
 		FTileIndex Index;
 
@@ -134,7 +134,7 @@ void UTileMapRenderer::Render(UEngineCamera* _Camera, float _DeltaTime)
 
 void UTileMapRenderer::SetTile(FVector _Pos, int _Spriteindex)
 {
-		FTileIndex Index = WorldPosToTileIndex(_Pos);
+	FTileIndex Index = WorldPosToTileIndex(_Pos);
 
 	SetTile(Index.X, Index.Y, _Spriteindex);
 }
@@ -173,9 +173,6 @@ void UTileMapRenderer::RemoveTile(int _X, int _Y)
 	Tiles.erase(Index.Key);
 }
 
-void UTileMapRenderer::RenderTransUpdate(UEngineCamera* _Camera)
-{
-}
 
 void UTileMapRenderer::ComponentTick(float _DeltaTime)
 {

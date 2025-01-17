@@ -2,6 +2,11 @@
 #include "Actor.h"
 #include "SceneComponent.h"
 
+UGameInstance* AActor::GetGameInstance()
+{
+	return GEngine->GetGameInstance();
+}
+
 AActor::AActor()
 {
 }

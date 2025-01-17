@@ -7,6 +7,7 @@
 #include "EngineCamera.h"
 #include "CameraActor.h"
 #include "EngineGUI.h"
+#include "HUD.h"
 #include "EngineRenderTarget.h"
 
 
@@ -136,8 +137,17 @@ void ULevel::Render(float _DeltaTime)
 		Camera.second->GetCameraComponent()->CameraTarget->MergeTo(LastRenderTarget);
 	}
 
+	if (true == Cameras.contains(static_cast<int>(EEngineCameraType::UICamera)))
+	{
+		std::shared_ptr<UEngineCamera> CameraComponent = Cameras[static_cast<int>(EEngineCameraType::UICamera)]->GetCameraComponent();
 
+		HUD->UIRender(CameraComponent.get(), _DeltaTime);
 
+	}
+	else
+	{
+		MSGASSERT("UI카메라가 존재하지 않습니다. 엔진 오류입니다. UI카메라를 제작해주세요.");
+	}
 
 
 	std::shared_ptr<UEngineRenderTarget> BackBuffer = UEngineCore::GetDevice().GetBackBufferTarget();

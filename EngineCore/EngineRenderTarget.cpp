@@ -111,4 +111,5 @@ void UEngineRenderTarget::MergeTo(std::shared_ptr<UEngineRenderTarget> _Target)
 	_Target->Setting();
 	TargetUnit.SetTexture("MergeTex", ArrTexture[0]);
 	TargetUnit.Render(nullptr, 0.0f);
+	TargetUnit.Reset();
 }

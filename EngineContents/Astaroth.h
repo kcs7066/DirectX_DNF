@@ -1,7 +1,11 @@
 #pragma once
+#include <EngineBase/FSMStateManager.h>
+
+#include <EnginePlatform/EngineWinImage.h>
+
 #include <EngineCore/Actor.h>
 #include <EngineCore/SpriteRenderer.h>
-#include <EnginePlatform/EngineWinImage.h>
+
 
 class AAstaroth : public AActor
 {
@@ -24,5 +28,7 @@ protected:
 	void Tick(float _DeltaTime) override;
 private:
 	std::shared_ptr<class USpriteRenderer> AstarothRenderer;
+
+	UFSMStateManager FSM = UFSMStateManager();
 };
 

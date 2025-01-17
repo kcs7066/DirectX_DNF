@@ -5,10 +5,10 @@
 class UEngineIndexBuffer : public UEngineResources, public UEngineDeviceBuffer
 {
 public:
-		UEngineIndexBuffer();
+	UEngineIndexBuffer();
 	~UEngineIndexBuffer();
 
-		UEngineIndexBuffer(const UEngineIndexBuffer& _Other) = delete;
+	UEngineIndexBuffer(const UEngineIndexBuffer& _Other) = delete;
 	UEngineIndexBuffer(UEngineIndexBuffer&& _Other) noexcept = delete;
 	UEngineIndexBuffer& operator=(const UEngineIndexBuffer& _Other) = delete;
 	UEngineIndexBuffer& operator=(UEngineIndexBuffer&& _Other) noexcept = delete;
@@ -19,7 +19,7 @@ public:
 		return Create(_Name, reinterpret_cast<const void*>(&_Data[0]), sizeof(IndexType), _Data.size());
 	}
 
-	static std::shared_ptr<UEngineIndexBuffer> Create(std::string_view _Name, const void* _InitData, size_t _VertexSize, size_t _VertexCount);
+	ENGINEAPI static std::shared_ptr<UEngineIndexBuffer> Create(std::string_view _Name, const void* _InitData, size_t _VertexSize, size_t _VertexCount);
 
 	void Setting();
 

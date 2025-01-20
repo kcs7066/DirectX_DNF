@@ -39,21 +39,18 @@ AEllerinonGameMode::AEllerinonGameMode()
 	BackGroundRenderer0->SetSprite("Ellerinon", 0);
 	BackGroundRenderer0->SetAutoScaleRatio(1.5f);
 	BackGroundRenderer0->SetWorldLocation({ -568,342,50 });
-	BackGroundRenderer0->SetOrder(-100);
 
 	BackGroundRenderer6 = CreateDefaultSubObject<USpriteRenderer>();
 	BackGroundRenderer6->SetupAttachment(RootComponent);
 	BackGroundRenderer6->SetSprite("Ellerinon", 2);
 	BackGroundRenderer6->SetAutoScaleRatio(1.5f);
 	BackGroundRenderer6->SetWorldLocation({ 199,320,50 });
-	BackGroundRenderer6->SetOrder(-100);
 
 	BackGroundRenderer5 = CreateDefaultSubObject<USpriteRenderer>();
 	BackGroundRenderer5->SetupAttachment(RootComponent);
 	BackGroundRenderer5->SetSprite("Ellerinon", 0);
 	BackGroundRenderer5->SetAutoScaleRatio(1.5f);
 	BackGroundRenderer5->SetWorldLocation({ 966,342,50 });
-	BackGroundRenderer5->SetOrder(-100);
 
 
 	BackGroundRenderer1 = CreateDefaultSubObject<USpriteRenderer>();
@@ -61,42 +58,36 @@ AEllerinonGameMode::AEllerinonGameMode()
 	BackGroundRenderer1->SetSprite("Ellerinon", 16);
 	BackGroundRenderer1->SetAutoScaleRatio(1.5f);
 	BackGroundRenderer1->SetWorldLocation({ -632,-61,100 });
-	BackGroundRenderer1->SetOrder(-100);
 
 	BackGroundRenderer2 = CreateDefaultSubObject<USpriteRenderer>();
 	BackGroundRenderer2->SetupAttachment(RootComponent);
 	BackGroundRenderer2->SetSprite("Ellerinon", 17);
 	BackGroundRenderer2->SetAutoScaleRatio(1.5f);
 	BackGroundRenderer2->SetWorldLocation({ -296,-61,100 });
-	BackGroundRenderer2->SetOrder(-100);
 
 	BackGroundRenderer3 = CreateDefaultSubObject<USpriteRenderer>();
 	BackGroundRenderer3->SetupAttachment(RootComponent);
 	BackGroundRenderer3->SetSprite("Ellerinon", 16);
 	BackGroundRenderer3->SetAutoScaleRatio(1.5f);
 	BackGroundRenderer3->SetWorldLocation({ 40,-61,100 });
-	BackGroundRenderer3->SetOrder(-100);
 
 	BackGroundRenderer4 = CreateDefaultSubObject<USpriteRenderer>();
 	BackGroundRenderer4->SetupAttachment(RootComponent);
 	BackGroundRenderer4->SetSprite("Ellerinon", 17);
 	BackGroundRenderer4->SetAutoScaleRatio(1.5f);
 	BackGroundRenderer4->SetWorldLocation({ 376,-61,100 });
-	BackGroundRenderer4->SetOrder(-100);
 
 	BackGroundRenderer5 = CreateDefaultSubObject<USpriteRenderer>();
 	BackGroundRenderer5->SetupAttachment(RootComponent);
 	BackGroundRenderer5->SetSprite("Ellerinon", 16);
 	BackGroundRenderer5->SetAutoScaleRatio(1.5f);
 	BackGroundRenderer5->SetWorldLocation({ 712,-61,100 });
-	BackGroundRenderer5->SetOrder(-100);
 
 	BackGroundRenderer6 = CreateDefaultSubObject<USpriteRenderer>();
 	BackGroundRenderer6->SetupAttachment(RootComponent);
 	BackGroundRenderer6->SetSprite("Ellerinon", 17);
 	BackGroundRenderer6->SetAutoScaleRatio(1.5f);
 	BackGroundRenderer6->SetWorldLocation({ 1048,-61,100 });
-	BackGroundRenderer6->SetOrder(-100);
 
 
 	BackGroundRenderer8 = CreateDefaultSubObject<USpriteRenderer>();
@@ -104,42 +95,36 @@ AEllerinonGameMode::AEllerinonGameMode()
 	BackGroundRenderer8->SetSprite("Ellerinon", 18);
 	BackGroundRenderer8->SetAutoScaleRatio(1.5f);
 	BackGroundRenderer8->SetWorldLocation({ -632,-360,100 });
-	//BackGroundRenderer8->SetOrder(-100);
 
 	BackGroundRenderer9 = CreateDefaultSubObject<USpriteRenderer>();
 	BackGroundRenderer9->SetupAttachment(RootComponent);
 	BackGroundRenderer9->SetSprite("Ellerinon", 19);
 	BackGroundRenderer9->SetAutoScaleRatio(1.5f);
 	BackGroundRenderer9->SetWorldLocation({ -296,-360,100 });
-	//BackGroundRenderer9->SetOrder(-100);
 
 	BackGroundRenderer10 = CreateDefaultSubObject<USpriteRenderer>();
 	BackGroundRenderer10->SetupAttachment(RootComponent);
 	BackGroundRenderer10->SetSprite("Ellerinon", 18);
 	BackGroundRenderer10->SetAutoScaleRatio(1.5f);
 	BackGroundRenderer10->SetWorldLocation({ 40,-360,100 });
-	BackGroundRenderer10->SetOrder(-100);
 
 	BackGroundRenderer11 = CreateDefaultSubObject<USpriteRenderer>();
 	BackGroundRenderer11->SetupAttachment(RootComponent);
 	BackGroundRenderer11->SetSprite("Ellerinon", 19);
 	BackGroundRenderer11->SetAutoScaleRatio(1.5f);
 	BackGroundRenderer11->SetWorldLocation({ 376,-360,100 });
-	BackGroundRenderer11->SetOrder(-100);
 
 	BackGroundRenderer12 = CreateDefaultSubObject<USpriteRenderer>();
 	BackGroundRenderer12->SetupAttachment(RootComponent);
 	BackGroundRenderer12->SetSprite("Ellerinon", 18);
 	BackGroundRenderer12->SetAutoScaleRatio(1.5f);
 	BackGroundRenderer12->SetWorldLocation({ 712,-360,100 });
-	BackGroundRenderer12->SetOrder(-100);
 
 	BackGroundRenderer13 = CreateDefaultSubObject<USpriteRenderer>();
 	BackGroundRenderer13->SetupAttachment(RootComponent);
 	BackGroundRenderer13->SetSprite("Ellerinon", 19);
 	BackGroundRenderer13->SetAutoScaleRatio(1.5f);
 	BackGroundRenderer13->SetWorldLocation({ 1048,-360,100 });
-	BackGroundRenderer13->SetOrder(-100);
 
 	NewInfighter = GetWorld()->SpawnActor<AInfighter>();
 	
@@ -162,7 +147,7 @@ AEllerinonGameMode::~AEllerinonGameMode()
 
 void AEllerinonGameMode::BeginPlay()
 {
-
+	AActor::BeginPlay();
 }
 
 void AEllerinonGameMode::Tick(float _DeltaTime)

@@ -13,6 +13,9 @@ AGrandis::AGrandis()
 	RootComponent = Default;
 
 	GrandisRenderer = CreateDefaultSubObject<USpriteRenderer>();
+	BackRenderer = CreateDefaultSubObject<USpriteRenderer>();
+
+	BackRenderer->CreateAnimation("Back", "grandis", 9,32, 0.2f);
 
 	GrandisRenderer->CreateAnimation("grandis_Prey", "grandis", 0, 4, 0.6f);
 	GrandisRenderer->CreateAnimation("grandis_UpMove", "grandis", 5, 6, 0.5f);
@@ -24,6 +27,13 @@ AGrandis::AGrandis()
 		GrandisRenderer->SetWorldLocation({ 100, 400,-10 });
 		GrandisRenderer->SetupAttachment(RootComponent);
 	}
+
+	{
+		BackRenderer->SetAutoScaleRatio(1.5f);
+		BackRenderer->SetWorldLocation({ 100, 400,-9 });
+		BackRenderer->SetupAttachment(RootComponent);
+	}
+
 }
 AGrandis::~AGrandis()
 {
@@ -70,6 +80,7 @@ void AGrandis::Prey(float _DeltaTime)
 	if (0.0f > DelayTime)
 	{
 		FSM.ChangeState(GrandisState::UpMove);
+		BackRenderer->ChangeAnimation("Back");
 		DelayTime = 1.0f;
 	}
 }

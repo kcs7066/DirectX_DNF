@@ -21,6 +21,7 @@ AAstaroth::AAstaroth()
 
 		AstarothRenderer->ChangeAnimation("astaroth_Idle");
 		AstarothRenderer->SetAutoScaleRatio(1.5f);
+		AstarothRenderer->SetWorldLocation({ 500, -200,-10 });
 		AstarothRenderer->SetupAttachment(RootComponent);
 	}
 }

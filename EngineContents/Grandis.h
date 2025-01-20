@@ -1,7 +1,19 @@
 #pragma once
+
+#include <EngineBase/FSMStateManager.h>
+
+#include <EnginePlatform/EngineWinImage.h>
+
 #include <EngineCore/Actor.h>
 #include <EngineCore/SpriteRenderer.h>
-#include <EnginePlatform/EngineWinImage.h>
+
+enum class GrandisState
+{
+	Prey,
+	UpMove,
+	DownMove
+
+};
 
 class AGrandis : public AActor
 {
@@ -19,10 +31,16 @@ public:
 		return GrandisRenderer;
 	}
 
+	void Prey(float _DeltaTime);
+	void UpMove(float _DeltaTime);
+	void DownMove(float _DeltaTime);
 protected:
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;
 private:
 	std::shared_ptr<class USpriteRenderer> GrandisRenderer;
+	UFSMStateManager FSM = UFSMStateManager();
+
+	float DelayTime = 3.0f;
 };
 

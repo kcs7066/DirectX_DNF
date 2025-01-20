@@ -11,6 +11,7 @@ AInfighter::AInfighter()
 {
 	std::shared_ptr<UDefaultSceneComponent> Default = CreateDefaultSubObject<UDefaultSceneComponent>();
 	RootComponent = Default;
+	Default->SetWorldLocation({ 0, 0, -100 });
 
 	InfighterRenderer = CreateDefaultSubObject<USpriteRenderer>();
 
@@ -42,7 +43,7 @@ AInfighter::AInfighter()
 
 
 	InfighterRenderer->SetAutoScaleRatio(1.5f);
-	InfighterRenderer->SetRelativeLocation({ 0,0,-200 });
+	InfighterRenderer->SetWorldLocation({ 0,0,-200 });
 	InfighterRenderer->SetupAttachment(RootComponent);
 	
 	//buffRenderer = CreateDefaultSubObject<USpriteRenderer>();
@@ -383,23 +384,39 @@ void AInfighter::Move(float _DeltaTime)
 	{
 		SeeRight = false;
 		DirChange();
-		AddRelativeLocation(FVector{ -Speed * _DeltaTime, 0.0f, 0.0f });
+		AddActorLocation(FVector{ -Speed * _DeltaTime, 0.0f, 0.0f });
+		if (-800 > GetActorLocation().X)
+		{
+			AddActorLocation(FVector{ Speed * _DeltaTime, 0.0f, 0.0f });
+		}
 	}
 	if (UEngineInput::IsPress(VK_RIGHT))
 	{
 		SeeRight = true;
 		DirChange();
-		AddRelativeLocation(FVector{ Speed * _DeltaTime, 0.0f, 0.0f });
+		AddActorLocation(FVector{ Speed * _DeltaTime, 0.0f, 0.0f });
+		if (1216 < GetActorLocation().X)
+		{
+			AddActorLocation(FVector{ -Speed * _DeltaTime, 0.0f, 0.0f });
+		}
 	}
 
 	if (UEngineInput::IsPress(VK_UP))
 	{
-		AddRelativeLocation(FVector{ 0.0f, Speed * _DeltaTime, 0.0f });
+		AddActorLocation(FVector{ 0.0f, Speed * _DeltaTime, 0.0f });
+		if (100 < GetActorLocation().Y)
+		{
+			AddActorLocation(FVector{ 0.0f, -Speed * _DeltaTime, 0.0f });
+		}
 	}
 
 	if (UEngineInput::IsPress(VK_DOWN))
 	{
-		AddRelativeLocation(FVector{ 0.0f, -Speed * _DeltaTime, 0.0f });
+		AddActorLocation(FVector{ 0.0f, -Speed * _DeltaTime, 0.0f });
+		if (-450 > GetActorLocation().Y)
+		{
+			AddActorLocation(FVector{ 0.0f, Speed * _DeltaTime, 0.0f });
+		}
 	}
 
 	if (true == UEngineInput::IsPress('X'))
@@ -426,24 +443,24 @@ void AInfighter::Jump(float _DeltaTime)
 	Delaytime -= _DeltaTime;
 	if (0.5f < Delaytime)
 	{
-		AddRelativeLocation(FVector{ 0.0f, Speed * _DeltaTime, 0.0f });
+		AddActorLocation(FVector{ 0.0f, Speed * _DeltaTime, 0.0f });
 	}
 	else
 	{
-		AddRelativeLocation(FVector{ 0.0f , -Speed * _DeltaTime, 0.0f });
+		AddActorLocation(FVector{ 0.0f , -Speed * _DeltaTime, 0.0f });
 	}
 
 	if (UEngineInput::IsPress(VK_LEFT))
 	{
 		SeeRight = false;
 		DirChange();
-		AddRelativeLocation(FVector{ -Speed * _DeltaTime, 0.0f, 0.0f });
+		AddActorLocation(FVector{ -Speed * _DeltaTime, 0.0f, 0.0f });
 	}
 	if (UEngineInput::IsPress(VK_RIGHT))
 	{
 		SeeRight = true;
 		DirChange();
-		AddRelativeLocation(FVector{ Speed * _DeltaTime, 0.0f, 0.0f });
+		AddActorLocation(FVector{ Speed * _DeltaTime, 0.0f, 0.0f });
 	}
 
 	if (0.0f > Delaytime)
@@ -468,7 +485,7 @@ void AInfighter::Ducking(float _DeltaTime)
 {
 	Delaytime -= _DeltaTime;
 
-	AddRelativeLocation(FVector{ DuckingDir.X * Speed * _DeltaTime, DuckingDir.Y * Speed * _DeltaTime, 0.0f });
+	AddActorLocation(FVector{ DuckingDir.X * Speed * _DeltaTime, DuckingDir.Y * Speed * _DeltaTime, 0.0f });
 
 	if (UEngineInput::IsPress('C')||
 		0.0f > Delaytime)
@@ -481,7 +498,7 @@ void AInfighter::Sway(float _DeltaTime)
 {
 	Delaytime -= _DeltaTime;
 
-	AddRelativeLocation(FVector{ DuckingDir.X * Speed * _DeltaTime, DuckingDir.Y * Speed * _DeltaTime, 0.0f });
+	AddActorLocation(FVector{ DuckingDir.X * Speed * _DeltaTime, DuckingDir.Y * Speed * _DeltaTime, 0.0f });
 
 	if (UEngineInput::IsPress('C') ||
 		0.0f > Delaytime)
@@ -495,21 +512,21 @@ void AInfighter::Roll(float _DeltaTime)
 
 	if (UEngineInput::IsPress(VK_LEFT))
 	{
-		AddRelativeLocation(FVector{ -Speed * _DeltaTime, 0.0f, 0.0f });
+	    AddActorLocation(FVector{ -Speed * _DeltaTime, 0.0f, 0.0f });
 	}
 	if (UEngineInput::IsPress(VK_RIGHT))
 	{
-		AddRelativeLocation(FVector{ Speed * _DeltaTime, 0.0f, 0.0f });
+		AddActorLocation(FVector{ Speed * _DeltaTime, 0.0f, 0.0f });
 	}
 
 	if (UEngineInput::IsPress(VK_UP))
 	{
-		AddRelativeLocation(FVector{ 0.0f, Speed * _DeltaTime, 0.0f });
+		AddActorLocation(FVector{ 0.0f, Speed * _DeltaTime, 0.0f });
 	}
 
 	if (UEngineInput::IsPress(VK_DOWN))
 	{
-		AddRelativeLocation(FVector{ 0.0f, -Speed * _DeltaTime, 0.0f });
+		AddActorLocation(FVector{ 0.0f, -Speed * _DeltaTime, 0.0f });
 	}
 
 	if (0.0f > Delaytime)

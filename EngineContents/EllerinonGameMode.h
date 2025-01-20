@@ -16,6 +16,8 @@ public:
 
 protected:
 
+	void LevelChangeStart() override;
+
 private:
 	std::shared_ptr<class AInfighter> NewInfighter;
 	std::shared_ptr<class AGrandis> NewGrandis;
@@ -39,5 +41,7 @@ private:
 	std::shared_ptr<class USpriteRenderer> BackGroundRenderer12;
 
 	std::shared_ptr<class USpriteRenderer> BackGroundRenderer14;
+
+	float PlayTime = 0.0f;
 };
 

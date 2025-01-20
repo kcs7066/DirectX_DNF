@@ -79,11 +79,11 @@ private:
 	{
 		if (false == SeeRight)
 		{
-			RootComponent->SetRelativeScale3D({ -1,1 });
+			RootComponent->SetScale3D({ -1,1 });
 		}
 		else
 		{
-			RootComponent->SetRelativeScale3D({ 1,1 });
+			RootComponent->SetScale3D({ 1,1 });
 		}
 	}
 };

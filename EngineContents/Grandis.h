@@ -43,5 +43,6 @@ private:
 	UFSMStateManager FSM = UFSMStateManager();
 
 	float DelayTime = 3.0f;
+
 };
 

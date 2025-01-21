@@ -22,7 +22,7 @@ enum class InfighterState
 	Die
 };
 
-class AInfighter : public AActor
+class AInfighter : public APawn
 {
 public:
 

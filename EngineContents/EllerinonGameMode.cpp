@@ -125,11 +125,8 @@ AEllerinonGameMode::AEllerinonGameMode()
 	BackGroundRenderer13->SetSprite("Ellerinon", 19);
 	BackGroundRenderer13->SetAutoScaleRatio(1.5f);
 	BackGroundRenderer13->SetWorldLocation({ 1048,-360,100 });
-
-	NewInfighter = GetWorld()->SpawnActor<AInfighter>();
 	
 	NewGrandis = GetWorld()->SpawnActor<AGrandis>();
-
 
 	NewAstaroth = GetWorld()->SpawnActor<AAstaroth>();
 	
@@ -155,7 +152,7 @@ void AEllerinonGameMode::Tick(float _DeltaTime)
 	AActor::Tick(_DeltaTime);
 	PlayTime += _DeltaTime;
 	std::shared_ptr<ACameraActor> Camera = GetWorld()->GetMainCamera();
-	FVector CameraPos = NewInfighter->GetActorLocation();
+	FVector CameraPos = GetWorld()->GetMainPawn<AInfighter>()->GetActorLocation();
 	FVector Value = { 0, 0, -1000, 0 };
 	CameraPos += Value;
 

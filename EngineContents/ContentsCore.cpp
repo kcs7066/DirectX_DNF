@@ -12,6 +12,7 @@
 #include <EngineCore/EngineGUI.h>
 #include <EngineCore/EngineGUIWindow.h>
 #include "ContentsEditorGUI.h"
+#include "Infighter.h"
 
 CreateContentsCoreDefine(UContentsCore);
 
@@ -32,9 +33,9 @@ void UContentsCore::EngineStart(UEngineInitData& _Data)
 
 	ResSetting();
 
-	UEngineCore::CreateLevel<ACampGameMode, APawn, AHUD>("Camplevel");
-	UEngineCore::CreateLevel<ACampTwoGameMode, APawn, AHUD>("CampTwolevel");
-	UEngineCore::CreateLevel<AEllerinonGameMode, APawn, AHUD>("Ellerinonlevel");
+	//UEngineCore::CreateLevel<ACampGameMode, AInfighter, AHUD>("Camplevel");
+	//UEngineCore::CreateLevel<ACampTwoGameMode, AInfighter, AHUD>("CampTwolevel");
+	UEngineCore::CreateLevel<AEllerinonGameMode, AInfighter, AHUD>("Ellerinonlevel");
 	UEngineCore::OpenLevel("Ellerinonlevel");
 
 	UEngineGUI::AllWindowOff();

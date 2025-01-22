@@ -9,6 +9,7 @@
 #include <EngineCore/EngineMaterial.h>
 #include <EngineCore/EngineTexture.h>
 #include <EngineCore/EngineSprite.h>
+#include <EnginePlatform/EngineSound.h>
 
 void UContentsCore::ResSetting()
 {
@@ -136,4 +137,21 @@ void UContentsCore::ResSetting()
 
 		UEngineSprite::CreateSpriteToFolder(Dir.GetPathToString());
 	}
+
+	UEngineDirectory Dir;
+	if (false == Dir.MoveParentToDirectory("DNFResource"))
+	{
+		MSGASSERT("리소스 폴더를 찾지 못했습니다.");
+		return;
+	}
+	Dir.Append("Sound");
+	// 로딩바 만들고 싶으면  100개면 10 10 10 10 10 10
+	std::vector<UEngineFile> ImageFiles = Dir.GetAllFile(true, { ".wav", ".mp3", ".ogg" });
+
+	for (size_t i = 0; i < ImageFiles.size(); i++)
+	{
+		std::string FilePath = ImageFiles[i].GetPathToString();
+		UEngineSound::Load(FilePath);
+	}
+
 }

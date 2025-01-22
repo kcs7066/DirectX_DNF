@@ -3,6 +3,7 @@
 #include <EngineBase/EngineRandom.h>
 
 #include <EnginePlatform/EngineWinImage.h>
+#include <EnginePlatform/EngineSound.h>
 
 #include <EngineCore/Actor.h>
 #include <EngineCore/SpriteRenderer.h>
@@ -17,6 +18,8 @@ enum class AstarothState
 	Trace,
 	Jump,
 	Landing,
+	AfterImageStart,
+	AfterImageReady,
 	AfterImage,
 	BorderTime,
 	Groggy,
@@ -50,6 +53,8 @@ public:
 	void Jump(float _DeltaTime);
 	void Landing(float _DeltaTime);
 	void AfterImage(float _DeltaTime);
+	void AfterImageReady(float _DeltaTime);
+	void AfterImageStart(float _DeltaTime);
 	void BorderTime(float _DeltaTime);
 	void Groggy(float _DeltaTime);
 	void Die(float _DeltaTime);
@@ -63,7 +68,9 @@ private:
 
 	UFSMStateManager FSM = UFSMStateManager();
 	UEngineRandom Random;
+	USoundPlayer SoundPlayer;
 
+	int AfterImageValue = 4;
 	float DelayTime = 1.4f;
 	bool SeeRight = false;
 	FVector RushDir;

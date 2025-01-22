@@ -9,7 +9,7 @@
 #include "EngineGUI.h"
 #include "Level.h"
 #include "GameInstance.h"
-
+#include <EnginePlatform/EngineSound.h>
 
 UEngineGraphicDevice& UEngineCore::GetDevice()
 {
@@ -108,6 +108,7 @@ void UEngineCore::EngineStart(HINSTANCE _Instance, std::string_view _DllName)
 	UEngineWindow::WindowMessageLoop(
 		[]()
 		{
+			UEngineSound::Init();
 			GEngine->Device.CreateDeviceAndContext();
 			GEngine->Core->EngineStart(GEngine->Data);
 			GEngine->MainWindow.SetWindowPosAndScale(GEngine->Data.WindowPos, GEngine->Data.WindowSize);
@@ -189,6 +190,8 @@ void UEngineCore::EngineFrame()
 		UEngineInput::KeyReset();
 	}
 
+	UEngineSound::Update();
+
 	GEngine->CurLevel->Tick(DeltaTime);
 	GEngine->CurLevel->Render(DeltaTime);
 	GEngine->CurLevel->Collision(DeltaTime);
@@ -206,6 +209,8 @@ void UEngineCore::EngineEnd()
 
 	UEngineResources::Release();
 	UEngineConstantBuffer::Release();
+
+	UEngineSound::Release();
 
 	GEngine->CurLevel = nullptr;
 	GEngine->NextLevel = nullptr;

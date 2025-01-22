@@ -1,4 +1,5 @@
 #pragma once
+#include <EnginePlatform/EngineSound.h>
 
 class AEllerinonGameMode : public AGameMode
 {
@@ -14,6 +15,8 @@ public:
 	void BeginPlay();
 	void Tick(float _DeltaTime);
 
+	std::shared_ptr<class AAstaroth> NewAstaroth;
+
 protected:
 
 	void LevelChangeStart() override;
@@ -21,7 +24,6 @@ protected:
 private:
 	std::shared_ptr<class AInfighter> NewInfighter;
 	std::shared_ptr<class AGrandis> NewGrandis;
-	std::shared_ptr<class AAstaroth> NewAstaroth;
 
 	std::shared_ptr<class USpriteRenderer> BackGroundRenderer0;
 	std::shared_ptr<class USpriteRenderer> BackGroundRenderer1;
@@ -43,5 +45,7 @@ private:
 	std::shared_ptr<class USpriteRenderer> BackGroundRenderer14;
 
 	float PlayTime = 0.0f;
+
+	USoundPlayer BGMPlayer;
 };
 

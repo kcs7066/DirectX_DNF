@@ -1,7 +1,7 @@
 #pragma once
 
 #include <EngineBase/FSMStateManager.h>
-
+#include <EnginePlatform/EngineSound.h>
 #include <EnginePlatform/EngineWinImage.h>
 
 #include <EngineCore/Actor.h>
@@ -9,6 +9,7 @@
 
 enum class GrandisState
 {
+	Appearance,
 	Prey,
 	UpMove,
 	DownMove
@@ -34,6 +35,7 @@ public:
 	void Prey(float _DeltaTime);
 	void UpMove(float _DeltaTime);
 	void DownMove(float _DeltaTime);
+	void Appearance(float _DeltaTime);
 protected:
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;
@@ -42,7 +44,7 @@ private:
 	std::shared_ptr<class USpriteRenderer> BackRenderer;
 	UFSMStateManager FSM = UFSMStateManager();
 
-	float DelayTime = 3.0f;
-
+	float DelayTime = 1.0f;
+	USoundPlayer SoundPlayer;
 };
 

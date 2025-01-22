@@ -17,14 +17,18 @@ AAstaroth::AAstaroth()
 	AstarothRenderer = CreateDefaultSubObject<USpriteRenderer>();
 
 	AstarothRenderer->CreateAnimation("astaroth_Appearance", "astaroth", { 50,51,52,53,54,55,56,57,58,0,1,2,3,4,5,6,7,0,1,2,3,4,5,6,7,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41 }, 0.2f);
+	AstarothRenderer->CreateAnimation("astaroth_Pattern", "astaroth", 24, 41, 0.2f);
+	AstarothRenderer->CreateAnimation("astaroth_Turn", "astaroth", 59, 66, 0.2f);
+	AstarothRenderer->CreateAnimation("astaroth_RunningStart", "astaroth", 18, 21, 0.2f);
+	AstarothRenderer->CreateAnimation("astaroth_Run", "astaroth", 22, 23, 0.2f);
 
-	AstarothRenderer->CreateAnimation("astaroth_Appearance", "astaroth", 50, 58, 0.2f);
 	AstarothRenderer->CreateAnimation("astaroth_Idle", "astaroth", 0, 7, 0.2f);
 	AstarothRenderer->CreateAnimation("astaroth_RushReady", "astaroth", { 251,252,253,237,238,239,240 }, 0.2f);
 	AstarothRenderer->CreateAnimation("astaroth_Rush", "astaroth", 254, 257, 0.2f);
 
 	AstarothRenderer->CreateAnimation("astaroth_Jump", "astaroth", { 18,19,20,21,22,23 }, { 0.1f,0.1f,0.1f,0.7f,0.1f,0.1f });
 	AstarothRenderer->CreateAnimation("astaroth_Landing", "astaroth", { 165,166,167,168,169,170,171 }, { 1.03f,0.03f,0.03f,0.03f,0.03f,0.05f,1.0f });
+	AstarothRenderer->CreateAnimation("astaroth_AfterImage", "astaroth", { 18,19,20,21,22,23,59,60,61,62,63,64,65,66 }, 0.2f);
 
 	{
 		AstarothRenderer->ChangeAnimation("astaroth_Appearance");
@@ -82,8 +86,29 @@ void AAstaroth::BeginPlay()
 		}
 	);
 
+	FSM.CreateState(AstarothState::AfterImageStart, std::bind(&AAstaroth::AfterImageStart, this, std::placeholders::_1),
+		[this]()
+		{
+			AstarothRenderer->ChangeAnimation("astaroth_Pattern");
+		}
+	);
+
+	FSM.CreateState(AstarothState::AfterImageReady, std::bind(&AAstaroth::AfterImageReady, this, std::placeholders::_1),
+		[this]()
+		{
+			AstarothRenderer->ChangeAnimation("astaroth_RunningStart");
+		}
+	);
+
+	FSM.CreateState(AstarothState::AfterImage, std::bind(&AAstaroth::AfterImage, this, std::placeholders::_1),
+		[this]()
+		{
+			AstarothRenderer->ChangeAnimation("astaroth_AfterImage");
+		}
+	);
+
 	RootComponent->SetScale3D({ -1,1 });
-	FSM.ChangeState(AstarothState::Idle);
+	FSM.ChangeState(AstarothState::Appearance);
 }
 
 void AAstaroth::Tick(float _DeltaTime)
@@ -100,6 +125,7 @@ void AAstaroth::Appearance(float _DeltaTime)
 	if (0 > DelayTime)
 	{
 		FSM.ChangeState(AstarothState::Idle);
+		SoundPlayer = UEngineSound::Play("astaroth_meet_04.ogg");
 		DelayTime = 1.0f;
 	}
 
@@ -110,7 +136,7 @@ void AAstaroth::Idle(float _DeltaTime)
 
 	if (0 > DelayTime)
 	{
-		int Randomint = Random.RandomInt(1, 2);
+		int Randomint = Random.RandomInt(3, 3);
 		switch (Randomint)
 		{
 		case 1:
@@ -136,6 +162,11 @@ void AAstaroth::Idle(float _DeltaTime)
 			DelayTime = 1.2f;
 			break;
 
+		case 3:
+			FSM.ChangeState(AstarothState::AfterImageStart);
+			DelayTime = 3.6f;
+
+			break;
 		default:
 			break;
 		}
@@ -239,9 +270,68 @@ void AAstaroth::Landing(float _DeltaTime)
 	}
 }
 
+void AAstaroth::AfterImageStart(float _DeltaTime)
+{
+	if (0.0f > DelayTime)
+	{
+		FSM.ChangeState(AstarothState::AfterImageReady);
+		PlayerPos = GetWorld()->GetMainPawn()->GetActorLocation();
+		RushDir = PlayerPos - GetActorLocation();
+		if (0 > RushDir.X)
+		{
+			SeeRight = false;
+		}
+		else
+		{
+			SeeRight = true;
+		}
+		DirChange();
+		DelayTime = 0.8f;
+	}
+}
+
+void AAstaroth::AfterImageReady(float _DeltaTime)
+{
+	if (0.0f > DelayTime)
+	{
+		FSM.ChangeState(AstarothState::AfterImage);
+		DelayTime = 1.6f;
+	}
+}
+
 void AAstaroth::AfterImage(float _DeltaTime)
 {
+	if (1.2f < DelayTime)
+	{
+		AddActorLocation(RushDir * 3.2f * _DeltaTime);
+	}
 
+	if (0.0f > DelayTime)
+	{
+		if (0 <= AfterImageValue)
+		{
+			AfterImageValue--;
+			PlayerPos = GetWorld()->GetMainPawn()->GetActorLocation();
+			RushDir = PlayerPos - GetActorLocation();
+			if (0 > RushDir.X)
+			{
+				SeeRight = false;
+			}
+			else
+			{
+				SeeRight = true;
+			}
+			DirChange();
+			FSM.ChangeState(AstarothState::AfterImageReady);
+			DelayTime = 0.8f;
+		}
+		else
+		{
+			AfterImageValue = 4;
+			FSM.ChangeState(AstarothState::Idle);
+			DelayTime = 1.0f;
+		}
+	}
 }
 
 void AAstaroth::BorderTime(float _DeltaTime)

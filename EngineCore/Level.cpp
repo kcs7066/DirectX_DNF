@@ -7,7 +7,9 @@
 #include "EngineCamera.h"
 #include "CameraActor.h"
 #include "EngineGUI.h"
+#include "Light.h"
 #include "HUD.h"
+#include "EngineFont.h"
 #include "EngineRenderTarget.h"
 
 
@@ -33,10 +35,12 @@ ULevel::ULevel()
 {
 	SpawnCamera(EEngineCameraType::MainCamera);
 
-	SpawnCamera(EEngineCameraType::UICamera);
+	std::shared_ptr<ACameraActor> UICamera = SpawnCamera(EEngineCameraType::UICamera);
+	UICamera->GetCameraComponent()->SetProjectionType(EProjectionType::Orthographic);
 
 	LastRenderTarget = std::make_shared<UEngineRenderTarget>();
 	LastRenderTarget->CreateTarget(UEngineCore::GetScreenScale());
+	LastRenderTarget->SetClearColor({ 0.0f, 0.0f, 0.0f, 0.0f });
 	LastRenderTarget->CreateDepth();
 }
 
@@ -125,6 +129,8 @@ void ULevel::Render(float _DeltaTime)
 
 	LastRenderTarget->Clear();
 
+
+
 	for (std::pair<const int, std::shared_ptr<ACameraActor>>& Camera : Cameras)
 	{
 		if (Camera.first == static_cast<int>(EEngineCameraType::UICamera))
@@ -132,22 +138,50 @@ void ULevel::Render(float _DeltaTime)
 			continue;
 		}
 
+		if (false == Camera.second->IsActive())
+		{
+			continue;
+		}
+
+		LightDatas.Count = 0;
+		for (size_t i = 0; i < Lights.size(); i++)
+		{
+			Lights[i]->LightUpdate(Camera.second->GetCameraComponent().get(), _DeltaTime);
+			++LightDatas.Count;
+			LightDatas.LightArr[i] = Lights[i]->LightData;
+		}
+
 		Camera.second->Tick(_DeltaTime);
 		Camera.second->GetCameraComponent()->Render(_DeltaTime);
-		Camera.second->GetCameraComponent()->CameraTarget->MergeTo(LastRenderTarget);
+
 	}
 
 	if (true == Cameras.contains(static_cast<int>(EEngineCameraType::UICamera)))
 	{
-		std::shared_ptr<UEngineCamera> CameraComponent = Cameras[static_cast<int>(EEngineCameraType::UICamera)]->GetCameraComponent();
+		std::shared_ptr<ACameraActor> CameraActor = Cameras[static_cast<int>(EEngineCameraType::UICamera)];
+		if (true == CameraActor->IsActive())
+		{
+			std::shared_ptr<UEngineCamera> CameraComponent = Cameras[static_cast<int>(EEngineCameraType::UICamera)]->GetCameraComponent();
 
-		HUD->UIRender(CameraComponent.get(), _DeltaTime);
+			CameraActor->Tick(_DeltaTime);
+			CameraComponent->CameraTarget->Clear();
+			CameraComponent->CameraTarget->Setting();
+
+			HUD->UIRender(CameraComponent.get(), _DeltaTime);
+
+
+
+
+		}
 
 	}
 	else
 	{
 		MSGASSERT("UI카메라가 존재하지 않습니다. 엔진 오류입니다. UI카메라를 제작해주세요.");
 	}
+
+	Cameras[static_cast<int>(EEngineCameraType::MainCamera)]->GetCameraComponent()->CameraTarget->MergeTo(LastRenderTarget);
+	Cameras[static_cast<int>(EEngineCameraType::UICamera)]->GetCameraComponent()->CameraTarget->MergeTo(LastRenderTarget);
 
 
 	std::shared_ptr<UEngineRenderTarget> BackBuffer = UEngineCore::GetDevice().GetBackBufferTarget();
@@ -194,6 +228,11 @@ void ULevel::ChangeRenderGroup(int _CameraOrder, int _PrevGroupOrder, std::share
 	std::shared_ptr<ACameraActor> Camera = Cameras[_CameraOrder];
 
 	Camera->GetCameraComponent()->ChangeRenderGroup(_PrevGroupOrder, _Renderer);
+}
+
+void ULevel::PushLight(std::shared_ptr<ULight> _Light)
+{
+	Lights.push_back(_Light);
 }
 
 void ULevel::CreateCollisionProfile(std::string_view _ProfileName)
@@ -256,6 +295,11 @@ void ULevel::Collision(float _DeltaTime)
 			{
 				for (std::shared_ptr<class UCollision>& RightCollision : RightList)
 				{
+					if (LeftCollision == RightCollision)
+					{
+						continue;
+					}
+
 					if (false == LeftCollision->IsActive())
 					{
 						continue;
@@ -277,6 +321,27 @@ void ULevel::Release(float _DeltaTime)
 
 	{
 		for (std::pair<const std::string, std::list<std::shared_ptr<UCollision>>>& Group : Collisions)
+		{
+			std::list<std::shared_ptr<UCollision>>& List = Group.second;
+
+			std::list<std::shared_ptr<UCollision>>::iterator StartIter = List.begin();
+			std::list<std::shared_ptr<UCollision>>::iterator EndIter = List.end();
+
+			for (; StartIter != EndIter; )
+			{
+				if (false == (*StartIter)->IsDestroy())
+				{
+					++StartIter;
+					continue;
+				}
+
+				StartIter = List.erase(StartIter);
+			}
+		}
+	}
+
+	{
+		for (std::pair<const std::string, std::list<std::shared_ptr<UCollision>>>& Group : CheckCollisions)
 		{
 			std::list<std::shared_ptr<UCollision>>& List = Group.second;
 

@@ -126,6 +126,7 @@ AEllerinonGameMode::AEllerinonGameMode()
 	BackGroundRenderer13->SetAutoScaleRatio(1.5f);
 	BackGroundRenderer13->SetWorldLocation({ 1048,-360,100 });
 	
+
 	NewGrandis = GetWorld()->SpawnActor<AGrandis>();
 
 	std::shared_ptr<ACameraActor> Camera = GetWorld()->GetMainCamera();

@@ -44,11 +44,11 @@ void UEnginePixelShader::ResLoad()
 	Flag0 = D3D10_SHADER_DEBUG;
 #endif
 
-			Flag0 |= D3DCOMPILE_PACK_MATRIX_ROW_MAJOR;
+	Flag0 |= D3DCOMPILE_PACK_MATRIX_ROW_MAJOR;
 
 	D3DCompileFromFile(
 		WPath.c_str(),
-		nullptr, 		nullptr,
+		nullptr, D3D_COMPILE_STANDARD_FILE_INCLUDE,
 		EntryName.c_str(),
 		version.c_str(),
 		Flag0,

@@ -179,8 +179,16 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="EngineThread.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="EngineWindow.cpp" />
     <ClCompile Include="EngineWinImage.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="EngineWorkThreadPool.cpp">
       <SubType>
       </SubType>
     </ClCompile>
@@ -202,8 +210,16 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="EngineThread.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="EngineWindow.h" />
     <ClInclude Include="EngineWinImage.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="EngineWorkThreadPool.h">
       <SubType>
       </SubType>
     </ClInclude>

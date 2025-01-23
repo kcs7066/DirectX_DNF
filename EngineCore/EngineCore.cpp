@@ -3,13 +3,15 @@
 #include <EngineBase/EngineDebug.h>
 #include <EnginePlatform/EngineWindow.h>
 #include <EnginePlatform/EngineInput.h>
+#include <EnginePlatform/EngineSound.h>
 #include "IContentsCore.h"
 #include "EngineResources.h"
 #include "EngineConstantBuffer.h"
+#include "EngineStructuredBuffer.h"
 #include "EngineGUI.h"
 #include "Level.h"
 #include "GameInstance.h"
-#include <EnginePlatform/EngineSound.h>
+
 
 UEngineGraphicDevice& UEngineCore::GetDevice()
 {
@@ -24,6 +26,11 @@ UEngineWindow& UEngineCore::GetMainWindow()
 std::map<std::string, std::shared_ptr<class ULevel>> UEngineCore::GetAllLevelMap()
 {
 	return GEngine->LevelMap;
+}
+
+UEngineWorkThreadPool& UEngineCore::GetThreadPool()
+{
+	return GEngine->ThreadPool;
 }
 
 UGameInstance* UEngineCore::GetGameInstance()
@@ -65,6 +72,7 @@ void UEngineCore::LoadContents(std::string_view _DllName)
 	Dir.Move("Release");
 #endif
 
+
 	UEngineFile File = Dir.GetFile(_DllName);
 
 	std::string FullPath = File.GetPathToString();
@@ -100,6 +108,8 @@ void UEngineCore::EngineStart(HINSTANCE _Instance, std::string_view _DllName)
 	UEngineCore EngineCore;
 
 	GEngine = &EngineCore;
+
+	GEngine->ThreadPool.Initialize();
 
 	WindowInit(_Instance);
 
@@ -166,6 +176,11 @@ void UEngineCore::OpenLevel(std::string_view _Name)
 
 void UEngineCore::EngineFrame()
 {
+	if (true == GEngine->IsCurLevelReset) {
+		GEngine->CurLevel = nullptr;
+		GEngine->IsCurLevelReset = false;
+	}
+
 	if (nullptr != GEngine->NextLevel)
 	{
 		if (nullptr != GEngine->CurLevel)
@@ -208,8 +223,9 @@ void UEngineCore::EngineEnd()
 	GEngine->Device.Release();
 
 	UEngineResources::Release();
-	UEngineConstantBuffer::Release();
 
+	UEngineConstantBuffer::Release();
+	UEngineStructuredBuffer::Release();
 	UEngineSound::Release();
 
 	GEngine->CurLevel = nullptr;
@@ -218,4 +234,53 @@ void UEngineCore::EngineEnd()
 
 	UEngineDebug::EndConsole();
 
+}
+
+void UEngineCore::SetGameInstance(std::shared_ptr<UGameInstance> _Inst)
+{
+	GEngine->GameInstance = _Inst;
+}
+
+bool UEngineCore::IsCurLevel(std::string_view _LevelName)
+{
+	std::string UpperName = UEngineString::ToUpper(_LevelName);
+
+	if (GEngine->CurLevel->GetName() != UpperName)
+	{
+		DestroyLevel(_LevelName); 		return false;
+	}
+	return true;
+}
+
+std::shared_ptr<ULevel> UEngineCore::ReadyToNextLevel(std::string_view _LevelName)
+{
+	std::string UpperName = UEngineString::ToUpper(_LevelName);
+
+	std::map<std::string, std::shared_ptr<ULevel>>::iterator FindIter = GEngine->LevelMap.find(UpperName);
+	GEngine->LevelMap.erase(FindIter); 	GEngine->IsCurLevelReset = true;
+	return 	GEngine->NextLevel;
+}
+
+void UEngineCore::SetNextLevel(std::shared_ptr<class ULevel> _NextLevel)
+{
+	GEngine->NextLevel = _NextLevel;
+}
+
+void UEngineCore::DestroyLevel(std::string_view _LevelName)
+{
+	std::string UpperName = UEngineString::ToUpper(_LevelName);
+
+	if (false == GEngine->LevelMap.contains(UpperName))
+	{
+		return;
+	}
+
+	std::map<std::string, std::shared_ptr<class ULevel>>::iterator FindIter = GEngine->LevelMap.find(UpperName);
+
+	if (nullptr != FindIter->second)
+	{
+		FindIter->second = nullptr;
+	}
+
+	GEngine->LevelMap.erase(FindIter);
 }

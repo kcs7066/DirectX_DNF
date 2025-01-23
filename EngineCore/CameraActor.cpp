@@ -93,6 +93,43 @@ void ACameraActor::Tick(float _DeltaTime)
 
 }
 
+FVector ACameraActor::ScreenMousePosToWorldPosWithOutPos(float _PosZ)
+{
+	FVector MousePos = UEngineCore::GetMainWindow().GetMousePos();
+
+	return ScreenPosToWorldPosWithOutPos(MousePos, _PosZ);
+}
+
+FVector ACameraActor::ScreenPosToWorldPosWithOutPos(FVector _Pos, float _PosZ)
+{
+	FVector Size = UEngineCore::GetMainWindow().GetWindowSize();
+
+	float4x4 ViewPort;
+	ViewPort.ViewPort(Size.X, Size.Y, 0.0f, 0.0f, 0.0f, 1.0f);
+
+	FTransform CameraTransform = GetActorTransform();
+
+	float4x4 ViewMat = CameraTransform.View;
+	ViewMat.ArrVector[3] = FVector::ZERO;
+
+	_Pos = _Pos * ViewPort.InverseReturn();
+	_Pos = _Pos * CameraTransform.Projection.InverseReturn();
+	_Pos = _Pos * ViewMat.InverseReturn();
+
+	float Ratio = Size.X / Size.Y;
+
+	_Pos.Y *= Ratio;
+
+
+	float FOV = GetCameraComponent()->FOV * 0.5f * UEngineMath::D2R;
+
+	FVector ZDisScreenScale;
+	ZDisScreenScale.X = tanf(FOV * Ratio) * _PosZ * _Pos.X;
+	ZDisScreenScale.Y = tanf(FOV) * _PosZ * _Pos.Y;
+
+	return _Pos;
+}
+
 FVector ACameraActor::ScreenPosToWorldPos(FVector _Pos)
 {
 	FVector Size = UEngineCore::GetMainWindow().GetWindowSize();

@@ -47,5 +47,6 @@ private:
 	float PlayTime = 0.0f;
 
 	USoundPlayer BGMPlayer;
+
 };
 

@@ -65,6 +65,8 @@ private:
 	std::shared_ptr<class USpriteRenderer> buffRenderer;
 	std::shared_ptr<class USpriteRenderer> neoRenderer;
 
+	UFSMStateManager FSM;
+
 	int Speed = 300;
 	float Delaytime = 0.0f;
 	bool MonsterValue = false;
@@ -72,8 +74,6 @@ private:
 	bool SeeRight = true;
 
 	FVector DuckingDir = { 0,0 };
-
-	UFSMStateManager FSM = UFSMStateManager();
 
 	void DirChange()
 	{

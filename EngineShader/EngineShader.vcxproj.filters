@@ -13,6 +13,12 @@
     <FxCompile Include="EngineTargetMergeShader.fx">
       <Filter>Target</Filter>
     </FxCompile>
+    <FxCompile Include="EngineTileMapInstShader.fx">
+      <Filter>2D</Filter>
+    </FxCompile>
+    <FxCompile Include="EngineMeshLightShader.fx">
+      <Filter>2D</Filter>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="2D">
@@ -21,5 +27,16 @@
     <Filter Include="Target">
       <UniqueIdentifier>{81df4db4-b21b-43f3-9053-02bf9fbec9db}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header">
+      <UniqueIdentifier>{0132feb8-ebc9-46d6-b925-49141de14afd}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Light.hlsli">
+      <Filter>Header</Filter>
+    </None>
+    <None Include="Transform.hlsli">
+      <Filter>Header</Filter>
+    </None>
   </ItemGroup>
 </Project>

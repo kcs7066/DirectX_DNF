@@ -10,9 +10,9 @@ public:
 	URenderUnit();
 	~URenderUnit();
 
-	UTransformObject* TransformObject = nullptr;
+	class UTransformObject* TransformObject = nullptr;
 
-	URenderer* ParentRenderer = nullptr;
+	class URenderer* ParentRenderer = nullptr;
 
 	std::shared_ptr<UMesh> Mesh;
 	std::shared_ptr<UEngineMaterial> Material;
@@ -25,6 +25,9 @@ public:
 
 	ENGINEAPI virtual void Render(class UEngineCamera* _Camera, float _DeltaTime);
 
+	ENGINEAPI virtual void RenderInst(class UEngineCamera* _Camera, UINT _InstCount, float _DeltaTime);
+
+
 	ENGINEAPI void MaterialResourcesCheck();
 
 	template<typename Data>
@@ -34,6 +37,14 @@ public:
 	}
 
 	ENGINEAPI void ConstantBufferLinkData(std::string_view Name, void* _Data);
+
+	template<typename Data>
+	ENGINEAPI void StructuredBufferLinkData(std::string_view _Name, std::vector<Data>& _Data)
+	{
+		StructuredBufferLinkData(_Name, static_cast<UINT>(_Data.size()), reinterpret_cast<void*>(&_Data[0]));
+	}
+
+	ENGINEAPI void StructuredBufferLinkData(std::string_view Name, UINT _Count, void* _Data);
 
 	ENGINEAPI void SetTexture(std::string_view _Name, std::string_view _ResName);
 	ENGINEAPI void SetTexture(std::string_view _Name, std::shared_ptr<UEngineTexture> _Texture);

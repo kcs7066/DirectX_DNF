@@ -5,6 +5,7 @@
 #include <EnginePlatform/EngineWindow.h>
 #include "EngineGraphicDevice.h"
 #include "IContentsCore.h"
+#include <EnginePlatform/EngineWorkThreadPool.h>
 #include "Level.h"
 #include <memory>
 
@@ -31,6 +32,25 @@ public:
 		return NewLevel;
 	}
 
+	template<typename GameModeType, typename MainPawnType, typename HUDType>
+	static void ResetLevel(std::string_view _LevelName)
+	{
+		std::string UpperName = UEngineString::ToUpper(_LevelName);
+
+		if (false == IsCurLevel(_LevelName)) {
+			CreateLevel<GameModeType, MainPawnType, HUDType>(UpperName);
+		}
+		else {
+			std::shared_ptr<class ULevel> NextFrameLevel = ReadyToNextLevel(_LevelName);
+			NextFrameLevel = CreateLevel<GameModeType, MainPawnType, HUDType>(UpperName); 			SetNextLevel(NextFrameLevel);
+		}
+	}
+
+	ENGINEAPI static bool IsCurLevel(std::string_view _LevelName);
+	ENGINEAPI static std::shared_ptr<class ULevel> ReadyToNextLevel(std::string_view _LevelName);
+	ENGINEAPI static void SetNextLevel(std::shared_ptr<class ULevel> _NextLevel);
+	static void DestroyLevel(std::string_view _LevelName);
+
 	ENGINEAPI static void OpenLevel(std::string_view _Name);
 
 
@@ -44,16 +64,22 @@ public:
 
 	ENGINEAPI static class UGameInstance* GetGameInstance();
 
+	ENGINEAPI static class UEngineWorkThreadPool& GetThreadPool();
+
 	template<typename Type>
 	static void CreateGameInstance()
 	{
-		GameInstance = std::make_shared<Type>();
+		SetGameInstance(std::make_shared<Type>());
 	}
+
+
 
 protected:
 
 private:
 	std::shared_ptr<class UGameInstance> GameInstance;
+
+	UEngineWorkThreadPool ThreadPool;
 
 	UEngineWindow MainWindow;
 
@@ -76,6 +102,9 @@ private:
 	std::map<std::string, std::shared_ptr<class ULevel>> LevelMap;
 	std::shared_ptr<class ULevel> CurLevel;
 	std::shared_ptr<class ULevel> NextLevel;
+	bool IsCurLevelReset = false;
+
+	ENGINEAPI static void SetGameInstance(std::shared_ptr<UGameInstance> _Inst);
 
 	ENGINEAPI UEngineCore();
 	ENGINEAPI virtual ~UEngineCore();

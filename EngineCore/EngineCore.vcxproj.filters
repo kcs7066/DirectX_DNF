@@ -182,6 +182,18 @@
     <ClInclude Include="GameInstance.h">
       <Filter>Core</Filter>
     </ClInclude>
+    <ClInclude Include="FontRenderer.h">
+      <Filter>Object\Component\Contents</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineStructuredBuffer.h">
+      <Filter>Resources\Buffer</Filter>
+    </ClInclude>
+    <ClInclude Include="Light.h">
+      <Filter>Object\Component\Light</Filter>
+    </ClInclude>
+    <ClInclude Include="LightActor.h">
+      <Filter>Object\Render</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PreCompile.cpp" />
@@ -344,6 +356,18 @@
     <ClCompile Include="GameInstance.cpp">
       <Filter>Core</Filter>
     </ClCompile>
+    <ClCompile Include="FontRenderer.cpp">
+      <Filter>Object\Component\Contents</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineStructuredBuffer.cpp">
+      <Filter>Resources\Buffer</Filter>
+    </ClCompile>
+    <ClCompile Include="Light.cpp">
+      <Filter>Object\Component\Light</Filter>
+    </ClCompile>
+    <ClCompile Include="LightActor.cpp">
+      <Filter>Object\Render</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Interface">
@@ -442,6 +466,9 @@
     <Filter Include="Resources\Font">
       <UniqueIdentifier>{eaa70186-998e-4b39-9128-9139cf856513}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Object\Component\Light">
+      <UniqueIdentifier>{a6e3e7d6-096d-47bf-9393-12ec05182a1f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="ThirdParty\DirectxTex\Inc\DirectXTex.inl">
@@ -464,10 +491,6 @@
     <CopyFileToFolders Include="ThirdParty\FW1FontWrapper\Release\FW1FontWrapper.dll">
       <Filter>ThirdParty\FW1FontWrapper\Release</Filter>
     </CopyFileToFolders>
-  </ItemGroup>
-  <ItemGroup>
-    <Library Include="ThirdParty\FW1FontWrapper\Debug\FW1FontWrapper.lib">
-      <Filter>ThirdParty\FW1FontWrapper\Debug</Filter>
-    </Library>
+    <CopyFileToFolders Include="ThirdParty\FW1FontWrapper\Debug\FW1FontWrapper.lib" />
   </ItemGroup>
 </Project>

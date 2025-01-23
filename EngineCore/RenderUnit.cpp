@@ -74,6 +74,25 @@ void URenderUnit::ConstantBufferLinkData(std::string_view _Name, void* _Data)
 	}
 }
 
+
+void URenderUnit::StructuredBufferLinkData(std::string_view _Name, UINT _Count, void* _Data)
+{
+	for (EShaderType i = EShaderType::VS; i < EShaderType::MAX; i = static_cast<EShaderType>(static_cast<int>(i) + 1))
+	{
+		if (false == Resources.contains(i))
+		{
+			continue;
+		}
+
+		if (false == Resources[i].IsStructuredBuffer(_Name))
+		{
+			continue;
+		}
+
+		Resources[i].StructuredBufferLinkData(_Name, _Count, _Data);
+	}
+}
+
 void URenderUnit::SetTexture(std::string_view _Name, UEngineTexture* _Texture)
 {
 	for (EShaderType i = EShaderType::VS; i < EShaderType::MAX; i = static_cast<EShaderType>(static_cast<int>(i) + 1))
@@ -212,6 +231,34 @@ void URenderUnit::Render(class UEngineCamera* _Camera, float _DeltaTime)
 	Material->GetDepthStencilState()->Setting();
 
 	UEngineCore::GetDevice().GetContext()->DrawIndexed(Mesh->GetIndexBuffer()->GetIndexCount(), 0, 0);
+}
+
+void URenderUnit::RenderInst(class UEngineCamera* _Camera, UINT _InstCount, float _DeltaTime)
+{
+
+	for (std::pair<const EShaderType, UEngineShaderResources>& Pair : Resources)
+	{
+		Pair.second.Setting();
+	}
+
+	Mesh->GetVertexBuffer()->Setting();
+
+	Material->GetVertexShader()->Setting();
+
+	Mesh->GetIndexBuffer()->Setting();
+	Material->PrimitiveTopologySetting();
+
+	UEngineCore::GetDevice().GetContext()->IASetInputLayout(InputLayOut.Get());
+
+	Material->GetRasterizerState()->Setting();
+
+	Material->GetPixelShader()->Setting();
+
+	Material->GetBlend()->Setting();
+
+	Material->GetDepthStencilState()->Setting();
+
+	UEngineCore::GetDevice().GetContext()->DrawIndexedInstanced(Mesh->GetIndexBuffer()->GetIndexCount(), _InstCount, 0, 0, 0);
 }
 
 void URenderUnit::InputLayOutCreate()

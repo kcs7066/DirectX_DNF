@@ -6,11 +6,9 @@
 class UFSMStateManager
 {
 public:
-	// constrcuter destructer
 	UFSMStateManager() {}
 	~UFSMStateManager() {}
 
-	// delete Function
 	UFSMStateManager(const UFSMStateManager& _Other) = delete;
 	UFSMStateManager(UFSMStateManager&& _Other) noexcept = delete;
 	UFSMStateManager& operator=(const UFSMStateManager& _Other) = delete;
@@ -25,12 +23,12 @@ public:
 	};
 
 	template<typename EnumType>
-	ENGINEAPI void CreateState(EnumType _Key, std::function<void(float)> _UpdateFunction, std::function<void()> _Start = nullptr)
+	void CreateState(EnumType _Key, std::function<void(float)> _UpdateFunction, std::function<void()> _Start = nullptr)
 	{
 		CreateState(static_cast<int>(_Key), _UpdateFunction, _Start);
 	}
 
-	ENGINEAPI void CreateState(int _Key, std::function<void(float)> _UpdateFunction, std::function<void()> _Start = nullptr)
+	void CreateState(int _Key, std::function<void(float)> _UpdateFunction, std::function<void()> _Start = nullptr)
 	{
 		if (true == States.contains(_Key))
 		{
@@ -42,7 +40,7 @@ public:
 		States[_Key].StartFunction = _Start;
 	}
 
-	ENGINEAPI void Update(float _DeltaTime)
+	void Update(float _DeltaTime)
 	{
 		if (nullptr == CurState)
 		{
@@ -54,12 +52,12 @@ public:
 	}
 
 	template<typename EnumType>
-	ENGINEAPI void ChangeState(EnumType _Key)
+	void ChangeState(EnumType _Key)
 	{
 		ChangeState(static_cast<int>(_Key));
 	}
 
-	ENGINEAPI void ChangeState(int _Key)
+	void ChangeState(int _Key)
 	{
 		if (false == States.contains(_Key))
 		{
@@ -80,3 +78,4 @@ private:
 	FSMState* CurState = nullptr;
 	std::map<int, FSMState> States;
 };
+

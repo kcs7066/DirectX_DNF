@@ -8,6 +8,12 @@
     <ClCompile Include="EngineSound.cpp">
       <Filter>Sound</Filter>
     </ClCompile>
+    <ClCompile Include="EngineThread.cpp">
+      <Filter>Thread</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineWorkThreadPool.cpp">
+      <Filter>Thread</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EngineWindow.h" />
@@ -41,6 +47,12 @@
     <ClInclude Include="ThirdParty\FMOD\Inc\fmod_output.h">
       <Filter>ThirdParty\Inc</Filter>
     </ClInclude>
+    <ClInclude Include="EngineThread.h">
+      <Filter>Thread</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineWorkThreadPool.h">
+      <Filter>Thread</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Sound">
@@ -58,11 +70,9 @@
     <Filter Include="ThirdParty\Release">
       <UniqueIdentifier>{6c5ea066-ac8e-47eb-a97f-4785748109df}</UniqueIdentifier>
     </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <Library Include="ThirdParty\FMOD\Debug\fmodL_vc.lib">
-      <Filter>ThirdParty\Debug</Filter>
-    </Library>
+    <Filter Include="Thread">
+      <UniqueIdentifier>{366286d1-b19e-4f70-9cb0-f488a4c6958f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <CopyFileToFolders Include="ThirdParty\FMOD\Debug\fmodL.dll">
@@ -74,5 +84,6 @@
     <CopyFileToFolders Include="ThirdParty\FMOD\Release\fmod_vc.lib">
       <Filter>ThirdParty\Release</Filter>
     </CopyFileToFolders>
+    <CopyFileToFolders Include="ThirdParty\FMOD\Debug\fmodL_vc.lib" />
   </ItemGroup>
 </Project>

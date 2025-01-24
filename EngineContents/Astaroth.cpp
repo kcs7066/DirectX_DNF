@@ -295,6 +295,7 @@ void AAstaroth::AfterImageReady(float _DeltaTime)
 	if (0.0f > DelayTime)
 	{
 		FSM.ChangeState(AstarothState::AfterImage);
+		AfterImageValue--;
 		DelayTime = 1.6f;
 	}
 }
@@ -308,9 +309,8 @@ void AAstaroth::AfterImage(float _DeltaTime)
 
 	if (0.0f > DelayTime)
 	{
-		if (0 <= AfterImageValue)
+		if (1 <= AfterImageValue)
 		{
-			AfterImageValue--;
 			PlayerPos = GetWorld()->GetMainPawn()->GetActorLocation();
 			RushDir = PlayerPos - GetActorLocation();
 			if (0 > RushDir.X)

@@ -79,7 +79,7 @@ void AInfighter::BeginPlay()
 			}
 			else
 			{
-				InfighterRenderer->ChangeAnimation("infighter_Heavenly");
+				InfighterRenderer->ChangeAnimation("infighter_IdleCamp");
 			}
 		}
 	);
